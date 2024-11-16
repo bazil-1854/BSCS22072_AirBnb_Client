@@ -70,16 +70,16 @@ const Navbar = () => {
                                     </div>
                                 ) : (
                                     <motion.div
-                                style={{ opacity, y }}
-                                className="hidden sm:flex xl:mr-[-165px] bg-white z-90 space-x-6"
-                            >
-                                <NavLink to="/stays" className="text-gray-600 hover:text-black font-medium">
-                                    Stays
-                                </NavLink>
-                                <NavLink to="/experiences" className="text-gray-600 hover:text-black font-medium">
-                                    Experiences
-                                </NavLink>
-                            </motion.div>
+                                        style={{ opacity, y }}
+                                        className="hidden sm:flex xl:mr-[-165px] bg-white z-90 space-x-6"
+                                    >
+                                        <NavLink to="/stays" className="text-gray-600 hover:text-black font-medium">
+                                            Stays
+                                        </NavLink>
+                                        <NavLink to="/experiences" className="text-gray-600 hover:text-black font-medium">
+                                            Experiences
+                                        </NavLink>
+                                    </motion.div>
                                 )}
                             </>
                         }
@@ -104,24 +104,24 @@ const Navbar = () => {
 
                     {isOpen && (
                         <div className="lg:block hidden">
-                            <div className="flex flex-col absolute z-[90] right-0 mr-[75px] w-[450px] bg-white rounded-lg border shadow-xl mt-2 p-4">
-                                <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <div className="flex flex-col absolute z-[90] right-0 mr-[75px] w-[250px] bg-white rounded-lg border shadow-xl mt-2 p-4">
+                                <NavLink to="/signUp" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Sign up
                                 </NavLink>
-                                <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                <NavLink to="/signIn" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Log in
                                 </NavLink>
                                 <div className="w-full bg-gray-200 h-[2px] my-2"></div>
-                                <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Gift Cards
                                 </NavLink>
-                                <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Airbnb Your Home
                                 </NavLink>
-                                <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Host an Experience
                                 </NavLink>
-                                <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Help Center
                                 </NavLink>
                             </div>
@@ -149,23 +149,23 @@ const Navbar = () => {
                 {isOpen && (
                     <div className="sm:hidden">
                         <div className="flex flex-col bg-white rounded-lg shadow-md mt-2 p-4">
-                            <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 Sign up
                             </NavLink>
-                            <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 Log in
                             </NavLink>
                             <div className="w-full bg-gray-200 h-[2px] my-2"></div>
-                            <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 Gift Cards
                             </NavLink>
-                            <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 Airbnb Your Home
                             </NavLink>
-                            <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 Host an Experience
                             </NavLink>
-                            <NavLink to="/" className="block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 Help Center
                             </NavLink>
                         </div>

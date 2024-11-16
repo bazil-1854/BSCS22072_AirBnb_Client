@@ -5,6 +5,8 @@ import Footer from './assets/Footer';
 import ListingDetails from './Components/Home/ListingDetails';
 import SearchListings from './Components/SearchListings';
 import Booking from './Components/Booking';
+import SignUpForm from './Components/Authentication/SignUp';
+import SignInnForm from './Components/Authentication/SignIn';
 
 function App() {
 
@@ -17,6 +19,12 @@ function App() {
         <Route path="/search" element={<SearchListings />} />
         <Route path="/listing/:id" element={<ListingDetails />} />
         <Route path="/booking/:id" element={<Booking />} />
+
+        <Route path="/signUp" element={<SignUpForm />} />
+        <Route path="/signIn" element={<SignInnForm />} />
+
+
+
       </Routes>
       <Footer />
     </Router>
