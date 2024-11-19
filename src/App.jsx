@@ -10,6 +10,7 @@ import SignInnForm from './Components/Authentication/SignIn';
 import Profile from './Components/Authentication/Profile';
 import AddListing from './Components/Host/AddListing';
 import HostedListings from './Components/Host/HostedListings';
+import EditListing from './Components/Host/EditListing ';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
 
         <Route path="/add-listing" element={<AddListing />} />
         <Route path="/host-listing" element={<HostedListings />} /> 
+        <Route path="/update-listing/:id" element={<EditListing />} /> 
 
 
 
