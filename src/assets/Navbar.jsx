@@ -9,7 +9,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 const Navbar = () => {
     const navigate = useNavigate();
-  
+
     const [isOpen, setIsOpen] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [homePath, sethomePath] = useState(true);
@@ -48,10 +48,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        //localStorage.removeItem('role');
-        //setIsLoggedIn(false);
-        //setUserRole(null);
-        navigate('/signin'); // Redirect to login page
+        navigate('/signin');
     };
 
     return (
@@ -98,7 +95,7 @@ const Navbar = () => {
                         }
 
                         <div className="flex items-center space-x-4">
-                            <span className='text-gray-700 text-md'>Airbnb Your Home</span>
+                            <span className='text-gray-700 xl:block hidden text-md'>Airbnb Your Home</span>
                             <button className="hidden md:inline-flex items-center text-gray-600 space-x-2 hover:text-black">
                                 <LuGlobe className="text-xl" />
                             </button>
@@ -129,12 +126,12 @@ const Navbar = () => {
                                     </>
                                 ) : (
                                     <>
-                                    <NavLink to="/profile" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                        Profile
-                                    </NavLink>
-                                    <button onClick={handleLogout} className="pl-[12px] block py-2 text-red-700 hover:bg-gray-100 rounded-lg">
-                                        Logout
-                                    </button>
+                                        <NavLink to="/profile" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                            Profile
+                                        </NavLink>
+                                        <button onClick={handleLogout} className="pl-[12px] block py-2 text-red-700 hover:bg-gray-100 rounded-lg">
+                                            Logout
+                                        </button>
                                     </>
                                 )}
 

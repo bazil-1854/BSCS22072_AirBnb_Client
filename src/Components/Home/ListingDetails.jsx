@@ -1,4 +1,85 @@
-import React, { useEffect, useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+
+const ListingDetails = () => {
+  const { id } = useParams(); // Get the listing ID from URL params
+  const [listing, setListing] = useState(null); // State to hold listing details
+  const [loading, setLoading] = useState(true); // State to manage loading
+  const [error, setError] = useState(null); // State to handle errors
+
+  useEffect(() => {
+    const fetchListingDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings/${id}`
+        );
+        setListing(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to fetch listing details');
+        setLoading(false);
+      }
+    };
+
+    fetchListingDetails();
+  }, [id]);
+
+  if (loading) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center mt-10 text-red-500">{error}</div>;
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <h1 className="text-2xl font-bold text-gray-800 mb-4">{listing.name}</h1>
+      <p className="text-gray-600">{listing.summary}</p>
+      <div className="mt-4">
+        <strong>Property Type:</strong> {listing.property_type}
+      </div>
+      <div className="mt-4">
+        <strong>Price:</strong> ${listing.price} per night
+      </div>
+      <div className="mt-4">
+        <strong>Bedrooms:</strong> {listing.bedrooms}, <strong>Bathrooms:</strong> {listing.bathrooms}
+      </div>
+      <div className="mt-4">
+        <strong>Address:</strong> {listing.address.street}, {listing.address.suburb}, {listing.address.country}
+      </div>
+      <div className="mt-4">
+        <strong>Amenities:</strong>
+        <ul className="list-disc pl-5">
+          {listing.amenities.map((amenity, index) => (
+            <li key={index}>{amenity}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="mt-6">
+        <strong>Images:</strong>
+        <div className="flex space-x-4 mt-2">
+          {listing.images.placePicture && (
+            <img src={listing.images.placePicture} alt="Place" className="w-32 h-32 object-cover" />
+          )}
+          {listing.images.coverPicture && (
+            <img src={listing.images.coverPicture} alt="Cover" className="w-32 h-32 object-cover" />
+          )}
+          {listing.images.additionalPictures.map((url, index) => (
+            <img key={index} src={url} alt={`Additional ${index + 1}`} className="w-32 h-32 object-cover" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ListingDetails;
+
+/*import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaMedal, FaHome, FaDoorOpen, FaToilet } from 'react-icons/fa';
@@ -196,7 +277,8 @@ const ListingDetails = () => {
         </div>
       </div>
 
-      {/*
+      
+      // idhr wala commented he 
       <div className="p-4">
         <h1 className="text-2xl font-bold mb-2">{listing.title}</h1>
         <p className="text-gray-700 mb-4">{listing.type}</p>
@@ -207,9 +289,10 @@ const ListingDetails = () => {
         </div>
         <p className="text-gray-700">Guests: {listing.guests}</p>
         <p className="text-gray-700">Category: {listing.category}</p>
-      </div>*/}
+      </div>
     </div>
   );
 };
 
 export default ListingDetails;
+*/

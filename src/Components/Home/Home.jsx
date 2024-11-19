@@ -2,73 +2,94 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Home = () => {
-  const [listings, setListings] = useState([]); // Store fetched listings
-  const [page, setPage] = useState(1); // Current page
-  const [hasMore, setHasMore] = useState(true); // Check if more listings are available
-  const limit = 10; // Number of listings per page
+  const [listings, setListings] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const fetchListings = async () => {
+  const fetchListings = async (page) => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings`,
-        {
-          params: { page, limit },
-        }
-      );
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings`, { params: { page, limit: 10 } });
+      const newListings = response.data.listings;
 
-      const { listings: newListings, totalPages } = response.data;
-
-      // Update state with new listings
-      setListings((prevListings) => [...prevListings, ...newListings]);
-      setHasMore(page < totalPages); // Disable "Show More" if no more pages
-    } catch (error) {
-      console.error('Error fetching listings:', error);
+      // Only append new listings once (no duplication)
+      if (page === 1) {
+        // If it's the first page, clear the state and set new listings
+        setListings(newListings);
+      } else {
+        // Otherwise, append new listings to the existing state
+        setListings((prev) => [...prev, ...newListings]);
+      }
+      setHasMore(page < response.data.totalPages); // Check if more pages are available
+    } catch (err) {
+      setError('Failed to fetch listings. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchListings(); // Fetch listings on initial render
-  }, [page]); // Re-fetch listings when `page` changes
+    fetchListings(currentPage);
+  }, [currentPage]);
 
-  const handleShowMore = () => {
-    setPage((prevPage) => prevPage + 1); // Increment the page
+  const loadMore = () => {
+    if (hasMore) {
+      setCurrentPage((prev) => prev + 1);
+    }
   };
 
+  if (error) return <p className="text-center text-lg text-red-500">{error}</p>;
+
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Listings</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {listings.map((listing, index) => (
+    <div className="p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {listings.map((listing) => (
           <div
-            key={index}
-            className="border rounded-lg p-4 shadow-md bg-white"
+            key={listing._id}
+            className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow"
           >
-            <h3 className="text-lg font-semibold">{listing.name}</h3>
-            <p className="text-sm text-gray-600">{listing.summary}</p>
-            <p className="mt-2 text-blue-500 font-medium">
-              ${listing.price} / night
-            </p>
+            <img
+              src={listing.images.coverPicture || 'https://via.placeholder.com/300'}
+              alt={listing.name}
+              className="w-full h-48 object-cover rounded-md mb-4"
+            />
+            <h3 className="text-lg font-semibold text-gray-800 truncate">{listing.name}</h3>
+            <p className="text-gray-600 text-sm truncate">{listing.summary}</p>
+            <div className="mt-2">
+              <p className="text-gray-700 text-sm">
+                <span className="font-medium">Price:</span> ${listing.price}
+              </p>
+              <p className="text-gray-700 text-sm">
+                <span className="font-medium">Location:</span>{' '}
+                {`${listing.address.suburb}, ${listing.address.country}`}
+              </p>
+              <p className="text-gray-700 text-sm">
+                <span className="font-medium">Rating:</span> {listing.rating} / 5
+              </p>
+            </div>
           </div>
         ))}
       </div>
 
       {hasMore && (
-        <button
-          onClick={handleShowMore}
-          className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none"
-        >
-          Show More
-        </button>
-      )}
-
-      {!hasMore && (
-        <p className="mt-6 text-center text-gray-500">No more listings to show</p>
+        <div className="text-center mt-6">
+          <button
+            onClick={loadMore}
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+            disabled={loading}
+          >
+            {loading ? 'Loading...' : 'Show More'}
+          </button>
+        </div>
       )}
     </div>
   );
 };
 
 export default Home;
+
 
 
 
