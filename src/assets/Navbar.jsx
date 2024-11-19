@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { FaBars, FaHeart, FaSearch, FaSlidersH, FaTimes, FaUser, FaUserCircle } from 'react-icons/fa';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import airbnb from "../logo.svg";
 import { LuGlobe } from 'react-icons/lu';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+  
     const [isOpen, setIsOpen] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [homePath, sethomePath] = useState(true);
     const location = useLocation();
+
+    const isUserLoggedIn = Boolean(localStorage.getItem('token'));
+
 
     const { scrollY } = useScroll();
     const opacity = useTransform(scrollY, [0, 150], [1, 0]);
@@ -40,6 +45,14 @@ const Navbar = () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        //localStorage.removeItem('role');
+        //setIsLoggedIn(false);
+        //setUserRole(null);
+        navigate('/signin'); // Redirect to login page
+    };
 
     return (
         <header className="bg-white fixed w-full z-50 top-0">
@@ -104,13 +117,27 @@ const Navbar = () => {
 
                     {isOpen && (
                         <div className="lg:block hidden">
-                            <div className="flex flex-col absolute z-[90] right-0 mr-[75px] w-[250px] bg-white rounded-lg border shadow-xl mt-2 p-4">
-                                <NavLink to="/signUp" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Sign up
-                                </NavLink>
-                                <NavLink to="/signIn" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Log in
-                                </NavLink>
+                            <div onClick={toggleMenu} className="flex flex-col absolute z-[90] right-0 mr-[75px] w-[250px] bg-white rounded-lg border shadow-xl mt-2 p-4">
+                                {!isUserLoggedIn ? (
+                                    <>
+                                        <NavLink to="/signUp" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                            Sign up
+                                        </NavLink>
+                                        <NavLink to="/signIn" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                            Log in
+                                        </NavLink>
+                                    </>
+                                ) : (
+                                    <>
+                                    <NavLink to="/profile" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        Profile
+                                    </NavLink>
+                                    <button onClick={handleLogout} className="pl-[12px] block py-2 text-red-700 hover:bg-gray-100 rounded-lg">
+                                        Logout
+                                    </button>
+                                    </>
+                                )}
+
                                 <div className="w-full bg-gray-200 h-[2px] my-2"></div>
                                 <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Gift Cards
