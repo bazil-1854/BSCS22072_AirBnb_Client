@@ -15,7 +15,7 @@ const SignInnForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/air-bnb/auth/login', formData);
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/auth/login`, formData);
       alert('Login successful!');
     } catch (error) {
       console.error(error);

@@ -3,24 +3,30 @@ import axios from 'axios';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
     password: '',
+    role: 'Guest',
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type, checked } = e.target;
+    if (type === 'checkbox') {
+      setFormData({ ...formData, [name]: checked ? value : 'Guest' });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/air-bnb/auth/register', formData);
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/auth/register`, formData);
       alert('Registration successful!');
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
-      alert('Registration failed!');
+      alert('Registration failed!' + error.response.data.error);
     }
   };
 
@@ -32,20 +38,53 @@ const SignUpForm = () => {
       >
         <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
         <div className="mb-4">
+          <p className="text-sm font-medium text-gray-600 mb-2">
+            How would you like to continue?
+          </p>
+          <div className="flex items-center mb-2">
+            <input
+              type="checkbox"
+              id="guestRole"
+              name="role"
+              value="Guest"
+              checked={formData.role === 'Guest'}
+              onChange={handleChange}
+              className="mr-2"
+            />
+            <label htmlFor="guestRole" className="text-sm text-gray-600">
+              As a Guest
+            </label>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="hostRole"
+              name="role"
+              value="Host"
+              checked={formData.role === 'Host'}
+              onChange={handleChange}
+              className="mr-2"
+            />
+            <label htmlFor="hostRole" className="text-sm text-gray-600">
+              As a Host
+            </label>
+          </div>
+        </div>
+        <div className="mb-4">
           <label
-            htmlFor="name"
+            htmlFor="fullName"
             className="block text-sm font-medium text-gray-600 mb-1"
           >
             Name
           </label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+            id="fullName"
+            name="fullName"
+            value={formData.fullName}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-            placeholder="Enter your name"
+            placeholder="Enter your full name"
             required
           />
         </div>
