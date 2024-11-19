@@ -93,9 +93,12 @@ const Profile = () => {
                         </div>
                     </div>
                     {userInfo.role === 'Host' &&
+                    <>
                     
-                    <button onClick={ () => {navigate('/add-listing')}}>Add Listing</button>
+                    <button className='text-blue-600 underline mb-[15px]' onClick={ () => {navigate('/add-listing')}}>Add Listing</button>
+                    <button className='text-blue-600 underline mb-[15px] ml-[25px]' onClick={ () => {navigate('/host-listing')}}>See Listing</button>
                     
+                    </>
                     }
                     {isEditing ? (
                         <form onSubmit={handleSubmit}>
