@@ -8,6 +8,7 @@ import Booking from './Components/Booking';
 import SignUpForm from './Components/Authentication/SignUp';
 import SignInnForm from './Components/Authentication/SignIn';
 import Profile from './Components/Authentication/Profile';
+import AddListing from './Components/Host/AddListing';
 
 function App() {
 
@@ -25,6 +26,9 @@ function App() {
         <Route path="/signIn" element={<SignInnForm />} />
 
         <Route path="/profile" element={<Profile />} />
+
+
+        <Route path="/add-listing" element={<AddListing />} />
 
 
 

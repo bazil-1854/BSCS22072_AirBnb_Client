@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
+    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState(null);
     const [updatedData, setUpdatedData] = useState({});
     const [isEditing, setIsEditing] = useState(false);
@@ -90,6 +92,11 @@ const Profile = () => {
                             <p className="text-gray-500">{userInfo.role}</p>
                         </div>
                     </div>
+                    {userInfo.role === 'Host' &&
+                    
+                    <button onClick={ () => {navigate('/add-listing')}}>Add Listing</button>
+                    
+                    }
                     {isEditing ? (
                         <form onSubmit={handleSubmit}>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
