@@ -1,4 +1,78 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Home = () => {
+  const [listings, setListings] = useState([]); // Store fetched listings
+  const [page, setPage] = useState(1); // Current page
+  const [hasMore, setHasMore] = useState(true); // Check if more listings are available
+  const limit = 10; // Number of listings per page
+
+  const fetchListings = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings`,
+        {
+          params: { page, limit },
+        }
+      );
+
+      const { listings: newListings, totalPages } = response.data;
+
+      // Update state with new listings
+      setListings((prevListings) => [...prevListings, ...newListings]);
+      setHasMore(page < totalPages); // Disable "Show More" if no more pages
+    } catch (error) {
+      console.error('Error fetching listings:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchListings(); // Fetch listings on initial render
+  }, [page]); // Re-fetch listings when `page` changes
+
+  const handleShowMore = () => {
+    setPage((prevPage) => prevPage + 1); // Increment the page
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto p-4">
+      <h2 className="text-2xl font-semibold mb-6 text-center">Listings</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {listings.map((listing, index) => (
+          <div
+            key={index}
+            className="border rounded-lg p-4 shadow-md bg-white"
+          >
+            <h3 className="text-lg font-semibold">{listing.name}</h3>
+            <p className="text-sm text-gray-600">{listing.summary}</p>
+            <p className="mt-2 text-blue-500 font-medium">
+              ${listing.price} / night
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {hasMore && (
+        <button
+          onClick={handleShowMore}
+          className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none"
+        >
+          Show More
+        </button>
+      )}
+
+      {!hasMore && (
+        <p className="mt-6 text-center text-gray-500">No more listings to show</p>
+      )}
+    </div>
+  );
+};
+
+export default Home;
+
+
+
+/*import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaSearch, FaStar, FaStarHalfAlt } from 'react-icons/fa';
@@ -103,3 +177,4 @@ const Home = () => {
 };
 
 export default Home;
+*/
