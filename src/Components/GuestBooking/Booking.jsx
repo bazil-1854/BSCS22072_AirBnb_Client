@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const Booking = () => {
-    const { listingId } = useParams();
+    const { listingId,hostId } = useParams();
     const [blockedDates, setBlockedDates] = useState([]);
     const [selectedDates, setSelectedDates] = useState({ checkIn: null, checkOut: null });
     const [guests, setGuests] = useState({ adults: 1, children: 0, infants: 0 });
@@ -83,6 +83,7 @@ const Booking = () => {
                     checkOut: selectedDates.checkOut,
                     guests,
                     totalAmount,
+                    hostId,
                     specialRequests,
                 },
                 { headers: { Authorization: `Bearer ${token}` } }
@@ -90,7 +91,8 @@ const Booking = () => {
 
             setMessage('Booking created successfully!');
             console.log(response.data);
-        } catch (err) {
+        } 
+        catch (err) {
             console.error('Error creating booking:', err.response?.data || err.message);
             setMessage('Failed to create booking. Please try again.');
         }

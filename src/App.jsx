@@ -12,6 +12,7 @@ import AddListing from './Components/Host/AddListing';
 import HostedListings from './Components/Host/HostedListings';
 import EditListing from './Components/Host/EditListing ';
 import GuestBookings from './Components/GuestBooking/GetBookings';
+import HostDashboard from './Components/Host/HostDashboard';
 
 function App() {
 
@@ -23,7 +24,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<SearchListings />} />
         <Route path="/listing/:id" element={<ListingDetails />} />
-        <Route path="/booking/:listingId" element={<Booking />} />
+
+        <Route path="/booking/:hostId/:listingId" element={<Booking />} />
 
         <Route path="/signUp" element={<SignUpForm />} />
         <Route path="/signIn" element={<SignInnForm />} />
@@ -36,6 +38,9 @@ function App() {
         <Route path="/update-listing/:id" element={<EditListing />} /> 
         
         <Route path="/reserved-bookings" element={<GuestBookings />} /> 
+
+        
+        <Route path="/host-dashboard" element={<HostDashboard />} /> 
 
         
 

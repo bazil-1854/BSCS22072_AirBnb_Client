@@ -36,7 +36,7 @@ const ListingDetails = () => {
   }
 
   const handleBooking = (id) => {
-    navigate(`/booking/${id}`);
+    navigate(`/booking/${listing.hostID}/${id}`);
   };
 
   return (

@@ -96,9 +96,10 @@ const Profile = () => {
                         <>
                             <button className='text-blue-600 underline mb-[15px]' onClick={() => { navigate('/add-listing') }}>Add Listing</button>
                             <button className='text-blue-600 underline mb-[15px] ml-[25px]' onClick={() => { navigate('/host-listing') }}>See Listing</button>
+                            <button className='text-blue-600 underline mb-[15px] ml-[25px]' onClick={() => { navigate('/host-dashboard') }}>Manage Boolings</button>
                         </> :
                         <>
-                            <button className='text-blue-600 underline mb-[15px]' onClick={() => { navigate('/reserved-bookings') }}>Add Listing</button>
+                            <button className='text-blue-600 underline mb-[15px]' onClick={() => { navigate('/reserved-bookings') }}>See Made Bookings</button>
                         </>
                     }
                     {isEditing ? (

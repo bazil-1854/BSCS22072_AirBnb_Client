@@ -11,17 +11,17 @@ const GuestBookings = () => {
         const fetchBookings = async () => {
             try {
                 const token = localStorage.getItem('token'); // Retrieve token for authentication
-                const response = await axios.get(
-                    `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/reservation/made-reservations`,
-                    {
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/reservation/made-reservations`, {
                         headers: { Authorization: `Bearer ${token}` },
                     }
                 );
                 setBookings(response.data.bookings);
-            } catch (err) {
+            } 
+            catch (err) {
                 setError('Failed to fetch bookings. Please try again.');
                 console.error('Error fetching bookings:', err.response?.data || err.message);
-            } finally {
+            } 
+            finally {
                 setLoading(false);
             }
         };
