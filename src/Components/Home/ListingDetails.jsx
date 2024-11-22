@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaMedal, FaHome, FaDoorOpen, FaToilet } from 'react-icons/fa';
 
 const ListingDetails = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,9 +14,7 @@ const ListingDetails = () => {
   useEffect(() => {
     const fetchListingDetails = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings/${id}`
-        );
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings/${id}`);
         setListing(response.data);
         setLoading(false);
       } catch (err) {
@@ -35,6 +34,10 @@ const ListingDetails = () => {
   if (error) {
     return <div className="text-center mt-10 text-red-500">{error}</div>;
   }
+
+  const handleBooking = (id) => {
+    navigate(`/booking/${id}`);
+  };
 
   return (
     <>

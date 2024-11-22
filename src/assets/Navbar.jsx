@@ -14,9 +14,29 @@ const Navbar = () => {
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [homePath, sethomePath] = useState(true);
     const location = useLocation();
-
-    const isUserLoggedIn = Boolean(localStorage.getItem('token'));
-
+    function isTokenValid() {
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+            return false; // No token present
+        }
+    
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1])); // Decode the token payload
+            
+            // Check if the token has expired
+            if (payload.exp && Date.now() >= payload.exp * 1000) {
+                return false; // Token is expired
+            }
+    
+            return true; // Token is valid
+        } catch (error) {
+            console.error('Invalid token:', error);
+            return false; // Invalid token format
+        }
+    }
+    
+    const isUserLoggedIn = isTokenValid();
 
     const { scrollY } = useScroll();
     const opacity = useTransform(scrollY, [0, 150], [1, 0]);

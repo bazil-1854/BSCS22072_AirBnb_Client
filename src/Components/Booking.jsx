@@ -1,4 +1,120 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+const Booking = () => {
+    //const [listingId, setListingID] = useState('');
+    const { listingId } = useParams();
+    const [checkIn, setCheckIn] = useState('');
+    const [checkOut, setCheckOut] = useState('');
+    const [guests, setGuests] = useState({ adults: 1, children: 0, infants: 0 });
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [specialRequests, setSpecialRequests] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleBooking = async (e) => {
+        e.preventDefault();
+
+        try {
+            const token = localStorage.getItem('token');
+
+            //`${import.meta.env.VITE_REACT_APP_API_BASE_URL}'/air-bnb/reservation/create-booking`, {
+
+            const response = await axios.post(
+                `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/reservation/create-booking`, {
+                listingId,
+                checkIn,
+                checkOut,
+                guests,
+                totalAmount,
+                specialRequests,
+            }, {
+                headers: { Authorization: `Bearer ${token}`, },
+            }
+            );
+
+            setMessage('Booking created successfully!');
+            console.log(response.data);
+        } catch (err) {
+            console.error('Error creating booking:', err.response?.data || err.message);
+            setMessage('Failed to create booking. Please try again.');
+        }
+    };
+
+    return (
+        <div className='mt-[335px]'>
+            <h1>Create Booking</h1>
+            <form onSubmit={handleBooking}>
+                <div>
+                    <label>Check-In Date:</label>
+                    <input
+                        type="date"
+                        value={checkIn}
+                        onChange={(e) => setCheckIn(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Check-Out Date:</label>
+                    <input
+                        type="date"
+                        value={checkOut}
+                        onChange={(e) => setCheckOut(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Adults:</label>
+                    <input
+                        type="number"
+                        value={guests.adults}
+                        onChange={(e) => setGuests({ ...guests, adults: e.target.value })}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Children:</label>
+                    <input
+                        type="number"
+                        value={guests.children}
+                        onChange={(e) => setGuests({ ...guests, children: e.target.value })}
+                    />
+                </div>
+                <div>
+                    <label>Infants:</label>
+                    <input
+                        type="number"
+                        value={guests.infants}
+                        onChange={(e) => setGuests({ ...guests, infants: e.target.value })}
+                    />
+                </div>
+                <div>
+                    <label>Total Amount:</label>
+                    <input
+                        type="number"
+                        value={totalAmount}
+                        onChange={(e) => setTotalAmount(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Special Requests:</label>
+                    <textarea
+                        value={specialRequests}
+                        onChange={(e) => setSpecialRequests(e.target.value)}
+                    />
+                </div>
+                <button type="submit">Create Booking</button>
+            </form>
+            {message && <p>{message}</p>}
+        </div>
+    );
+};
+
+export default Booking;
+
+
+/*import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaStar, FaShieldAlt, FaInfoCircle } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
@@ -15,7 +131,7 @@ const Booking = () => {
     useEffect(() => {
         const fetchListing = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/listings/${id}`);
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/api/listings/${id}`);
                 setListing(response.data);
             } catch (error) {
                 console.error('Error fetching listing:', error);
@@ -175,3 +291,4 @@ const Booking = () => {
 }
 
 export default Booking;
+*/
