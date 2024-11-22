@@ -1,6 +1,172 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'; // Styling for the calendar
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+
+const Booking = () => {
+    const { listingId } = useParams();
+    const [blockedDates, setBlockedDates] = useState([]);
+    const [selectedDates, setSelectedDates] = useState({ checkIn: null, checkOut: null });
+    const [guests, setGuests] = useState({ adults: 1, children: 0, infants: 0 });
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [specialRequests, setSpecialRequests] = useState('');
+    const [message, setMessage] = useState('');
+
+    // Fetch blocked dates for the listing
+    useEffect(() => {
+        const fetchBlockedDates = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/reservation/get-reserved-bookings`, { listingId });
+                const dates = response.data.blockedDates.map((date) => new Date(date)); // Convert to Date objects
+                setBlockedDates(dates);
+            } catch (err) {
+                console.error('Error fetching blocked dates:', err.response?.data || err.message);
+            }
+        };
+
+        fetchBlockedDates();
+    }, [listingId]);
+
+    // Handle Calendar Date Selection
+    const handleDateChange = (date) => {
+        if (!selectedDates.checkIn || (selectedDates.checkIn && selectedDates.checkOut)) {
+            // Select Check-In
+            setSelectedDates({ checkIn: date, checkOut: null });
+        } else {
+            // Select Check-Out
+            if (date > selectedDates.checkIn) {
+                setSelectedDates({ ...selectedDates, checkOut: date });
+            } else {
+                alert('Check-Out date must be after Check-In date.');
+            }
+        }
+    };
+
+    // Disable blocked dates and enforce logical selection flow
+    const tileDisabled = ({ date, view }) => {
+        if (view === 'month') {
+            return blockedDates.some(
+                (blockedDate) => blockedDate.toDateString() === date.toDateString()
+            );
+        }
+        return false;
+    };
+
+    // Highlight reserved dates in yellow
+    const tileClassName = ({ date, view }) => {
+        if (view === 'month') {
+            return blockedDates.some(
+                (blockedDate) => blockedDate.toDateString() === date.toDateString()
+            )
+                ? 'reserved-date' // Custom CSS class
+                : '';
+        }
+    };
+
+    // Handle booking submission
+    const handleBooking = async (e) => {
+        e.preventDefault();
+
+        if (!selectedDates.checkIn || !selectedDates.checkOut) {
+            alert('Please select both Check-In and Check-Out dates.');
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(
+                `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/reservation/create-booking`,
+                {
+                    listingId,
+                    checkIn: selectedDates.checkIn,
+                    checkOut: selectedDates.checkOut,
+                    guests,
+                    totalAmount,
+                    specialRequests,
+                },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            setMessage('Booking created successfully!');
+            console.log(response.data);
+        } catch (err) {
+            console.error('Error creating booking:', err.response?.data || err.message);
+            setMessage('Failed to create booking. Please try again.');
+        }
+    };
+
+    return (
+        <div className='mt-[250px]'>
+            <h3>Select Booking Dates</h3>
+            <Calendar
+                onChange={handleDateChange}
+                value={[selectedDates.checkIn, selectedDates.checkOut]}
+                tileDisabled={tileDisabled}
+                tileClassName={tileClassName}
+                selectRange={false}
+            />
+            <div>
+                {selectedDates.checkIn && <p>Check-In: {selectedDates.checkIn.toDateString()}</p>}
+                {selectedDates.checkOut && <p>Check-Out: {selectedDates.checkOut.toDateString()}</p>}
+            </div>
+            <form onSubmit={handleBooking}>
+                <div>
+                    <label>Adults:</label>
+                    <input
+                        type="number"
+                        value={guests.adults}
+                        onChange={(e) => setGuests({ ...guests, adults: parseInt(e.target.value, 10) })}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Children:</label>
+                    <input
+                        type="number"
+                        value={guests.children}
+                        onChange={(e) => setGuests({ ...guests, children: parseInt(e.target.value, 10) })}
+                    />
+                </div>
+                <div>
+                    <label>Infants:</label>
+                    <input
+                        type="number"
+                        value={guests.infants}
+                        onChange={(e) => setGuests({ ...guests, infants: parseInt(e.target.value, 10) })}
+                    />
+                </div>
+                <div>
+                    <label>Total Amount:</label>
+                    <input
+                        type="number"
+                        value={totalAmount}
+                        onChange={(e) => setTotalAmount(parseFloat(e.target.value))}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Special Requests:</label>
+                    <textarea
+                        value={specialRequests}
+                        onChange={(e) => setSpecialRequests(e.target.value)}
+                    />
+                </div>
+                <button type="submit">Create Booking</button>
+            </form>
+            {message && <p>{message}</p>}
+        </div>
+    );
+};
+
+export default Booking;
+
+
+/*import React, { useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom'; 
+import BookingDatePicker from './BookingDatePicker';
+
 
 const Booking = () => {
     //const [listingId, setListingID] = useState('');
@@ -43,6 +209,7 @@ const Booking = () => {
 
     return (
         <div className='mt-[335px]'>
+            <BookingDatePicker listingID={listingId}/>
             <h1>Create Booking</h1>
             <form onSubmit={handleBooking}>
                 <div>
@@ -112,7 +279,7 @@ const Booking = () => {
 };
 
 export default Booking;
-
+*/
 
 /*import { useEffect, useState } from 'react';
 import axios from 'axios';

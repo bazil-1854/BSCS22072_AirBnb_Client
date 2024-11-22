@@ -4,7 +4,7 @@ import Home from './Components/Home/Home';
 import Footer from './assets/Footer';
 import ListingDetails from './Components/Home/ListingDetails';
 import SearchListings from './Components/SearchListings';
-import Booking from './Components/Booking';
+import Booking from './Components/GuestBooking/Booking';
 import SignUpForm from './Components/Authentication/SignUp';
 import SignInnForm from './Components/Authentication/SignIn';
 import Profile from './Components/Authentication/Profile';
