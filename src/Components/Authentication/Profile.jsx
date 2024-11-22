@@ -92,13 +92,14 @@ const Profile = () => {
                             <p className="text-gray-500">{userInfo.role}</p>
                         </div>
                     </div>
-                    {userInfo.role === 'Host' &&
-                    <>
-                    
-                    <button className='text-blue-600 underline mb-[15px]' onClick={ () => {navigate('/add-listing')}}>Add Listing</button>
-                    <button className='text-blue-600 underline mb-[15px] ml-[25px]' onClick={ () => {navigate('/host-listing')}}>See Listing</button>
-                    
-                    </>
+                    {userInfo.role === 'Host' ?
+                        <>
+                            <button className='text-blue-600 underline mb-[15px]' onClick={() => { navigate('/add-listing') }}>Add Listing</button>
+                            <button className='text-blue-600 underline mb-[15px] ml-[25px]' onClick={() => { navigate('/host-listing') }}>See Listing</button>
+                        </> :
+                        <>
+                            <button className='text-blue-600 underline mb-[15px]' onClick={() => { navigate('/reserved-bookings') }}>Add Listing</button>
+                        </>
                     }
                     {isEditing ? (
                         <form onSubmit={handleSubmit}>
