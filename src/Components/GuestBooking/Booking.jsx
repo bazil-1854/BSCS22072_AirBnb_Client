@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const Booking = () => {
-    const { listingId,hostId } = useParams();
+    const { listingId, hostId } = useParams();
     const [blockedDates, setBlockedDates] = useState([]);
     const [selectedDates, setSelectedDates] = useState({ checkIn: null, checkOut: null });
     const [guests, setGuests] = useState({ adults: 1, children: 0, infants: 0 });
@@ -17,10 +17,11 @@ const Booking = () => {
     useEffect(() => {
         const fetchBlockedDates = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/reservation/get-reserved-bookings`, { listingId });
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/reservation/get-reserved-bookings/${listingId}`);
                 const dates = response.data.blockedDates.map((date) => new Date(date)); // Convert to Date objects
                 setBlockedDates(dates);
-            } catch (err) {
+            }
+            catch (err) {
                 console.error('Error fetching blocked dates:', err.response?.data || err.message);
             }
         };
@@ -91,7 +92,7 @@ const Booking = () => {
 
             setMessage('Booking created successfully!');
             console.log(response.data);
-        } 
+        }
         catch (err) {
             console.error('Error creating booking:', err.response?.data || err.message);
             setMessage('Failed to create booking. Please try again.');

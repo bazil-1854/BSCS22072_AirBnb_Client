@@ -13,6 +13,7 @@ import HostedListings from './Components/Host/HostedListings';
 import EditListing from './Components/Host/EditListing ';
 import GuestBookings from './Components/GuestBooking/GetBookings';
 import HostDashboard from './Components/Host/HostDashboard';
+import FinalizeBooking from './Components/GuestBooking/FinalizeBooking';
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
         <Route path="/host-dashboard" element={<HostDashboard />} /> 
 
         
+        <Route path="/finalize-booking" element={<FinalizeBooking />} />
 
       </Routes>
       <Footer />
