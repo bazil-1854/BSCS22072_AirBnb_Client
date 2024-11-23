@@ -55,6 +55,12 @@ const GuestBookings = () => {
                         <p className="text-sm text-gray-600">
                             Check-Out: {new Date(booking.checkOut).toDateString()}
                         </p>
+                        <p className="text-sm text-gray-600">
+                            Payment Sttaus: {booking.paymentStatus}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                            Status: {booking.status}
+                        </p>
                         <p className="text-sm text-gray-600">Guests: {booking.guests.adults} Adults</p>
                         <p className="text-sm text-gray-600">
                             {booking.guests.children} Children, {booking.guests.infants} Infants
