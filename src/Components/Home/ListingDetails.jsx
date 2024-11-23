@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaMedal, FaHome, FaDoorOpen, FaToilet } from 'react-icons/fa';
-import AddRating from './ListingRating';
+import { AddRating, Reviews } from './ListingRating';
 
 const ListingDetails = () => {
   const navigate = useNavigate();
@@ -11,6 +11,8 @@ const ListingDetails = () => {
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
 
   useEffect(() => {
     const fetchListingDetails = async () => {
@@ -52,8 +54,8 @@ const ListingDetails = () => {
             />
           </div>
 
-          <div className='hidden h-[430px] col-span-2 md:grid grid-cols-2 grid-rows-2 gap-[6px]'> 
-            {listing.images.additionalPictures.map((url, index) => ( 
+          <div className='hidden h-[430px] col-span-2 md:grid grid-cols-2 grid-rows-2 gap-[6px]'>
+            {listing.images.additionalPictures.map((url, index) => (
               <div key={index} className="flex items-center justify-center h-full">
                 <img src={url} alt={`Additional ${index + 1}`} className="w-full h-full object-cover" />
               </div>
@@ -136,6 +138,11 @@ const ListingDetails = () => {
             </div>
 
             <AddRating listingId={id} />
+            <button onClick={() => setShowModal(true)} className="bg-green-500 px-4 py-2 text-white">
+              See Review
+            </button>
+            {showModal && <Reviews listingId={id} onClose={() => setShowModal(false)} />}
+
           </div>
 
           <div className="space-y-4">
