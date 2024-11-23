@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Styling for the calendar
+import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 

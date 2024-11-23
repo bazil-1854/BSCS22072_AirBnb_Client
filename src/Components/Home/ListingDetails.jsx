@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaMedal, FaHome, FaDoorOpen, FaToilet } from 'react-icons/fa';
+import AddRating from './ListingRating';
 
 const ListingDetails = () => {
   const navigate = useNavigate();
@@ -133,6 +134,8 @@ const ListingDetails = () => {
                 {listing.summary}
               </p>
             </div>
+
+            <AddRating listingId={id} />
           </div>
 
           <div className="space-y-4">
