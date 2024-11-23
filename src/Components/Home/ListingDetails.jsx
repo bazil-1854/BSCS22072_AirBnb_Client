@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaMedal, FaHome, FaDoorOpen, FaToilet } from 'react-icons/fa';
-import { AddRating, Reviews } from './ListingRating';
+import { AddRating, FavoriteButton, Reviews } from './ListingRating';
 
 const ListingDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [listing, setListing] = useState(null);
+  const [isInitiallyFavorited, setIsInitiallyFavorited] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -17,10 +18,16 @@ const ListingDetails = () => {
   useEffect(() => {
     const fetchListingDetails = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings/${id}`);
-        setListing(response.data);
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings/${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setListing(response.data.listing);
+        setIsInitiallyFavorited(response.data.isLiked);
         setLoading(false);
-      } catch (err) {
+      } 
+      catch (err) {
         console.error(err);
         setError('Failed to fetch listing details');
         setLoading(false);
@@ -135,7 +142,10 @@ const ListingDetails = () => {
               <p className="text-sm text-gray-600">
                 {listing.summary}
               </p>
+
             </div>
+
+            <FavoriteButton listingId={id} isInitiallyFavorited={isInitiallyFavorited} />
 
             <AddRating listingId={id} />
             <button onClick={() => setShowModal(true)} className="bg-green-500 px-4 py-2 text-white">

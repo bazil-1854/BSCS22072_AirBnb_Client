@@ -1,6 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
+    const [isFavorited, setIsFavorited] = useState(isInitiallyFavorited);
+    const [error, setError] = useState('');
+  
+    const toggleFavorite = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings/${listingId}/toggle-favorite`,{}, {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+  
+        setIsFavorited(!isFavorited); // Toggle state
+      } catch (err) {
+        setError('Failed to toggle favorite. Please try again.');
+        console.error('Error toggling favorite:', err.response?.data || err.message);
+      }
+    };
+  
+    return (
+      <div>
+        <button
+          onClick={toggleFavorite}
+          className={`px-4 py-2 rounded-md ${
+            isFavorited ? 'bg-red-500 text-white' : 'bg-gray-300 text-black'
+          } hover:opacity-80`}
+        >
+          {isFavorited ? 'Unfavorite' : 'Favorite'}
+        </button>
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+      </div>
+    );
+  };
+  
 
 export const AddRating = ({ listingId }) => {
     const [rating, setRating] = useState(3);
