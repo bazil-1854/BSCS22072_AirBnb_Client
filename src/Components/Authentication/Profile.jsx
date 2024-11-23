@@ -100,6 +100,7 @@ const Profile = () => {
                         </> :
                         <>
                             <button className='text-blue-600 underline mb-[15px]' onClick={() => { navigate('/reserved-bookings') }}>See Made Bookings</button>
+                            <button className='text-blue-600 underline mb-[15px]' onClick={() => { navigate('/favourite-listings') }}>See Fav Listings</button>
                         </>
                     }
                     {isEditing ? (

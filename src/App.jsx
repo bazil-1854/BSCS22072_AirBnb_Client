@@ -14,6 +14,7 @@ import EditListing from './Components/Host/EditListing ';
 import GuestBookings from './Components/GuestBooking/GetBookings';
 import HostDashboard from './Components/Host/HostDashboard';
 import FinalizeBooking from './Components/GuestBooking/FinalizeBooking';
+import FavoriteListings from './Components/Authentication/FavoriteListings';
 
 function App() {
 
@@ -45,6 +46,9 @@ function App() {
 
         
         <Route path="/finalize-booking" element={<FinalizeBooking />} />
+
+        <Route path="/favourite-listings" element={<FavoriteListings />} />
+
 
       </Routes>
       <Footer />

@@ -20,7 +20,7 @@ const FinalizeBooking = () => {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             alert('Booking finalized successfully!');
-            navigate('/host-bookings'); // Redirect back to host bookings
+            navigate('/host-bookings');
         } catch (err) {
             console.error('Error finalizing booking:', err.response?.data || err.message);
             alert('Failed to finalize booking. Please try again.');

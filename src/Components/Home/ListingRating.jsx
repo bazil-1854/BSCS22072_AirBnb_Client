@@ -13,7 +13,7 @@ export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
           }
         );
   
-        setIsFavorited(!isFavorited); // Toggle state
+        setIsFavorited(!isFavorited);
       } catch (err) {
         setError('Failed to toggle favorite. Please try again.');
         console.error('Error toggling favorite:', err.response?.data || err.message);
@@ -137,10 +137,10 @@ export const Reviews = ({ listingId, onClose }) => {
 
             if (page === 1) {
                 setReviews(response.data.reviews);
-              }
-               else {
+            }
+            else {
                 setReviews((prevReviews) => [...prevReviews, ...response.data.reviews]);
-              }
+            }
 
             //setReviews((prevReviews) => [...prevReviews, ...response.data.reviews]);
             setCurrentPage(response.data.currentPage);
