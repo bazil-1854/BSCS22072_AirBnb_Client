@@ -16,26 +16,24 @@ const Navbar = () => {
     const location = useLocation();
     function isTokenValid() {
         const token = localStorage.getItem('token');
-        
+
         if (!token) {
-            return false; // No token present
+            return false;
         }
-    
+
         try {
-            const payload = JSON.parse(atob(token.split('.')[1])); // Decode the token payload
-            
-            // Check if the token has expired
+            const payload = JSON.parse(atob(token.split('.')[1]));
             if (payload.exp && Date.now() >= payload.exp * 1000) {
-                return false; // Token is expired
+                return false;
             }
-    
-            return true; // Token is valid
-        } catch (error) {
+            return true;
+        }
+        catch (error) {
             console.error('Invalid token:', error);
-            return false; // Invalid token format
+            return false;
         }
     }
-    
+
     const isUserLoggedIn = isTokenValid();
 
     const { scrollY } = useScroll();
@@ -54,7 +52,8 @@ const Navbar = () => {
     const handleScroll = () => {
         if (window.scrollY > 50) {
             setShowSearchBar(true);
-        } else {
+        } 
+        else {
             setShowSearchBar(false);
         }
     };
@@ -149,7 +148,7 @@ const Navbar = () => {
                                         <NavLink to="/profile" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                             Profile
                                         </NavLink>
-                                        <button onClick={handleLogout} className="pl-[12px] block py-2 text-red-700 hover:bg-gray-100 rounded-lg">
+                                        <button onClick={handleLogout} className="pl-[12px]  py-2 text-red-700 hover:bg-gray-100 rounded-lg">
                                             Logout
                                         </button>
                                     </>
