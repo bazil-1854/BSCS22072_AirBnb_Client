@@ -1,11 +1,10 @@
-/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .reserved-date { 
-    color: #545454 !important;
-    pointer-events: none; /* Prevent interaction */
+    color: #545454 ;
+    pointer-events: none; 
   }
   
   

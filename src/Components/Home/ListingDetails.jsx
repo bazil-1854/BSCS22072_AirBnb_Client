@@ -46,12 +46,14 @@ const ListingDetails = () => {
   }
 
   const handleBooking = (id) => {
-    navigate(`/booking/${listing.hostID}/${id}`);
+    navigate(`/booking/${listing.hostID}/${id}`, {
+      state: { listing },
+    });
   };
 
   return (
     <div className="w-full overflow-x-hidden xl:px-[180px] min-h-screen p-6 bg-white">
-      
+
       {showModal && <Reviews listingId={id} onClose={() => setShowModal(false)} />}
       <div className='mt-[150px] grid w-full overflow-hidden gap-[6px] grid-cols-5 rounded-[25px]'>
         <div className="col-span-5 h-[430px] md:col-span-3">
@@ -156,7 +158,7 @@ const ListingDetails = () => {
         <div className="space-y-4">
           <div className="border bg-white shadow-lg rounded-lg py-[30px] px-4 border-[#e7e7e7] space-y-[18px]">
             <div className="flex justify-between items-center">
-              <p className="text-2xl font-semibold">$111</p>
+              <p className="text-2xl font-semibold">{listing.price}</p>
               <p className="text-sm text-gray-600 font-[600]">/ night</p>
             </div>
 
@@ -173,14 +175,13 @@ const ListingDetails = () => {
               </div>
               <div className="px-4 pt-4 flex justify-between items-center">
                 <div className="space-y-1">
-                  <p className="text-xs font-semibold text-gray-600">GUESTS</p>
-                  <p className="text-sm font-medium text-gray-800">2 guests</p>
+                  <p className="text-xs font-semibold text-gray-600">Max Accomodation</p>
+                  <p className="text-sm font-medium text-gray-800">8 guests</p>
                 </div>
                 <span className="text-gray-500">▼</span>
               </div>
             </div>
-
-
+ 
             <button onClick={() => handleBooking(id)} className="w-full py-2 bg-gradient-to-r from-pink-600 to-pink-800 text-white font-semibold rounded-lg">
               Reserve
             </button>
@@ -189,8 +190,8 @@ const ListingDetails = () => {
 
             <div className="space-y-1 text-gray-600 font-[500] underline text-[15px]">
               <div className="flex justify-between">
-                <p>$111 x 5 nights</p>
-                <p>$554</p>
+                <p>${listing.price} x 7 nights</p>
+                <p>${listing.price * 7}</p>
               </div>
               <div className="flex justify-between">
                 <p>Cleaning fee</p>
@@ -204,7 +205,7 @@ const ListingDetails = () => {
             <div className='mx-auto h-[2px] bg-gray-300'></div>
             <div className="flex justify-between font-semibold">
               <p>Total before taxes</p>
-              <p>$672</p>
+              <p>${(listing.price * 7) + 29 + 89}</p>
             </div>
           </div>
 
