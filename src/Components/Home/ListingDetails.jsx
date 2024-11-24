@@ -51,6 +51,8 @@ const ListingDetails = () => {
 
   return (
     <div className="w-full overflow-x-hidden xl:px-[180px] min-h-screen p-6 bg-white">
+      
+      {showModal && <Reviews listingId={id} onClose={() => setShowModal(false)} />}
       <div className='mt-[150px] grid w-full overflow-hidden gap-[6px] grid-cols-5 rounded-[25px]'>
         <div className="col-span-5 h-[430px] md:col-span-3">
           <img
@@ -94,7 +96,6 @@ const ListingDetails = () => {
               <button onClick={() => setShowModal(true)} className="bg-rose-500 ml-auto rounded-xl px-4 py-[6px] text-white">
                 See Review
               </button>
-              {showModal && <Reviews listingId={id} onClose={() => setShowModal(false)} />}
             </div>
           </div>
 
