@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AiOutlineClose } from 'react-icons/ai';
-import {  FaStar, FaStarHalfAlt } from 'react-icons/fa';
+import { FaBookmark, FaStar, FaStarHalfAlt } from 'react-icons/fa'; 
 
 export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
     const [isFavorited, setIsFavorited] = useState(isInitiallyFavorited);
@@ -24,12 +24,8 @@ export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
 
     return (
         <div>
-            <button
-                onClick={toggleFavorite}
-                className={`px-4 py-2 rounded-md ${isFavorited ? 'bg-red-500 text-white' : 'bg-gray-300 text-black'
-                    } hover:opacity-80`}
-            >
-                {isFavorited ? 'Unfavorite' : 'Favorite'}
+            <button onClick={toggleFavorite} className={`text-[30px] ${isFavorited ? 'text-yellow-400  ' : 'text-gray-400  '} hover:opacity-80`}>
+                <FaBookmark  />
             </button>
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
@@ -188,7 +184,7 @@ export const Reviews = ({ listingId, onClose }) => {
                         </div>
                         <p className="text-sm text-center text-yellow-700 font-[600] underline">Guest favorite</p>
                         <p className='mt-[15px] text-[13px] text-gray-600'>One of the most loved homes on Airbnb based on ratings, reviews, and reliability</p>
-                       
+
                     </div>
 
                     <div className="lg:col-span-3  mt-[15px]">
@@ -203,7 +199,7 @@ export const Reviews = ({ listingId, onClose }) => {
                                                 alt={`${review.user.name}'s profile`}
                                                 className="w-10 h-10 rounded-full mr-4"
                                             />
-                                            : 
+                                            :
                                             <div className="w-10 h-10 bg-gray-300 rounded-full mr-4"></div>
                                         }
                                         <div>
@@ -258,31 +254,6 @@ export const Reviews = ({ listingId, onClose }) => {
                                     </button>
                                 </div>
                             )}
-                        </div>
-
-                        <div className="space-y-4">
-                            <div>
-                                <p className="font-semibold">Roger</p>
-                                <p className="text-sm text-gray-600">La Neuveville, Switzerland</p>
-                                <p className="text-sm text-gray-500">"Apart from the absence of the owner, everything went well in the end."</p>
-                            </div>
-                            <div>
-                                <p className="font-semibold">Eric</p>
-                                <p className="text-sm text-gray-600">5 years on Airbnb</p>
-                                <p className="text-sm text-gray-500">"Excellent stay, thank you."</p>
-                            </div>
-                            <div>
-                                <p className="font-semibold">Thuries</p>
-                                <p className="text-sm text-gray-600">11 months on Airbnb</p>
-                                <p className="text-sm text-gray-500">
-                                    "Very nice and welcoming host... My daughter felt like home."
-                                </p>
-                            </div>
-                            <div>
-                                <p className="font-semibold">Viet Anh</p>
-                                <p className="text-sm text-gray-600">3 years on Airbnb</p>
-                                <p className="text-sm text-gray-500">"Stayed in October 2024, excellent!"</p>
-                            </div>
                         </div>
                     </div>
                 </div>

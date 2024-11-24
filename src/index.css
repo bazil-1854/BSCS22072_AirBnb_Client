@@ -2,8 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.reserved-date {
-    background-color: yellow !important;
+
+.reserved-date { 
+    color: #545454 !important;
     pointer-events: none; /* Prevent interaction */
   }
   

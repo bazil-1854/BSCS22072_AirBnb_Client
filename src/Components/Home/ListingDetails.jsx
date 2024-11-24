@@ -71,9 +71,12 @@ const ListingDetails = () => {
       </div>
       <div className="container mx-auto p-4 space-y-6 md:space-y-8 lg:grid lg:grid-cols-3 lg:gap-6 lg:space-y-0">
         <div className="lg:col-span-2 space-y-4">
-          <div>
-            <h2 className="text-2xl font-semibold">{listing.name}</h2>
-            <p className="text-gray-600">1 bed · Shared bathroom</p>
+          <div className='flex justify-between items-center'>
+            <div>
+              <h2 className="text-2xl font-semibold">{listing.name}</h2>
+              <p className="text-gray-600">1 bed · Shared bathroom</p>
+            </div>
+            <FavoriteButton listingId={id} isInitiallyFavorited={isInitiallyFavorited} />
           </div>
 
           <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:items-center md:space-x-4">
@@ -144,7 +147,7 @@ const ListingDetails = () => {
 
           </div>
 
-          <FavoriteButton listingId={id} isInitiallyFavorited={isInitiallyFavorited} /> 
+
           <AddRating listingId={id} />
           <button onClick={() => setShowModal(true)} className="bg-green-500 px-4 py-2 text-white">
             See Review
@@ -232,7 +235,7 @@ const ListingDetails = () => {
         <p className="text-gray-700">Guests: {listing.guests}</p>
         <p className="text-gray-700">Category: {listing.category}</p>
       </div>*/}
-    </div> 
+    </div>
   );
 };
 
