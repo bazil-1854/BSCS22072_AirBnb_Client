@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AiOutlineClose } from 'react-icons/ai';
-import { FaBookmark, FaStar, FaStarHalfAlt } from 'react-icons/fa'; 
+import { FaBookmark, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 
 export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
     const [isFavorited, setIsFavorited] = useState(isInitiallyFavorited);
@@ -25,7 +25,7 @@ export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
     return (
         <div>
             <button onClick={toggleFavorite} className={`text-[30px] ${isFavorited ? 'text-yellow-400  ' : 'text-gray-400  '} hover:opacity-80`}>
-                <FaBookmark  />
+                <FaBookmark />
             </button>
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
@@ -64,15 +64,17 @@ export const AddRating = ({ listingId }) => {
             setError('Failed to submit review. Please try again.');
         }
     };
-
+    const handleStarClick = (index) => {
+        setRating(index + 1); // Set rating based on star index (1-based)
+    };
     return (
         <div className="w-full">
-            <div className="bg-white rounded-lg p-6 shadow-lg">
+            <div className="bg-white border-t-[3px] border-gray-300 mt-[25px] pt-[15px]">
                 <h2 className="text-xl font-semibold mb-4">Add a Review</h2>
                 {error && <p className="text-red-500">{error}</p>}
                 {success && <p className="text-green-500">{success}</p>}
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
+                    {/*<div className="mb-4">
                         <label htmlFor="rating" className="block text-sm font-medium text-gray-700">
                             Rating (1-5):
                         </label>
@@ -87,6 +89,18 @@ export const AddRating = ({ listingId }) => {
                             onChange={(e) => setRating(parseFloat(e.target.value))}
                         />
                     </div>
+                    */}
+                    <div className="flex items-center">
+                        <label className="mr-[10px] text-xl font-semibold">Rating:</label>
+                        {[...Array(5)].map((_, index) => (
+                            <FaStar
+                                size={25}
+                                key={index}
+                                className={`cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
+                                onClick={() => handleStarClick(index)}
+                            />
+                        ))}
+                    </div>
                     <div className="mb-4">
                         <label htmlFor="review" className="block text-sm font-medium text-gray-700">
                             Review:
@@ -100,13 +114,10 @@ export const AddRating = ({ listingId }) => {
                         ></textarea>
                     </div>
                     <div className="flex justify-end">
-                        <div
-                            type="button"
-                            className="mr-4 px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
-                        >
+                        <div type="button" className="text-[14px] mr-2 px-4 py-[4px] bg-gray-100 text-red-700 rounded-md">
                             Cancel
                         </div>
-                        <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md">
+                        <button type="submit" className="text-[14px] mr-4 px-4 py-[4px] bg-rose-500 text-white rounded-md">
                             Submit
                         </button>
                     </div>
@@ -139,7 +150,6 @@ export const Reviews = ({ listingId, onClose }) => {
                 setReviews((prevReviews) => [...prevReviews, ...response.data.reviews]);
             }
 
-            //setReviews((prevReviews) => [...prevReviews, ...response.data.reviews]);
             setCurrentPage(response.data.currentPage);
             setTotalPages(response.data.totalPages);
         }

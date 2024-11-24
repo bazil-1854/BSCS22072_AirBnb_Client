@@ -91,7 +91,10 @@ const ListingDetails = () => {
             <div className="flex items-center space-x-1 text-sm">
               <p className="font-semibold">4.96</p>
               <span>⭐</span>
-              <p className="text-gray-600">(124 Reviews)</p>
+              <button onClick={() => setShowModal(true)} className="bg-rose-500 ml-auto rounded-xl px-4 py-[6px] text-white">
+                See Review
+              </button>
+              {showModal && <Reviews listingId={id} onClose={() => setShowModal(false)} />}
             </div>
           </div>
 
@@ -144,16 +147,9 @@ const ListingDetails = () => {
             <p className="text-sm text-gray-600">
               {listing.summary}
             </p>
-
           </div>
 
-
           <AddRating listingId={id} />
-          <button onClick={() => setShowModal(true)} className="bg-green-500 px-4 py-2 text-white">
-            See Review
-          </button>
-          {showModal && <Reviews listingId={id} onClose={() => setShowModal(false)} />}
-
         </div>
 
         <div className="space-y-4">
