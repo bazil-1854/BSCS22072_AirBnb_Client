@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaUserAlt, FaCheckCircle, FaCamera } from "react-icons/fa"; 
+import { FaUserAlt, FaCheckCircle, FaCamera } from "react-icons/fa";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -76,118 +76,50 @@ const Profile = () => {
     const placeholderText = (attribute) => userInfo[attribute] || `Enter ${attribute}`;
 
     return (
-        <main className='px-6 min-h-screen pt-[150px]'>
+        <main className='px-6 min-h-screen bg-gray-100 pt-[150px]'>
             {isEditing ?
-                <div className="p-6 max-w-4xl mx-auto">
-                    {/* Header Section */}
-                    <div className="flex flex-col items-center lg:flex-row lg:items-start lg:space-x-8">
-                        {/* Profile Picture */}
-                        <div className="relative w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center text-3xl font-bold text-white mb-4 lg:mb-0">
-                            B
-                            <button className="absolute bottom-1 right-1 bg-white rounded-full shadow-md p-2">
-                                <FaCamera className="text-gray-700 text-sm" />
-                                <span className="sr-only">Add Profile Picture</span>
-                            </button>
-                        </div>
-
-                        {/* About Section */}
-                        <div className="flex-1">
-                            <h3 className="text-lg font-semibold mb-2">About you</h3>
-                            <div className="border border-gray-300 p-3 rounded-md text-gray-500">
-                                Write something fun and punchy.{" "}
-                                <button className="text-blue-500 text-sm font-medium hover:underline">
-                                    Add intro
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Divider */}
-                    <hr className="my-6" />
-
-                    {/* Where You've Been Section */}
-                    <div>
-                        <h3 className="text-lg font-semibold mb-4">Where you’ve been</h3>
-                        <p className="text-sm text-gray-500 mb-4">
-                            Choose whether other people can see all the places you’ve been on
-                            Airbnb.
-                        </p>
-                        <div className="flex items-center justify-between">
-                            <div className="flex space-x-4">
-                                {/* Destination Cards */}
-                                {Array(5)
-                                    .fill(null)
-                                    .map((_, idx) => (
-                                        <div
-                                            key={idx}
-                                            className="w-16 h-16 bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-500 text-sm rounded-lg"
-                                        >
-                                            Next destination
-                                        </div>
-                                    ))}
-                            </div>
-                            {/* Toggle Button */}
-                            <div>
-                                <label className="relative inline-flex items-center cursor-pointer">
-                                    <input
-                                        type="checkbox"
-                                        value=""
-                                        className="sr-only peer"
-                                    />
-                                    <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 peer-focus:ring-4 peer-focus:ring-blue-300 transition-all"></div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Divider */}
-                    <hr className="my-6" />
-
-                    {/* What You're Into Section */}
-                    <div>
-                        <h3 className="text-lg font-semibold mb-4">What you’re into</h3>
-                        <div className="flex flex-wrap gap-4 mb-4">
-                            {/* Interests Tags */}
-                            {["Anime", "Chess", "Outdoors"].map((interest, idx) => (
-                                <span
-                                    key={idx}
-                                    className="flex items-center px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
-                                >
-                                    {interest}
-                                </span>
-                            ))}
-                        </div>
-                        <button className="text-blue-500 text-sm font-medium hover:underline">
-                            Edit interests
-                        </button>
-                    </div>
-
-                    {/* Done Button */}
-                    <div className="mt-6 text-center">
-                        <button onClick={handleSubmit} className="px-6 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition">
-                            Done
-                        </button>
-                    </div>
-                </div>
-                :
                 <div className="lg:flex lg:space-x-8 lg:items-start max-w-5xl mx-auto">
                     {/* Left Section */}
-                    <div className="bg-white shadow-md p-6 rounded-md lg:w-1/3 mb-6 lg:mb-0">
-                        <div className="text-center">
-                            <div className="w-20 h-20 bg-gray-300 rounded-full flex items-center justify-center mx-auto text-3xl font-bold text-gray-700 mb-4">
-                                B
+                    <div className="lg:w-1/3 mb-6 lg:mb-0">
+                        <div className="flex justify-between py-6 p-[35px] bg-white rounded-[28px] shadow-sm ">
+                            <div className='flex flex-col items-center justify-center'>
+                                <div className="w-[100px] h-[100px] bg-gray-300 rounded-full flex items-center justify-center mx-auto text-4xl font-bold text-gray-700 mb-[3px]">
+                                    {userInfo.username.charAt(0)}
+                                </div>
+                                <h2 className="text-[25px] font-semibold">{userInfo.username}</h2>
+                                <p className="bg-gray-500 text-gray-100 text-center py-[1px] mt-[8px] text-[13px] rounded-[35px] w-[70px]">{userInfo.role}</p>
+
                             </div>
-                            <h2 className="text-xl font-semibold">Bazil</h2>
-                            <p className="text-gray-500">{userInfo.role}</p>
-                            <p className="text-sm text-gray-500 mt-1">1 Month on Airbnb</p>
+                            <div className="flex flex-col mr-[25px] items-center justify-center text-gray-500">
+                                <p className='text-[18px]'> {(() => {
+                                    const reviewDate = new Date(userInfo.createdAt);
+                                    const now = new Date();
+                                    const timeDiff = now - reviewDate; // Difference in milliseconds
+
+                                    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                                    const months = Math.floor(days / 30);
+                                    const years = Math.floor(days / 365);
+
+                                    if (years >= 1) {
+                                        return `${years} year${years > 1 ? 's' : ''} ago`;
+                                    } else if (months >= 1) {
+                                        return `${months} month${months > 1 ? 's' : ''} ago`;
+                                    } else {
+                                        return `${days} day${days > 1 ? 's' : ''} ago`;
+                                    }
+                                })()}
+                                </p>
+                                <p className='text-rose-700 font-[700]'>On AirBnb</p>
+                            </div>
                         </div>
 
-                        <div className="mt-8">
+                        <div className="mt-8 p-6  border bg-white rounded-[24px]">
                             <h3 className="text-lg font-semibold mb-4">Bazil's confirmed information</h3>
                             <div className="flex items-center space-x-2 mb-2">
                                 <FaCheckCircle className="text-green-500" />
                                 <p className="text-sm text-gray-600">Phone number</p>
                             </div>
+
                             <hr className="my-4" />
                             <div>
                                 <h3 className="text-lg font-semibold mb-2">Verify your identity</h3>
@@ -202,45 +134,200 @@ const Profile = () => {
                     </div>
 
                     {/* Right Section */}
-                    <div className="lg:flex-1">
-                        <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-[28px] font-semibold">About Bazil</h3>
-                            <button onClick={() => setIsEditing(true)} className="text-sm font-medium border-[2px] border-gray-700 text-gray-800 px-2 py-[4px] rounded-lg">Edit profile</button>
+                    <div className='lg:flex-1'>
+                        <div className=" bg-white p-6 rounded-[22px] border ">
+                            <div className="flex items-center justify-between mb-8">
+                                <h3 className="text-[28px] font-semibold">About Bazil</h3>
+                                <button onClick={handleSubmit} className="text-sm font-medium border-[2px]  text-gray-50 bg-gray-800 px-2 py-[4px] rounded-lg">Done</button>
+                            </div>
+
+                            <p className=''>
+                                <span className='font-[700]  mr-[4px]'>Fullname:</span>
+                                <input
+                                    type="text"
+                                    id="fullName"
+                                    name="fullName"
+                                    value={updatedData.fullName || userInfo.fullName || ''}
+                                    onChange={handleChange}
+                                    className="p-[5px] border w-full my-[12px] border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                />
+                            </p>
+                            <p>
+                                <span className='font-[700]  mr-[4px]'>About:</span>
+                                <input
+                                    type="text"
+                                    id="about"
+                                    name="about"
+                                    value={updatedData.about || userInfo.about || ''}
+                                    onChange={handleChange}
+                                    className="p-[5px] border w-full my-[12px]border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                />
+                            </p>
+                            <p>
+                                <span className='font-[700]  mr-[4px]'>Occupation:</span>
+                                <input
+                                    type="text"
+                                    id="occupation"
+                                    name="occupation"
+                                    value={updatedData.occupation || userInfo.occupation || ''}
+                                    onChange={handleChange}
+                                    className="p-[5px] border w-full my-[12px] border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                />
+                            </p>
+                            <p>
+                                <span className='font-[700]  mr-[4px]'>Location:</span>
+                                {userInfo.location.city}, {userInfo.location.country}
+                            </p>
+
                         </div>
 
-                        <div className="space-y-4 mb-8">
-                            <div className="flex items-center space-x-4">
-                                <p className="text-sm text-gray-600">📍</p>
-                                <p className="text-sm text-gray-600">Born in the 00s</p>
+                        <div className="mt-8 bg-white p-6 rounded-[22px] border ">
+                            <h3 className="text-[20px] font-semibold">Ask Me In</h3>
+                            <div className="list-disc list-inside space-y-2">
+                                {userInfo.languages && userInfo.languages.length > 0 ? (
+                                    userInfo.languages.map((language, index) => (
+                                        <p key={index} className="inline-block px-[15px] text-sm mr-[4px] bg-gray-600 text-white rounded-[25px]">
+                                            {language}
+                                        </p>
+                                    ))
+                                ) : (
+                                    <p className="text-gray-500">No languages available.</p>
+                                )}
                             </div>
-                            <div className="flex items-center space-x-4">
-                                <p className="text-sm text-gray-600">🎓</p>
-                                <p className="text-sm text-gray-600">Where I went to school: Junior Campus High School</p>
+                            <h3 className="text-[20px] mt-[35px] font-semibold">Interest</h3>
+                            <div className="list-disc list-inside space-y-2">
+                                {userInfo.interests && userInfo.interests.length > 0 ? (
+                                    userInfo.interests.map((interests, index) => (
+                                        <p key={index} className="inline-block px-[15px] text-sm mr-[4px] bg-gray-200 text-gray-600 rounded-[25px]">
+                                            {interests}
+                                        </p>
+                                    ))
+                                ) : (
+                                    <p className="text-gray-500">No interests Added.</p>
+                                )}
                             </div>
-                            <div className="flex items-center space-x-4">
-                                <p className="text-sm text-gray-600">🗣️</p>
-                                <p className="text-sm text-gray-600">Speaks English and Urdu</p>
+
+                            <div className='flex mt-[40px] items-center'>
+                                <p className='text-rose-900 font-[500] mr-[15px]'>Found Me at:</p>
+                                {/*<p className='bg-blue-600 text-white'>{userInfo.socialLinks.facebook}</p>*/}
+                                <p className='bg-blue-600 ml-[6px] text-sm px-[12px] rounded-lg text-white'>Facebook</p>
+                                <p className='bg-rose-600 ml-[6px] text-sm px-[12px] rounded-lg text-white'>Instagram</p>
+                                <p className='bg-blue-300 ml-[6px] text-sm px-[12px] rounded-lg text-white'>linkdin</p>
                             </div>
                         </div>
 
-                        <div>
-                            <h3 className="text-lg font-semibold mb-4">Ask Bazil about</h3>
-                            <div className="flex flex-wrap gap-4">
-                                <span className="flex items-center px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
-                                    <FaUserAlt className="mr-2" /> Anime
-                                </span>
-                                <span className="flex items-center px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
-                                    <FaUserAlt className="mr-2" /> Chess
-                                </span>
-                                <span className="flex items-center px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
-                                    <FaUserAlt className="mr-2" /> Outdoors
-                                </span>
+                    </div>
+                </div>
+                :
+                <div className="lg:flex lg:space-x-8 lg:items-start max-w-5xl mx-auto">
+                    {/* Left Section */}
+                    <div className="lg:w-1/3 mb-6 lg:mb-0">
+                        <div className="flex justify-between py-6 p-[35px] bg-white rounded-[28px] shadow-sm ">
+                            <div className='flex flex-col items-center justify-center'>
+                                <div className="w-[100px] h-[100px] bg-gray-300 rounded-full flex items-center justify-center mx-auto text-4xl font-bold text-gray-700 mb-[3px]">
+                                    {userInfo.username.charAt(0)}
+                                </div>
+                                <h2 className="text-[25px] font-semibold">{userInfo.username}</h2>
+                                <p className="bg-gray-500 text-gray-100 text-center py-[1px] mt-[8px] text-[13px] rounded-[35px] w-[70px]">{userInfo.role}</p>
+
+                            </div>
+                            <div className="flex flex-col mr-[25px] items-center justify-center text-gray-500">
+                                <p className='text-[18px]'> {(() => {
+                                    const reviewDate = new Date(userInfo.createdAt);
+                                    const now = new Date();
+                                    const timeDiff = now - reviewDate; // Difference in milliseconds
+
+                                    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                                    const months = Math.floor(days / 30);
+                                    const years = Math.floor(days / 365);
+
+                                    if (years >= 1) {
+                                        return `${years} year${years > 1 ? 's' : ''} ago`;
+                                    } else if (months >= 1) {
+                                        return `${months} month${months > 1 ? 's' : ''} ago`;
+                                    } else {
+                                        return `${days} day${days > 1 ? 's' : ''} ago`;
+                                    }
+                                })()}
+                                </p>
+                                <p className='text-rose-700 font-[700]'>On AirBnb</p>
+                            </div>
+                        </div>
+
+                        <div className="mt-8 p-6  border bg-white rounded-[24px]">
+                            <h3 className="text-lg font-semibold mb-4">Bazil's confirmed information</h3>
+                            <div className="flex items-center space-x-2 mb-2">
+                                <FaCheckCircle className="text-green-500" />
+                                <p className="text-sm text-gray-600">Phone number</p>
+                            </div>
+
+                            <hr className="my-4" />
+                            <div>
+                                <h3 className="text-lg font-semibold mb-2">Verify your identity</h3>
+                                <p className="text-sm text-gray-500 mb-4">
+                                    Before you book or host on Airbnb, you’ll need to complete this step.
+                                </p>
+                                <button className="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600">
+                                    Get verified
+                                </button>
                             </div>
                         </div>
                     </div>
+
+                    {/* Right Section */}
+                    <div className='lg:flex-1'>
+                        <div className=" bg-white p-6 rounded-[22px] border ">
+                            <div className="flex items-center justify-between mb-8">
+                                <h3 className="text-[28px] font-semibold">About Bazil</h3>
+                                <button onClick={() => setIsEditing(true)} className="text-sm font-medium border-[2px] border-gray-700 text-gray-800 px-2 py-[4px] rounded-lg">Edit profile</button>
+                            </div>
+
+                            <p><span className='font-[700]  mr-[4px]'>Fullname:</span> {userInfo.fullName}</p>
+                            <p><span className='font-[700]  mr-[4px]'>About:</span> {userInfo.about}</p>
+                            <p><span className='font-[700]  mr-[4px]'>Occupation:</span> {userInfo.occupation}</p>
+                            <p><span className='font-[700]  mr-[4px]'>Location:</span> {userInfo.location.city}, {userInfo.location.country}</p>
+
+                        </div>
+
+                        <div className="mt-8 bg-white p-6 rounded-[22px] border ">
+                            <h3 className="text-[20px] font-semibold">Ask Me In</h3>
+                            <div className="list-disc list-inside space-y-2">
+                                {userInfo.languages && userInfo.languages.length > 0 ? (
+                                    userInfo.languages.map((language, index) => (
+                                        <p key={index} className="inline-block px-[15px] text-sm mr-[4px] bg-gray-600 text-white rounded-[25px]">
+                                            {language}
+                                        </p>
+                                    ))
+                                ) : (
+                                    <p className="text-gray-500">No languages available.</p>
+                                )}
+                            </div>
+                            <h3 className="text-[20px] mt-[35px] font-semibold">Interest</h3>
+                            <div className="list-disc list-inside space-y-2">
+                                {userInfo.interests && userInfo.interests.length > 0 ? (
+                                    userInfo.interests.map((interests, index) => (
+                                        <p key={index} className="inline-block px-[15px] text-sm mr-[4px] bg-gray-200 text-gray-600 rounded-[25px]">
+                                            {interests}
+                                        </p>
+                                    ))
+                                ) : (
+                                    <p className="text-gray-500">No interests Added.</p>
+                                )}
+                            </div>
+
+                            <div className='flex mt-[40px] items-center'>
+                                <p className='text-rose-900 font-[500] mr-[15px]'>Found Me at:</p>
+                                {/*<p className='bg-blue-600 text-white'>{userInfo.socialLinks.facebook}</p>*/}
+                                <p className='bg-blue-600 ml-[6px] text-sm px-[12px] rounded-lg text-white'>Facebook</p>
+                                <p className='bg-rose-600 ml-[6px] text-sm px-[12px] rounded-lg text-white'>Instagram</p>
+                                <p className='bg-blue-300 ml-[6px] text-sm px-[12px] rounded-lg text-white'>linkdin</p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             }
-        </main>
+        </main >
     );
 };
 
