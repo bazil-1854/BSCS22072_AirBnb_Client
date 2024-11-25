@@ -2,18 +2,36 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { FaMedal, FaHome, FaDoorOpen, FaToilet } from 'react-icons/fa';
+import { FaMedal, FaHome, FaDoorOpen, FaToilet, FaStarHalfAlt, FaStar } from 'react-icons/fa';
 import { AddRating, FavoriteButton, Reviews } from './ListingRating';
 
 const ListingDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [listing, setListing] = useState(null);
+  const [hostdetails, setHostdetails] = useState(null);
   const [isInitiallyFavorited, setIsInitiallyFavorited] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  const [ratingReviews, setRatingReviews] = useState([]);
+
+  const fetch_Review_count_and_rating = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/listing-rating/rating-review-count/${id}`);
+      setRatingReviews(response.data);
+    }
+    catch (err) {
+      setError('Failed to fetch reviews. Please try again.');
+      console.error('Error fetching reviews:', err.response?.data || err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetch_Review_count_and_rating();
+  }, []);
 
   useEffect(() => {
     const fetchListingDetails = async () => {
@@ -25,6 +43,7 @@ const ListingDetails = () => {
         );
         setListing(response.data.listing);
         setIsInitiallyFavorited(response.data.isLiked);
+        setHostdetails(response.data.hostDetails);
         setLoading(false);
       }
       catch (err) {
@@ -55,7 +74,7 @@ const ListingDetails = () => {
     <div className="w-full overflow-x-hidden xl:px-[180px] min-h-screen p-6 bg-white">
 
       {showModal && <Reviews listingId={id} onClose={() => setShowModal(false)} />}
-      <div className='mt-[150px] grid w-full overflow-hidden gap-[6px] grid-cols-5 rounded-[25px]'>
+      <div className='mt-[120px] grid w-full overflow-hidden gap-[6px] grid-cols-5 rounded-[25px]'>
         <div className="col-span-5 h-[430px] md:col-span-3">
           <img
             src={listing.images.coverPicture}
@@ -83,31 +102,63 @@ const ListingDetails = () => {
             <FavoriteButton listingId={id} isInitiallyFavorited={isInitiallyFavorited} />
           </div>
 
-          <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:items-center md:space-x-4">
-            <div className="flex items-center space-x-2 text-sm">
-              <span className="text-yellow-500">🏆</span>
-              <p>Guest favorite</p>
+          <div className="grid grid-cols-5 border shadow-md px-[45px] py-[15px] rounded-[28px] space-y-2 md:space-y-0 md:flex-row md:items-center md:space-x-4">
+            <div className="flex flex-col items-center font-[500] text-lg">
+              <span>Guest</span>
+              <span className='mt-[-5px]'>favorite</span>
             </div>
-            <div className="flex items-center space-x-2 text-sm">
-              <span className="text-yellow-500">🏅</span>
-              <p>One of the most loved homes on Airbnb, according to guests</p>
+
+            <p className="text-[14px] font-[600] border-r-[2px] border-l-[2px] col-span-2 lg:block hidden text-center">
+              One of the most loved homes on Airbnb, according to guests
+            </p>
+
+            <div className='flex flex-col items-center border-r-[2px] justify-center'>
+              <p className="font-semibold text-[18px]">{ratingReviews.averageRating}</p>
+              <div className='flex'>
+                {[...Array(Math.floor(ratingReviews.averageRating))].map((_, index) => (
+                  <FaStar size={15} key={`full-${index}`} className="text-yellow-500" />
+                ))}
+                {(ratingReviews.averageRating % 1 >= 0.5) && (
+                  <FaStarHalfAlt size={15} key="half" className="text-yellow-500" />
+                )}
+                {[...Array(5 - (Math.floor(ratingReviews.averageRating)) - ((ratingReviews.averageRating % 1 >= 0.5) ? 1 : 0))].map((_, index) => (
+                  <FaStar size={15} key={`empty-${index}`} className="text-gray-300" />
+                ))}
+              </div>
             </div>
-            <div className="flex items-center space-x-1 text-sm">
-              <p className="font-semibold">4.96</p>
-              <span>⭐</span>
-              <button onClick={() => setShowModal(true)} className="bg-rose-500 ml-auto rounded-xl px-4 py-[6px] text-white">
-                See Review
-              </button>
-            </div>
+
+            <button onClick={() => setShowModal(true)} className="flex flex-col items-center justify-center">
+              <span className='text-[24px] text-rose-700 font-[600]'>{ratingReviews.arraySize}</span>
+              <span className='text-rose-900 mt-[-8px] underline'>Review</span>
+            </button>
+            
           </div>
 
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-full bg-gray-200">
+            <div className="w-10 h-10 rounded-full bg-gray-600">
               <div className='h-full w-full rounded-full bg-gray-600'></div>
             </div>
             <div>
-              <p className="font-semibold">Host</p>
-              <p className="text-gray-500 text-sm">Superhost · 3 years hosting</p>
+              <p className="font-semibold">{hostdetails.username}</p>
+              <p className="text-gray-500 text-sm">SuperHost ·
+                {(() => {
+                  const reviewDate = new Date(hostdetails.createdAt);
+                  const now = new Date();
+                  const timeDiff = now - reviewDate; // Difference in milliseconds
+
+                  const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                  const months = Math.floor(days / 30);
+                  const years = Math.floor(days / 365);
+
+                  if (years >= 1) {
+                    return `${years} year${years > 1 ? 's' : ''} ago`;
+                  } else if (months >= 1) {
+                    return `${months} month${months > 1 ? 's' : ''} ago`;
+                  } else {
+                    return `${days} day${days > 1 ? 's' : ''} ago`;
+                  }
+                })()}
+              </p>
             </div>
           </div>
 
@@ -181,7 +232,7 @@ const ListingDetails = () => {
                 <span className="text-gray-500">▼</span>
               </div>
             </div>
- 
+
             <button onClick={() => handleBooking(id)} className="w-full py-2 bg-gradient-to-r from-pink-600 to-pink-800 text-white font-semibold rounded-lg">
               Reserve
             </button>

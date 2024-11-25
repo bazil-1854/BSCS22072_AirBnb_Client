@@ -52,7 +52,7 @@ const Navbar = () => {
     const handleScroll = () => {
         if (window.scrollY > 50) {
             setShowSearchBar(true);
-        } 
+        }
         else {
             setShowSearchBar(false);
         }
@@ -148,21 +148,21 @@ const Navbar = () => {
                                         <NavLink to="/profile" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                             Profile
                                         </NavLink>
-                                        <button onClick={handleLogout} className="pl-[12px]  py-2 text-red-700 hover:bg-gray-100 rounded-lg">
+                                        <button onClick={handleLogout} className="pl-[12px] text-start text-white py-[3px] bg-rose-500 my-[8px] hover:bg-rose-200 hover:text-rose-700 rounded-lg">
                                             Logout
                                         </button>
                                     </>
                                 )}
 
                                 <div className="w-full bg-gray-200 h-[2px] my-2"></div>
-                                <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Gift Cards
+                                <NavLink to="/host-listing" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                    Host Listing
                                 </NavLink>
-                                <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Airbnb Your Home
+                                <NavLink to="/host-dashboard" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                    Host Dashboard
                                 </NavLink>
-                                <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Host an Experience
+                                <NavLink to="/add-listing" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                   Add Listing
                                 </NavLink>
                                 <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Help Center

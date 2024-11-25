@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const EditListing = () => {
-  const { id } = useParams(); // Extract listing ID from URL
+  const { id } = useParams();
+  
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -19,7 +20,6 @@ const EditListing = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Fetch listing details
   const fetchListingDetails = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -27,11 +27,14 @@ const EditListing = () => {
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setFormData(response.data); // Populate form with listing data
-    } catch (err) {
+      setFormData(response.data.listing);
+      //console.log(response.data.listing)
+    } 
+    catch (err) {
       console.error('Error fetching listing details:', err);
       setError('Failed to fetch listing details');
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
@@ -49,13 +52,15 @@ const EditListing = () => {
         ...prevState,
         address: { ...prevState.address, [field]: value },
       }));
-    } else if (name.includes('images.')) {
+    }
+    else if (name.includes('images.')) {
       const field = name.split('.')[1];
       setFormData((prevState) => ({
         ...prevState,
         images: { ...prevState.images, [field]: value },
       }));
-    } else {
+    }
+    else {
       setFormData((prevState) => ({
         ...prevState,
         [name]: value,
@@ -190,7 +195,7 @@ const EditListing = () => {
           <label className="block text-gray-600 mb-1">Street</label>
           <input
             type="text"
-            name="address.street"
+            name="Street"
             value={formData.address.street}
             onChange={handleChange}
             required
@@ -201,7 +206,7 @@ const EditListing = () => {
           <label className="block text-gray-600 mb-1">Suburb</label>
           <input
             type="text"
-            name="address.suburb"
+            name="Suburb"
             value={formData.address.suburb}
             onChange={handleChange}
             required
@@ -212,7 +217,7 @@ const EditListing = () => {
           <label className="block text-gray-600 mb-1">Country</label>
           <input
             type="text"
-            name="address.country"
+            name="Country"
             value={formData.address.country}
             onChange={handleChange}
             required
