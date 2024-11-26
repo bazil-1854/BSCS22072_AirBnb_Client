@@ -10,6 +10,370 @@ const AddListing = () => {
         bathrooms: 0,
         price: 0,
         address: { street: '', suburb: '', country: '' },
+        amenities: [''],
+        images: { placePicture: '', coverPicture: '', additionalPictures: ['', '', '', '', ''] },
+    });
+
+    const [currentStep, setCurrentStep] = useState(1);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name.includes('address.')) {
+            const field = name.split('.')[1];
+            setFormData((prevState) => ({
+                ...prevState,
+                address: { ...prevState.address, [field]: value },
+            }));
+        } 
+        else if (name.includes('images.')) {
+            const field = name.split('.')[1];
+            setFormData((prevState) => ({
+                ...prevState,
+                images: { ...prevState.images, [field]: value },
+            }));
+        } 
+        else {
+            setFormData((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+    };
+
+    const handleAmenityAdd = () => {
+        setFormData((prevState) => {
+            if (prevState.amenities.length >= 5) {
+                alert('You can only add up to 5 amenities.');
+                return prevState; // Return unchanged state
+            }
+            return {
+                ...prevState,
+                amenities: [...prevState.amenities, ''],
+            };
+        });
+    };
+    
+
+    const handleAmenityChange = (index, value) => {
+        const updatedAmenities = [...formData.amenities];
+        updatedAmenities[index] = value;
+        setFormData((prevState) => ({
+            ...prevState,
+            amenities: updatedAmenities,
+        }));
+    };
+
+    const handleAmenityRemove = (index) => {
+        const updatedAmenities = formData.amenities.filter((_, i) => i !== index);
+        setFormData((prevState) => ({
+            ...prevState,
+            amenities: updatedAmenities,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(
+                `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/hosting/add-listing`,
+                formData,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            alert(response.data.message);
+        } catch (error) {
+            console.error(error);
+            alert('Error adding listing');
+        }
+    };
+
+    // Subcomponents for each step
+    const Step1 = () => (
+        <div>
+            <h2 className="text-xl font-semibold mb-4">Basic Information</h2>
+            <div>
+                <label>Name</label>
+                <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+                />
+                <label>Summary</label>
+                <textarea
+                    name="summary"
+                    value={formData.summary}
+                    onChange={handleChange}
+                    className="w-full py-2 appearance-none border-b style-none border-gray-400 focus:outline-none mb-4"
+                />
+                <label>Property Type</label>
+                <input
+                    type="text"
+                    name="property_type"
+                    value={formData.property_type}
+                    onChange={handleChange}
+                    className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+                />
+            </div>
+            <button
+                onClick={() => setCurrentStep(2)}
+                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+            >
+                Next
+            </button>
+        </div>
+    );
+
+    const Step2 = () => (
+        <div>
+            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Property Details:</h2>
+            <label>Bedrooms</label>
+            <input
+                type="number"
+                name="bedrooms"
+                value={formData.bedrooms}
+                onChange={handleChange}
+                    className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+            />
+            <label>Bathrooms</label>
+            <input
+                type="number"
+                name="bathrooms"
+                value={formData.bathrooms}
+                onChange={handleChange}
+                    className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+            />
+            <label>Price</label>
+            <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+            />
+            <button
+                onClick={() => setCurrentStep(1)}
+                className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+            >
+                Back
+            </button>
+            <button
+                onClick={() => setCurrentStep(3)}
+                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+            >
+                Next
+            </button>
+        </div>
+    );
+
+    const Step3 = () => (
+        <div>
+            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Property's Address:</h2>
+            <label>Street</label>
+            <input
+                type="text"
+                name="address.street"
+                value={formData.address.street}
+                onChange={handleChange}
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+            />
+            <label>Suburb</label>
+            <input
+                type="text"
+                name="address.suburb"
+                value={formData.address.suburb}
+                onChange={handleChange}
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+            />
+            <label>Country</label>
+            <input
+                type="text"
+                name="address.country"
+                value={formData.address.country}
+                onChange={handleChange}
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+            />
+            <button
+                onClick={() => setCurrentStep(2)}
+                className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+            >
+                Back
+            </button>
+            <button
+                onClick={() => setCurrentStep(4)}
+                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+            >
+                Next
+            </button>
+        </div>
+    );
+
+    const Step4 = () => (
+        <div className='lg:w-[750px] w-[350px] md:w-[450px]'>
+            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Customer Rules and Guidelines</h2>
+            {formData.amenities.map((amenity, index) => (
+                <div key={index} className="flex items-center mb-2">
+                    <input
+                        type="text"
+                        value={amenity}
+                        onChange={(e) => handleAmenityChange(index, e.target.value)}
+                        className="w-[80%] lg:w-[70%] p-2 border-b border-gray-400"
+                    />
+                    <button
+                        onClick={() => handleAmenityRemove(index)}
+                        className="bg-red-700 text-[11px] lg:text-[13px] text-white px-2 ml-[8px] py-[3px] rounded-xl"
+                    >
+                        Remove
+                    </button>
+                </div>
+            ))}
+            <button
+                onClick={handleAmenityAdd}
+                className="bg-green-700 text-[14px] mb-[12px] text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+            >
+                Add Amenity
+            </button>
+            <br />
+            <button
+                onClick={() => setCurrentStep(3)}
+                className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+            >
+                Back
+            </button>
+            <button
+                onClick={() => setCurrentStep(5)}
+                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+            >
+                Next
+            </button>
+        </div>
+    );
+
+    const Step5 = () => (
+        <div>
+            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Place Link for Place and Cover Image:</h2>
+            <label>Place Picture</label>
+            <input
+                type="text"
+                name="images.placePicture"
+                value={formData.images.placePicture}
+                onChange={handleChange}
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+            />
+            <label>Cover Picture</label>
+            <input
+                type="text"
+                name="images.coverPicture"
+                value={formData.images.coverPicture}
+                onChange={handleChange}
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+            />
+            <button
+                onClick={() => setCurrentStep(4)}
+                className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+            >
+                Back
+            </button>
+            <button
+                onClick={() => setCurrentStep(6)}
+                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+            >
+                Next
+            </button>
+        </div>
+    );
+
+    const Step6 = () => (
+        <div>
+            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Place Links Property Images:</h2>
+            {formData.images.additionalPictures.map((url, index) => (
+                <input
+                    key={index}
+                    type="text"
+                    value={url}
+                    placeholder={`Enter image URL for Image ${index + 1}`}
+                    onChange={(e) =>
+                        setFormData((prevState) => {
+                            const updatedPictures = [...prevState.images.additionalPictures];
+                            updatedPictures[index] = e.target.value;
+                            return {
+                                ...prevState,
+                                images: { ...prevState.images, additionalPictures: updatedPictures },
+                            };
+                        })
+                    }
+                    className="w-full p-2 border rounded mb-2 placeholder:text-[14px]"
+                />
+            ))}
+            <p className=' mt-[15px]'></p>
+            {formData.images.additionalPictures.length < 5 && (
+                <button
+                    onClick={() =>
+                        setFormData((prevState) => ({
+                            ...prevState,
+                            images: {
+                                ...prevState.images,
+                                additionalPictures: [...prevState.images.additionalPictures, ''],
+                            },
+                        }))
+                    }
+                    className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+                >
+                    Add Picture
+                </button>
+            )}
+            <button
+                onClick={() => setCurrentStep(5)}
+                className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+            >
+                Back
+            </button>
+            <button
+                onClick={handleSubmit}
+                className="bg-green-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+            >
+                Submit
+            </button>
+        </div>
+    );
+
+    // Render the correct step
+    return (
+        <main className='bg-gray-100 p-4 min-h-screen flex flex-col justify-center items-center pt-[100px] w-full h-full'>
+            <div className='max-w-2xl'>
+                <h3 className='text-[38px] text-rose-600 font-[700] text-center'>Add Listing</h3>
+                <p className="text-rose-900 my-[15px] font-[600] px-[25px] lg:px-[85px]  text-center text-[13px]">
+                    Create your property listing by providing all the necessary details with accurate information to attract potential guests, include captivating descriptions, amenities, and high-quality images to make your listing stand out.
+                </p>
+
+            </div>
+            <div className="max-w-2xl overflow-hidden p-6 h-[420px] bg-white shadow border rounded-[25px]">
+                {currentStep === 1 && <Step1 />}
+                {currentStep === 2 && <Step2 />}
+                {currentStep === 3 && <Step3 />}
+                {currentStep === 4 && <Step4 />}
+                {currentStep === 5 && <Step5 />}
+                {currentStep === 6 && <Step6 />}
+            </div>
+        </main>
+    );
+};
+
+export default AddListing;
+
+/*import React, { useState } from 'react';
+import axios from 'axios';
+
+const AddListing = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        summary: '',
+        property_type: '',
+        bedrooms: 0,
+        bathrooms: 0,
+        price: 0,
+        address: { street: '', suburb: '', country: '' },
         amenities: [],
         images: { placePicture: '', coverPicture: '', additionalPictures: [] },
     });
@@ -286,3 +650,4 @@ const AddListing = () => {
 };
 
 export default AddListing;
+*/
