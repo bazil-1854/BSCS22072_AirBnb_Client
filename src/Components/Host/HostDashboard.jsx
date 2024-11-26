@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FaCheckCircle, FaInfoCircle, FaTimesCircle, FaUserCircle } from "react-icons/fa";
+import { TbBrandBooking } from 'react-icons/tb';
+
 
 const HostBookings = () => {
     const [bookings, setBookings] = useState([]);
@@ -74,88 +77,109 @@ const HostBookings = () => {
     }
 
     return (
-        <div className="max-w-6xl mt-[150px] mx-auto p-4">
-            <h1 className="text-2xl font-semibold text-center mb-6">Bookings for Your Listings</h1>
-
-            <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
-                {bookings.map((booking) => (
-                    <div
-                        key={booking._id}
-                        className="bg-white shadow-lg rounded-lg p-4 hover:shadow-2xl transition duration-300 ease-in-out"
-                    >
-                        <p
-                            className="text-sm text-blue-600 cursor-pointer underline"
-                            onClick={() => fetchGuestDetails(booking.userID)}
+        <div className='bg-gray-50 pt-[115px] p-6 min-h-screen justify-center items-center '>
+            <div className="max-w-[1350px] mx-auto" >
+                <h3 className='text-[24px] mb-[15px] text-rose-600 font-[700]'>Applied Bookings For Your Properties:</h3>
+                <div className='h-[2.5px] bg-rose-600 mb-[35px] lg:mb-[55px]'></div>
+                <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
+                    {bookings.map((booking) => (
+                        <div
+                            key={booking._id}
+                            className="bg-white flex flex-col border rounded-lg p-4 hover:shadow-md transition duration-300 ease-in-out"
                         >
-                            Guest: {booking.userID || 'N/A'}
-                        </p>
-                        <p className="text-sm text-gray-600">Listing ID: {booking.listingId}</p>
-                        <p className="text-sm text-gray-600">Name: {booking.listingDetails.name || 'N/A'}</p>
-                        <p className="text-sm text-gray-600">
-                            Type: {booking.listingDetails.property_type}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                            Check-In: {new Date(booking.checkIn).toDateString()}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                            Check-Out: {new Date(booking.checkOut).toDateString()}
-                        </p>
-                        <p className="text-sm text-gray-600">Status: {booking.status}</p>
+                            <div className='flex items-center md:mb-0 mb-[15px] space-x-2'>
+                                <div className='w-[35px] h-[35px] md:w-[45px] md:h-[45px] rounded-full flex items-center justify-center text-[28px] text-rose-100 bg-rose-600'>
+                                    <TbBrandBooking />
+                                </div>
+                                <div className='flex md:flex-row flex-col ml-[15px] md:items-center justify-center'>
+                                    <p className='text-[12px] md:text-[15px] font-[600] text-gray-500 '>Property Name:</p>
+                                    <p className='font-[600] text-[15px] md:text-[18px] md:ml-[10px] text-rose-800'><p>{`${booking.listingDetails.name.slice(0, 35)}...` || 'N/A'}</p></p>
+                                </div>
+                            </div>
 
-                        <div className="mt-4">
-                            <button
-                                onClick={() => updateStatus(booking._id, 'approved')}
-                                className="mr-2 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                            <div className='ml-[53px] flex items-center space-x-2'>
+                                <p className='text-[13px] font-[600] text-gray-500 '>Check-In</p>
+                                <p className='font-[600] text-[14px] text-rose-800'>{new Date(booking.checkIn).toDateString()}</p>
+                            </div>
+
+                            <div className='ml-[53px] flex items-center space-x-2'>
+                                <p className='text-[13px] font-[600] text-gray-500 '>Check Out</p>
+                                <p className='font-[600] text-[14px] text-rose-800'>{new Date(booking.checkOut).toDateString()}</p>
+                            </div>
+
+                            <div className='ml-[53px] flex items-center space-x-2'>
+                                <p className='text-[13px] font-[600] text-gray-500 '>Status</p>
+                                <p className={`scale-[0.95] font-[600] px-[12px] py-[2px] mt-[5px] text-white rounded-[30px] text-[12px] ${booking.status === 'paid' ? 'bg-green-800' : booking.status === 'pending' ? 'bg-yellow-600' : booking.status === 'confirmed' ? 'bg-blue-800' : booking.status === 'canceled' ? 'bg-red-800' : booking.status === 'completed' ? 'text-gray-800' : ''}`}>{booking.status}</p>
+                            </div>
+
+                            <div className='ml-[53px] flex items-center space-x-2'>
+                                <p className='text-[13px] font-[600] text-gray-500 '>Property Type</p>
+                                <p className='font-[600] text-[14px] text-rose-800'>{booking.listingDetails.property_type}</p>
+                            </div>
+                            <p
+                                className="mt-[15px] ml-[53px] flex space-x-3 items-center text-rose-600 cursor-pointer underline"
+                                onClick={() => fetchGuestDetails(booking.userID)}
                             >
-                                Approve
-                            </button>
+                                <FaInfoCircle size={20} />
+                                <span>User Contact/Info</span>
+                            </p>
+
+
+                            <div className="mt-5 md:mt-4 ml-auto">
+                                <button
+                                    onClick={() => updateStatus(booking._id, 'rejected')}
+                                    className="px-4 py-[4px] mr-2 bg-red-700 text-[13px] text-white rounded-md hover:bg-red-600"
+                                >
+                                    Reject
+                                </button>
+                                <button
+                                    onClick={() => updateStatus(booking._id, 'approved')}
+                                    className=" px-4 py-[4px] bg-green-700 text-[13px] text-white rounded-md hover:bg-green-600"
+                                >
+                                    Approve
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Modal for Guest Details */}
+                {showModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white rounded-lg shadow-lg p-6 w-96">
+                            {modalLoading ? (
+                                <p>Loading...</p>
+                            ) : guestDetails ? (
+                                <>
+                                    <h2 className="text-xl font-semibold mb-4">{guestDetails.username}</h2>
+                                    <p><strong>Email:</strong> {guestDetails.email}</p>
+                                    <p><strong>Location:</strong> {`${guestDetails.location.city}, ${guestDetails.location.country}`}</p>
+                                    <p><strong>Bio:</strong> {guestDetails.bio}</p>
+                                    <p><strong>Social Links:</strong></p>
+                                    <ul className="list-disc pl-5">
+                                        {guestDetails.socialLinks &&
+                                            Object.entries(guestDetails.socialLinks).map(([platform, link]) => (
+                                                <li key={platform}>
+                                                    <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                                                        {platform}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                    </ul>
+                                </>
+                            ) : (
+                                <p>No details available.</p>
+                            )}
                             <button
-                                onClick={() => updateStatus(booking._id, 'rejected')}
-                                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                                onClick={() => setShowModal(false)}
+                                className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
                             >
-                                Reject
+                                Close
                             </button>
                         </div>
                     </div>
-                ))}
+                )}
             </div>
-
-            {/* Modal for Guest Details */}
-            {showModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-                        {modalLoading ? (
-                            <p>Loading...</p>
-                        ) : guestDetails ? (
-                            <>
-                                <h2 className="text-xl font-semibold mb-4">{guestDetails.username}</h2>
-                                <p><strong>Email:</strong> {guestDetails.email}</p>
-                                <p><strong>Location:</strong> {`${guestDetails.location.city}, ${guestDetails.location.country}`}</p>
-                                <p><strong>Bio:</strong> {guestDetails.bio}</p>
-                                <p><strong>Social Links:</strong></p>
-                                <ul className="list-disc pl-5">
-                                    {guestDetails.socialLinks &&
-                                        Object.entries(guestDetails.socialLinks).map(([platform, link]) => (
-                                            <li key={platform}>
-                                                <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
-                                                    {platform}
-                                                </a>
-                                            </li>
-                                        ))}
-                                </ul>
-                            </>
-                        ) : (
-                            <p>No details available.</p>
-                        )}
-                        <button
-                            onClick={() => setShowModal(false)}
-                            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-                        >
-                            Close
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

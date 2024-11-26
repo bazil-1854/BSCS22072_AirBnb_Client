@@ -122,7 +122,6 @@ const GuestBookings = () => {
                                 <div className='flex flex-col items-center justify-center'>
                                     <p className='text-[13px] font-[600] text-gray-500 '>Status</p>
                                     <p className={`font-[600] px-[12px] py-[3px] mt-[5px] text-white rounded-[30px] text-[12px] ${booking.status === 'paid' ? 'bg-green-800' : booking.status === 'pending' ? 'bg-yellow-600' : booking.status === 'confirmed' ? 'bg-blue-800' : booking.status === 'canceled' ? 'bg-red-800' : booking.status === 'completed' ? 'text-gray-800' : ''}`}>{booking.status}</p>
-
                                 </div>
                                 <div>
                                     <button onClick={() => openModal(booking)}
