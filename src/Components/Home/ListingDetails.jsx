@@ -73,7 +73,7 @@ const ListingDetails = () => {
   return (
     <div className="w-full overflow-x-hidden xl:px-[180px] min-h-screen p-6 bg-white">
 
-      {showModal && <Reviews listingId={id} onClose={() => setShowModal(false)} />}
+      {showModal && <Reviews listingId={id} ratingReviews={ratingReviews} onClose={() => setShowModal(false)} />}
       <div className='mt-[120px] grid w-full overflow-hidden gap-[6px] grid-cols-5 rounded-[25px]'>
         <div className="col-span-5 h-[430px] md:col-span-3">
           <img
@@ -144,7 +144,7 @@ const ListingDetails = () => {
                 {(() => {
                   const reviewDate = new Date(hostdetails.createdAt);
                   const now = new Date();
-                  const timeDiff = now - reviewDate; // Difference in milliseconds
+                  const timeDiff = now - reviewDate; 
 
                   const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
                   const months = Math.floor(days / 30);

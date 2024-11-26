@@ -129,16 +129,16 @@ export const AddRating = ({ listingId }) => {
 };
 
 
-export const Reviews = ({ listingId, onClose }) => {
+export const Reviews = ({ listingId, ratingReviews, onClose }) => {
     const [reviews, setReviews] = useState([]);
-    const [ratingReviews, setRatingReviews] = useState([]);
+    //const [ratingReviews, setRatingReviews] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [bachaloading, setBachaLoading] = useState(false);
+    //const [bachaloading, setBachaLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const fetch_Review_count_and_rating = async () => {
+    /*const fetch_Review_count_and_rating = async () => {
         try {
             setLoading(true);
             const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/listing-rating/rating-review-count/${listingId}`);
@@ -155,11 +155,11 @@ export const Reviews = ({ listingId, onClose }) => {
 
     useEffect(() => {
         fetch_Review_count_and_rating();
-    }, []);
+    }, []);*/
 
     const fetchReviews = async (page) => {
         try {
-            setBachaLoading(true);
+            setLoading(true);
             const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/listing-rating/get-reviews/${listingId}`, { params: { page, limit: 5 } });
 
             if (page === 1) {
@@ -177,7 +177,7 @@ export const Reviews = ({ listingId, onClose }) => {
             console.error('Error fetching reviews:', err.response?.data || err.message);
         }
         finally {
-            setBachaLoading(false);
+            setLoading(false);
         }
     };
 
@@ -194,9 +194,7 @@ export const Reviews = ({ listingId, onClose }) => {
     if (error) {
         return <div className="text-center text-red-500 mt-10">{error}</div>;
     }
-    if (loading) {
-        return <div className="text-center text-green-500 mt-10">Loading...</div>;
-    }
+     
     return (
         <div className="fixed inset-0 bg-black  bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white rounded-lg overflow-y-auto no-scrollbar lg:overflow-y-hidden h-[90vh] w-full max-w-4xl mx-4 md:mx-auto shadow-lg">
@@ -218,76 +216,81 @@ export const Reviews = ({ listingId, onClose }) => {
 
                     <div className="lg:col-span-3  mt-[15px]">
                         <h3 className="text-lg font-medium mb-4">{ratingReviews.arraySize} Reviews</h3>
-                        {bachaloading ?
-                            <div>Loading ....</div>
-                            :
-                            <div className='overflow-y-auto mb-[75px] no-scrollbar max-h-[520px]'>
-                                {reviews.map((review, index) => (
-                                    <div key={index} className="mb-6 p-4 bg-white">
-                                        <div className="flex items-center">
-                                            {review.user?.profilePicture ?
-                                                <img
-                                                    src={review.user.profilePicture}
-                                                    alt={`${review.user.name}'s profile`}
-                                                    className="w-10 h-10 rounded-full mr-4"
-                                                />
-                                                :
-                                                <div className="w-10 h-10 bg-gray-300 rounded-full mr-4"></div>
-                                            }
-                                            <div>
-                                                <h4 className="text-[15px] font-medium">{review.user?.username || 'Anonymous'}</h4>
-                                            </div>
-                                        </div>
-                                        <div className='flex my-[4px] items-center'>
-                                            <div className='flex'>
-                                                {[...Array(Math.floor(review.rating))].map((_, index) => (
-                                                    <FaStar size={15} key={`full-${index}`} className="text-yellow-500" />
-                                                ))}
-                                                {(review.rating % 1 >= 0.5) && (
-                                                    <FaStarHalfAlt size={15} key="half" className="text-yellow-500" />
-                                                )}
-                                                {[...Array(5 - (Math.floor(review.rating)) - ((review.rating % 1 >= 0.5) ? 1 : 0))].map((_, index) => (
-                                                    <FaStar size={15} key={`empty-${index}`} className="text-gray-300" />
-                                                ))}
-                                            </div>
-                                            <p className="text-sm ml-[15px] mb-[3px] text-gray-500">
-                                                {(() => {
-                                                    const reviewDate = new Date(review.date);
-                                                    const now = new Date();
-                                                    const timeDiff = now - reviewDate; // Difference in milliseconds
+                        <div className='overflow-y-auto mb-[75px] no-scrollbar max-h-[520px]'>
 
-                                                    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-                                                    const months = Math.floor(days / 30);
-                                                    const years = Math.floor(days / 365);
-
-                                                    if (years >= 1) {
-                                                        return `${years} year${years > 1 ? 's' : ''} ago`;
-                                                    } else if (months >= 1) {
-                                                        return `${months} month${months > 1 ? 's' : ''} ago`;
-                                                    } else {
-                                                        return `${days} day${days > 1 ? 's' : ''} ago`;
+                            {loading ?
+                                <>
+                                    {
+                                        reviews.map((review, index) => (
+                                            <div key={index} className="mb-6 p-4 bg-white">
+                                                <div className="flex items-center">
+                                                    {review.user?.profilePicture ?
+                                                        <img
+                                                            src={review.user.profilePicture}
+                                                            alt={`${review.user.name}'s profile`}
+                                                            className="w-10 h-10 rounded-full mr-4"
+                                                        />
+                                                        :
+                                                        <div className="w-10 h-10 bg-gray-300 rounded-full mr-4"></div>
                                                     }
-                                                })()}
-                                            </p>
-                                            {/*<p className="text-sm text-gray-500">{new Date(review.date).toLocaleDateString()}</p>*/}
+                                                    <div>
+                                                        <h4 className="text-[15px] font-medium">{review.user?.username || 'Anonymous'}</h4>
+                                                    </div>
+                                                </div>
+                                                <div className='flex my-[4px] items-center'>
+                                                    <div className='flex'>
+                                                        {[...Array(Math.floor(review.rating))].map((_, index) => (
+                                                            <FaStar size={15} key={`full-${index}`} className="text-yellow-500" />
+                                                        ))}
+                                                        {(review.rating % 1 >= 0.5) && (
+                                                            <FaStarHalfAlt size={15} key="half" className="text-yellow-500" />
+                                                        )}
+                                                        {[...Array(5 - (Math.floor(review.rating)) - ((review.rating % 1 >= 0.5) ? 1 : 0))].map((_, index) => (
+                                                            <FaStar size={15} key={`empty-${index}`} className="text-gray-300" />
+                                                        ))}
+                                                    </div>
+                                                    <p className="text-sm ml-[15px] mb-[3px] text-gray-500">
+                                                        {(() => {
+                                                            const reviewDate = new Date(review.date);
+                                                            const now = new Date();
+                                                            const timeDiff = now - reviewDate; // Difference in milliseconds
+
+                                                            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                                                            const months = Math.floor(days / 30);
+                                                            const years = Math.floor(days / 365);
+
+                                                            if (years >= 1) {
+                                                                return `${years} year${years > 1 ? 's' : ''} ago`;
+                                                            } else if (months >= 1) {
+                                                                return `${months} month${months > 1 ? 's' : ''} ago`;
+                                                            } else {
+                                                                return `${days} day${days > 1 ? 's' : ''} ago`;
+                                                            }
+                                                        })()}
+                                                    </p>
+                                                    {/*<p className="text-sm text-gray-500">{new Date(review.date).toLocaleDateString()}</p>*/}
+                                                </div>
+                                                <div>
+                                                    <p className="mt-2 text-gray-700">{review.review}</p>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                    {currentPage < totalPages && !loading && (
+                                        <div className=" mt-6">
+                                            <button
+                                                onClick={handleShowMore}
+                                                className="px-4 py-[6px] text-[13px] bg-rose-600 text-white rounded-md hover:bg-rose-900"
+                                            >
+                                                Show More
+                                            </button>
                                         </div>
-                                        <div>
-                                            <p className="mt-2 text-gray-700">{review.review}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                                {currentPage < totalPages && !loading && (
-                                    <div className=" mt-6">
-                                        <button
-                                            onClick={handleShowMore}
-                                            className="px-4 py-[6px] text-[13px] bg-rose-600 text-white rounded-md hover:bg-rose-900"
-                                        >
-                                            Show More
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        }
+                                    )}
+                                </>
+                                :
+                                <p>loading ........</p>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

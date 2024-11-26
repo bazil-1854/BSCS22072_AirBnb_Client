@@ -17,6 +17,7 @@ const EditListing = () => {
     amenities: [],
     images: { placePicture: '', coverPicture: '', additionalPictures: [] },
   });
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -103,9 +104,10 @@ const EditListing = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      alert(response.data.message); // Alert success
-      navigate('/hosted-listings'); // Redirect to hosted listings
-    } catch (err) {
+      alert(response.data.message);  
+      navigate('/hosted-listings');  
+    } 
+    catch (err) {
       console.error('Error updating listing:', err);
       alert('Error updating listing');
     }
