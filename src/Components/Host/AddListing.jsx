@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { RiDeleteBinLine } from 'react-icons/ri';
 
 const AddListing = () => {
     const [formData, setFormData] = useState({
@@ -24,14 +25,14 @@ const AddListing = () => {
                 ...prevState,
                 address: { ...prevState.address, [field]: value },
             }));
-        } 
+        }
         else if (name.includes('images.')) {
             const field = name.split('.')[1];
             setFormData((prevState) => ({
                 ...prevState,
                 images: { ...prevState.images, [field]: value },
             }));
-        } 
+        }
         else {
             setFormData((prevState) => ({
                 ...prevState,
@@ -52,7 +53,7 @@ const AddListing = () => {
             };
         });
     };
-    
+
 
     const handleAmenityChange = (index, value) => {
         const updatedAmenities = [...formData.amenities];
@@ -87,10 +88,9 @@ const AddListing = () => {
         }
     };
 
-    // Subcomponents for each step
     const Step1 = () => (
         <div>
-            <h2 className="text-xl font-semibold mb-4">Basic Information</h2>
+            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Property's Info:</h2>
             <div>
                 <label>Name</label>
                 <input
@@ -134,7 +134,7 @@ const AddListing = () => {
                 name="bedrooms"
                 value={formData.bedrooms}
                 onChange={handleChange}
-                    className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
             />
             <label>Bathrooms</label>
             <input
@@ -142,7 +142,7 @@ const AddListing = () => {
                 name="bathrooms"
                 value={formData.bathrooms}
                 onChange={handleChange}
-                    className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
             />
             <label>Price</label>
             <input
@@ -218,13 +218,14 @@ const AddListing = () => {
                         type="text"
                         value={amenity}
                         onChange={(e) => handleAmenityChange(index, e.target.value)}
-                        className="w-[80%] lg:w-[70%] p-2 border-b border-gray-400"
+                        className="w-[80%] lg:w-[77%] p-2 border-b border-gray-400"
                     />
                     <button
                         onClick={() => handleAmenityRemove(index)}
-                        className="bg-red-700 text-[11px] lg:text-[13px] text-white px-2 ml-[8px] py-[3px] rounded-xl"
+                        className="text-red-700 text-[15px] lg:text-[22px] mb-[-20px] ml-[15px]"
                     >
-                        Remove
+                        
+                    <RiDeleteBinLine />
                     </button>
                 </div>
             ))}
@@ -257,9 +258,10 @@ const AddListing = () => {
             <input
                 type="text"
                 name="images.placePicture"
+                placeholder='Enter image URL for Place Picture'
                 value={formData.images.placePicture}
                 onChange={handleChange}
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4 placeholder:text-[14px]"
             />
             <label>Cover Picture</label>
             <input
@@ -267,7 +269,8 @@ const AddListing = () => {
                 name="images.coverPicture"
                 value={formData.images.coverPicture}
                 onChange={handleChange}
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+                placeholder='Enter image URL for Cover Picture'
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4 placeholder:text-[14px]"
             />
             <button
                 onClick={() => setCurrentStep(4)}
@@ -343,7 +346,7 @@ const AddListing = () => {
         <main className='bg-gray-100 p-4 min-h-screen flex flex-col justify-center items-center pt-[100px] w-full h-full'>
             <div className='max-w-2xl'>
                 <h3 className='text-[38px] text-rose-600 font-[700] text-center'>Add Listing</h3>
-                <p className="text-rose-900 my-[15px] font-[600] px-[25px] lg:px-[85px]  text-center text-[13px]">
+                <p className="text-rose-900 mb-[20px] font-[600] px-[25px] lg:px-[85px]  text-center text-[13px]">
                     Create your property listing by providing all the necessary details with accurate information to attract potential guests, include captivating descriptions, amenities, and high-quality images to make your listing stand out.
                 </p>
 
