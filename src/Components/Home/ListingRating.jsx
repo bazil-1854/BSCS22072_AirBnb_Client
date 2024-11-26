@@ -130,33 +130,12 @@ export const AddRating = ({ listingId }) => {
 
 
 export const Reviews = ({ listingId, ratingReviews, onClose }) => {
-    const [reviews, setReviews] = useState([]);
-    //const [ratingReviews, setRatingReviews] = useState([]);
+    const [reviews, setReviews] = useState([]); 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [loading, setLoading] = useState(false);
-    //const [bachaloading, setBachaLoading] = useState(false);
+    const [loading, setLoading] = useState(true); 
     const [error, setError] = useState('');
-
-    /*const fetch_Review_count_and_rating = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/listing-rating/rating-review-count/${listingId}`);
-            setRatingReviews(response.data);
-        }
-        catch (err) {
-            setError('Failed to fetch reviews. Please try again.');
-            console.error('Error fetching reviews:', err.response?.data || err.message);
-        }
-        finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetch_Review_count_and_rating();
-    }, []);*/
-
+ 
     const fetchReviews = async (page) => {
         try {
             setLoading(true);
@@ -218,7 +197,7 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
                         <h3 className="text-lg font-medium mb-4">{ratingReviews.arraySize} Reviews</h3>
                         <div className='overflow-y-auto mb-[75px] no-scrollbar max-h-[520px]'>
 
-                            {loading ?
+                            {!loading ?
                                 <>
                                     {
                                         reviews.map((review, index) => (

@@ -164,8 +164,11 @@ const Navbar = () => {
                                 <NavLink to="/add-listing" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                    Add Listing
                                 </NavLink>
-                                <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Help Center
+                                <NavLink to="/favourite-listings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                    Favourites
+                                </NavLink>
+                                <NavLink to="/reserved-bookings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                    Reserved Bookings
                                 </NavLink>
                             </div>
                         </div>
