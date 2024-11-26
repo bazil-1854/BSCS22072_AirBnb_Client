@@ -56,35 +56,30 @@ const FavoriteListings = () => {
     }
 
     return (
-        <div className='bg-gray-100 pt-[115px] min-h-screen justify-center items-center '>
-            <div className="max-w-[950px] mx-auto" >
+        <div className='bg-gray-100 pt-[115px] p-6 min-h-screen justify-center items-center '>
+            <div className="max-w-[1150px] mx-auto" >
                 <h3 className='text-[24px] mb-[15px] text-rose-600 font-[700]'>Favourite Listings</h3>
-                <div className='h-[2.5px] bg-rose-600 lg:mb-[55px]'></div>
-                <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div className='h-[2.5px] bg-rose-600 mb-[35px] lg:mb-[55px]'></div>
+                <div className="grid gap-6 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
                     {listings.map((listing) => (
                         <div
                             key={listing._id}
                             onClick={() => navigate(`/listing/${listing._id}`)}
-                            className="bg-white shadow-lg rounded-lg p-4 hover:shadow-2xl transition duration-300 ease-in-out"
+                            className="overflow-hidden mx-auto w-[330px] sm:w-full cursor-pointer bg-white border rounded-xl hover:shadow-md transition duration-200"
                         >
-                            <div className='flex items-center justify-between'>
-                                <div className='flex items-center'>
-                                    <img src={listing.images.placePicture} alt="Connection Error" className='h-[50px] w-[70px] rounded-xl' />
-                                    <p className="ml-[8px]">
-                                        <span className="text-lg font-semibold">{listing.name}</span> <br />
-                                        <span className="text-[12px] mt-[-4px] text-gray-500">{listing.address.suburb}, {listing.address.country}</span>
-                                    </p>
-                                </div>
-                                <button
-                                    className="absolute top-3 right-3 text-red-500 hover:text-red-700"
-                                >
-                                    <RiDeleteBinLine />
-                                </button>
+                            <img
+                                src={listing.images.coverPicture || 'https://via.placeholder.com/300'}
+                                alt={listing.name}
+                                loading='lazy'
+                                className="m-2 h-[220px] w-[95%] "
+                            />
+                            <div className="p-4">
+                                <h2 className="font-semibold text-lg">{listing.name}</h2>
+                                <p className="text-gray-500">{listing.property_type}</p>
+                                <p className="text-gray-500">{listing.category}</p>
+                                <p className="text-gray-700">Bedrooms: {listing.bedrooms}</p>
+                                <p className="font-bold text-lg">${listing.price} / night</p> 
                             </div>
-                            <p className="text-[14px] mt-[8px] text-gray-700">{listing.summary}</p>
-                            <p className="mt-2 text-[14px] text-green-700 font-medium">${listing.price} /night</p>
-
-
                         </div>
                     ))}
                 </div>
