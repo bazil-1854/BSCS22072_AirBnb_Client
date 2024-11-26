@@ -32,8 +32,6 @@ const FavoriteListings = () => {
                 setListings((prev) => [...prev, ...response.data.listings]);
             }
 
-            //setListings((prev) => [...prev, ...response.data.listings]);
-
             setTotalPages(response.data.totalPages);
         }
         catch (err) {
