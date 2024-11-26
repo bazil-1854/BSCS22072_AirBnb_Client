@@ -10,7 +10,7 @@ import SignInnForm from './Components/Authentication/SignIn';
 import Profile from './Components/Authentication/Profile';
 import AddListing from './Components/Host/AddListing';
 import HostedListings from './Components/Host/HostedListings';
-import EditListing from './Components/Host/EditListing ';
+import EditListing from './Components/Host/EditListing';
 import GuestBookings from './Components/GuestBooking/GetBookings';
 import HostDashboard from './Components/Host/HostDashboard';
 import FinalizeBooking from './Components/GuestBooking/FinalizeBooking';
