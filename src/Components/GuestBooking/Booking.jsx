@@ -10,7 +10,7 @@ import { BsCircle, BsCheckCircle } from "react-icons/bs";
 const Booking = () => {
     const { listingId, hostId } = useParams();
     const location = useLocation();
-    const { listing } = location.state || {};
+    const { listing, ratingReviews } = location.state || {};
     const [blockedDates, setBlockedDates] = useState([]);
     const [selectedDates, setSelectedDates] = useState({ checkIn: null, checkOut: null });
     const [guests, setGuests] = useState({ adults: 1, children: 0, infants: 0 });
@@ -19,6 +19,8 @@ const Booking = () => {
     const [specialRequests, setSpecialRequests] = useState('');
     const [message, setMessage] = useState('');
     const totalAmount = listing.price;
+
+    const [numberOfDays, setNumberOfDays] = useState(null);
 
     useEffect(() => {
         const fetchBlockedDates = async () => {
@@ -35,6 +37,25 @@ const Booking = () => {
         fetchBlockedDates();
     }, [listingId]);
 
+    useEffect(() => {
+        if (selectedDates.checkIn && selectedDates.checkOut) {
+            const checkInDate = new Date(selectedDates.checkIn);
+            const checkOutDate = new Date(selectedDates.checkOut);
+            const timeDifference = checkOutDate - checkInDate;
+
+            if (timeDifference >= 0) {
+                const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+                setNumberOfDays(daysDifference);
+            }
+            else {
+                setNumberOfDays(0);
+            }
+        }
+        else {
+            setNumberOfDays(null);
+        }
+    }, [selectedDates]);
+
     const handleDateChange = (date) => {
         if (!selectedDates.checkIn || (selectedDates.checkIn && selectedDates.checkOut)) {
             setSelectedDates({ checkIn: date, checkOut: null });
@@ -42,7 +63,8 @@ const Booking = () => {
         else {
             if (date > selectedDates.checkIn) {
                 setSelectedDates({ ...selectedDates, checkOut: date });
-            } else {
+            }
+            else {
                 alert('Check-Out date must be after Check-In date.');
             }
         }
@@ -139,7 +161,7 @@ const Booking = () => {
                     <div className="flex justify-between items-center">
                         <div>
                             <p className="text-sm text-gray-500">Guests</p>
-                            <p className='text-rose-700 font-[600]'>{guests.adults + guests.children + guests.infants} guests</p>
+                            <p className='text-rose-700 font-[600]'>{(guests.adults + guests.children + guests.infants) || '0'} guests</p>
                         </div>
                         <MdEdit className="text-gray-500 cursor-pointer" />
                     </div>
@@ -221,12 +243,13 @@ const Booking = () => {
                         />
                         <p className="text-xs text-gray-500 mt-1">We’ll call or text you to confirm your number. Standard message and data rates apply. <p className="text-blue-500 underline">Privacy Policy</p></p>
                     </div>
-                    <button
-                        onClick={handleBooking}
-                        className="w-full py-3 bg-gradient-to-r from-pink-700 to-pink-900 text-white font-semibold rounded-lg"
-                    >
-                        Continue
-                    </button>
+                    {numberOfDays !== null ?
+                        <button onClick={handleBooking} className="w-full py-3 bg-gradient-to-r from-pink-700 to-pink-900 text-white font-semibold rounded-lg" >
+                            Continue
+                        </button> :
+                        <button onClick={handleBooking} disabled className="w-full py-3 bg-rose-400 text-white font-semibold rounded-lg" >
+                            Continue
+                        </button>}
                 </div>
             </div>
 
@@ -240,10 +263,10 @@ const Booking = () => {
                                 className="w-[75px] h-[75px] rounded-lg mr-[15px]"
                             />
                             <div className="space-y-2">
-                                <h3 className="text-lg font-semibold">{listing.title}</h3>
+                                <h3 className="text-lg font-semibold">{listing.name}</h3>
                                 <div className="flex items-center space-x-2">
                                     <FaStar className="text-yellow-500" />
-                                    <p>4.96 (124 reviews) • <FaShieldAlt className="inline" /> {listing.category}</p>
+                                    <p>{ratingReviews.averageRating || ''} <FaShieldAlt className="inline" /> {listing.property_type}</p>
                                 </div>
                                 <div className="text-sm text-gray-500">{listing.address.suburb}, {listing.address.country} </div>
                             </div>

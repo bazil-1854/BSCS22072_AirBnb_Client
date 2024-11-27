@@ -66,7 +66,7 @@ const ListingDetails = () => {
 
   const handleBooking = (id) => {
     navigate(`/booking/${listing.hostID}/${id}`, {
-      state: { listing },
+      state: { listing, ratingReviews },
     });
   };
 
@@ -84,11 +84,10 @@ const ListingDetails = () => {
         </div>
 
         <div className='hidden h-[430px] col-span-2 md:grid grid-cols-2 grid-rows-2 gap-[6px]'>
-          {listing.images.additionalPictures.map((url, index) => (
+          {listing.images.additionalPictures.slice(0, 4).map((url, index) => (
             <div key={index} className="flex items-center justify-center h-full">
               <img src={url} alt={`Additional ${index + 1}`} className="w-full h-full object-cover" />
             </div>
-
           ))}
         </div>
       </div>
@@ -270,20 +269,6 @@ const ListingDetails = () => {
           </div>
         </div>
       </div>
-
-      {/*
-    
-      <div className="p-4">
-        <h1 className="text-2xl font-bold mb-2">{listing.title}</h1>
-        <p className="text-gray-700 mb-4">{listing.type}</p>
-        <p className="text-lg font-semibold text-blue-600 mb-4">${listing.price} per night</p>
-        <div className="flex items-center mb-4">
-          <span className="text-yellow-500 mr-2">★</span>
-          <span className="text-gray-700">{listing.rating}</span>
-        </div>
-        <p className="text-gray-700">Guests: {listing.guests}</p>
-        <p className="text-gray-700">Category: {listing.category}</p>
-      </div>*/}
     </div>
   );
 };
