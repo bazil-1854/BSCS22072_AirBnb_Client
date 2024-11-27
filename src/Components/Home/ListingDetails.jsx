@@ -44,6 +44,8 @@ const ListingDetails = () => {
         setListing(response.data.listing);
         setIsInitiallyFavorited(response.data.isLiked);
         setHostdetails(response.data.hostDetails);
+        
+        console.log(response.data.listing.images.coverPicture)
         setLoading(false);
       }
       catch (err) {

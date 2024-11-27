@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { RiDeleteBinLine } from 'react-icons/ri';
+import { FaRegImage, FaLink } from 'react-icons/fa'; 
 
 const Step1 = ({ formData, handleChange, setCurrentStep }) => (
     <div>
@@ -138,8 +139,8 @@ const Step4 = ({ formData, setCurrentStep, handleAmenityChange, handleAmenityRem
                     onClick={() => handleAmenityRemove(index)}
                     className="text-red-700 text-[15px] lg:text-[22px] mb-[-20px] ml-[15px]"
                 >
-                    
-                <RiDeleteBinLine />
+
+                    <RiDeleteBinLine />
                 </button>
             </div>
         ))}
@@ -165,7 +166,90 @@ const Step4 = ({ formData, setCurrentStep, handleAmenityChange, handleAmenityRem
     </div>
 );
 
-const Step5 = ({ formData, handleChange, setCurrentStep }) => (
+const Step5 = ({ uploadMethod, setUploadMethod, setCurrentStep }) => (
+    <div className="container lg:w-[630px] w-[335px] md:w-[450px]">
+        <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">
+            Choose Image Upload Method:
+        </h2>
+
+        <div className="flex flex-col items-center justify-center">
+            <label
+                className={`flex items-center w-[325px] py-[25px] my-[25px] px-2 border-2 text-rose-900 font-[500] rounded-lg cursor-pointer ${uploadMethod === 'url' ? 'border-rose-600 bg-rose-100' : 'border-gray-300'
+                    }`}
+                onClick={() => setUploadMethod('url')}
+            >
+                <FaLink className="text-rose-600 mr-2" size={24} />
+                <span>Upload Property Info via Image Links</span>
+            </label>
+            <label
+                className={`flex items-center w-[325px] py-[25px]  px-2 border-2 text-rose-900 font-[500] rounded-lg cursor-pointer ${uploadMethod === 'file' ? 'border-rose-600 bg-rose-100' : 'border-gray-300'
+                    }`}
+                onClick={() => setUploadMethod('file')}
+            >
+                <FaRegImage className="text-rose-600 mr-2" size={24} />
+                <span>Upload Property Info Via Image Files</span>
+            </label>
+        </div>
+
+        {/*<div className="flex flex-col items-center">
+      <label className="flex items-center space-x-2 cursor-pointer">
+        <div
+          className={`w-5 h-5 border-2 ${
+            uploadMethod === 'url' ? 'bg-rose-500 border-rose-500' : 'border-gray-400'
+          } rounded-md flex items-center justify-center`}
+        >
+          {uploadMethod === 'url' && (
+            <div className="w-2.5 h-2.5 bg-white rounded-md" />
+          )}
+        </div>
+        <span className="text-gray-700">Use Image URLs</span>
+        <input
+          type="radio"
+          name="uploadMethod"
+          value="url"
+          checked={uploadMethod === 'url'}
+          onChange={(e) => setUploadMethod(e.target.value)}
+          className="hidden"
+        />
+      </label>
+      <label className="flex items-center space-x-2 cursor-pointer">
+        <div
+          className={`w-5 h-5 border-2 ${
+            uploadMethod === 'file' ? 'bg-rose-500 border-rose-500' : 'border-gray-400'
+          } rounded-md flex items-center justify-center`}
+        >
+          {uploadMethod === 'file' && (
+            <div className="w-2.5 h-2.5 bg-white rounded-md" />
+          )}
+        </div>
+        <span className="text-gray-700">Upload Image Files</span>
+        <input
+          type="radio"
+          name="uploadMethod"
+          value="file"
+          checked={uploadMethod === 'file'}
+          onChange={(e) => setUploadMethod(e.target.value)}
+          className="hidden"
+        />
+      </label>
+    </div>*/}
+
+        <button
+            onClick={() => setCurrentStep(4)}
+            className="bg-gray-600 mt-[45px] text-white mr-[10px] px-[25px] py-[5px] rounded-lg"
+        >
+            Back
+        </button>
+        <button
+            onClick={() => setCurrentStep(uploadMethod === 'url' ? 6 : 8)}
+            className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+        >
+            Next
+        </button>
+    </div>
+);
+
+const Step6 = ({ formData, handleChange, setCurrentStep }) => (
     <div>
         <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Place Link for Place and Cover Image:</h2>
         <label>Place Picture</label>
@@ -187,13 +271,13 @@ const Step5 = ({ formData, handleChange, setCurrentStep }) => (
             className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4 placeholder:text-[14px]"
         />
         <button
-            onClick={() => setCurrentStep(4)}
+            onClick={() => setCurrentStep(5)}
             className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
         >
             Back
         </button>
         <button
-            onClick={() => setCurrentStep(6)}
+            onClick={() => setCurrentStep(7)}
             className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
         >
             Next
@@ -201,7 +285,7 @@ const Step5 = ({ formData, handleChange, setCurrentStep }) => (
     </div>
 );
 
-const Step6 = ({ formData,setFormData, handleSubmit, setCurrentStep }) => (
+const Step7 = ({ formData, setFormData, handleSubmit, setCurrentStep }) => (
     <div>
         <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Place Links Property Images:</h2>
         {formData.images.additionalPictures.map((url, index) => (
@@ -241,7 +325,7 @@ const Step6 = ({ formData,setFormData, handleSubmit, setCurrentStep }) => (
             </button>
         )}
         <button
-            onClick={() => setCurrentStep(5)}
+            onClick={() => setCurrentStep(6)}
             className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
         >
             Back
@@ -254,6 +338,99 @@ const Step6 = ({ formData,setFormData, handleSubmit, setCurrentStep }) => (
         </button>
     </div>
 );
+
+const Step8 = ({ setFormData, setCurrentStep }) => {
+    const [placeImage, setPlaceImage] = useState(null);
+    const [coverImage, setCoverImage] = useState(null);
+
+    const handleFileChange = (e, setImage) => {
+        setImage(e.target.files[0]);
+    };
+
+    return (
+        <div className='lg:w-[750px] w-[350px] md:w-[450px]'>
+            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Upload Place and Cover Image</h2>
+            <label>Place Picture:</label>
+            <br />
+            <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, setPlaceImage)}
+                className='my-[12px]  file:bg-rose-800 file:my-[2px] file:text-red-100 file:text-[15px] file:rounded-xl file:px-[15px] file:mr-[15px]'
+            />
+            <br />
+            <label>Cover Picture:</label>
+            <br />
+            <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, setCoverImage)}
+                className='mt-[15px]  file:bg-rose-800 file:my-[2px] file:text-red-100 file:text-[15px] file:rounded-xl file:px-[15px] file:mr-[15px]'
+            />
+            <br />
+            <button
+                onClick={() => setCurrentStep(5)}
+                className="bg-gray-600 text-white mr-[10px] mt-[155px] px-[25px] py-[5px] rounded-lg"
+            >
+                Back
+            </button>
+            <button
+                onClick={() => {
+                    setFormData((prev) => ({ ...prev, placeImage, coverImage }));
+                    setCurrentStep(9);
+                }}
+                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+            >
+                Next
+            </button>
+        </div>
+    );
+};
+
+const Step9 = ({ setFormData, handleFileSubmit, setCurrentStep }) => {
+    const [additionalImages, setAdditionalImages] = useState([null, null, null, null, null]);
+
+    const handleFileChange = (index, file) => {
+        const updatedImages = [...additionalImages];
+        updatedImages[index] = file;
+        setAdditionalImages(updatedImages);
+    };
+
+    return (
+        <div className='lg:w-[750px] w-[350px] md:w-[450px]'>
+            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-6">Upload Additional Images</h2>
+            {additionalImages.map((_, index) => (
+                <div key={index} className="mb-4 flex ">
+                    <label className="block text-gray-700 font-medium mb-2">
+                        Image {index + 1}:
+                    </label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileChange(index, e.target.files[0])}
+                        className='ml-[15px]  file:bg-rose-800 file:my-[2px] file:text-red-100 file:text-[13px] file:rounded-xl file:px-[15px] file:mr-[15px]'
+                    />
+                </div>
+            ))}
+            <button
+                onClick={() => setCurrentStep(8)}
+                className="bg-gray-600 text-white mr-[10px] mt-[55px] px-[25px] py-[5px] rounded-lg"
+            >
+                Back
+            </button>
+            <button
+                onClick={() => {
+                    setFormData((prev) => ({ ...prev, additionalImages }));
+                    handleFileSubmit();
+                }}
+                className="bg-green-600 text-white mr-[10px] mt-auto ml-auto px-[25px] py-[5px] rounded-lg"
+            >
+                Submit
+            </button>
+        </div>
+    );
+};
+
 
 const AddListing = () => {
     const [formData, setFormData] = useState({
@@ -270,9 +447,12 @@ const AddListing = () => {
 
     const [currentStep, setCurrentStep] = useState(1);
 
+    const [uploadMethod, setUploadMethod] = useState('url');
+    const [files, setFiles] = useState([]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-    
+
         setFormData((prevState) => {
             if (name.includes('address.')) {
                 const field = name.split('.')[1];
@@ -291,13 +471,13 @@ const AddListing = () => {
             }
         });
     };
-    
+
 
     const handleAmenityAdd = () => {
         setFormData((prevState) => {
             if (prevState.amenities.length >= 5) {
                 alert('You can only add up to 5 amenities.');
-                return prevState; // Return unchanged state
+                return prevState;
             }
             return {
                 ...prevState,
@@ -334,15 +514,66 @@ const AddListing = () => {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             alert(response.data.message);
-        } catch (error) {
+        }
+        catch (error) {
             console.error(error);
             alert('Error adding listing');
         }
     };
 
-    
+    const handleFileChange = (e) => {
+        setFiles([...e.target.files]);
+    };
 
-    // Render the correct step
+    const handleFileSubmit = async () => {
+        if (!formData.placeImage || !formData.coverImage || formData.additionalImages.length === 0) {
+            alert('Please upload all required images');
+            return;
+        }
+
+        const formDataToSend = new FormData();
+
+        // Appened All listng to the from
+        formDataToSend.append('name', formData.name);
+        formDataToSend.append('summary', formData.summary);
+        formDataToSend.append('property_type', formData.property_type);
+        formDataToSend.append('bedrooms', formData.bedrooms);
+        formDataToSend.append('bathrooms', formData.bathrooms);
+        formDataToSend.append('price', formData.price);
+        formDataToSend.append('address[street]', formData.address.street);
+        formDataToSend.append('address[suburb]', formData.address.suburb);
+        formDataToSend.append('address[country]', formData.address.country);
+        formDataToSend.append('amenities', JSON.stringify(formData.amenities));
+
+        formDataToSend.append('placeImage', formData.placeImage);
+        formDataToSend.append('coverImage', formData.coverImage);
+        formData.additionalImages.forEach((image, index) => {
+            formDataToSend.append(`additionalImages`, image);
+        });
+
+        try {
+            const token = localStorage.getItem('token');
+
+            const response = await axios.post(
+                `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/hosting/add-listing-with-images`,
+                formDataToSend,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            alert(response.data.message);
+        }
+        catch (error) {
+            console.error('Error submitting listing with images:', error);
+            alert('Failed to submit the listing. Please try again.');
+        }
+    };
+
+
     return (
         <main className='bg-gray-100 p-4 min-h-screen flex flex-col justify-center items-center pt-[100px] w-full h-full'>
             <div className='max-w-2xl'>
@@ -352,13 +583,33 @@ const AddListing = () => {
                 </p>
 
             </div>
-            <div className="max-w-2xl overflow-hidden p-6 h-[420px] bg-white shadow border rounded-[25px]">
+            <div className="max-w-2xl overflow-hidden p-6 h-[430px] bg-white shadow border rounded-[25px]">
                 {currentStep === 1 && <Step1 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} />}
                 {currentStep === 2 && <Step2 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} />}
                 {currentStep === 3 && <Step3 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} />}
                 {currentStep === 4 && <Step4 formData={formData} setCurrentStep={setCurrentStep} handleAmenityChange={handleAmenityChange} handleAmenityRemove={handleAmenityRemove} handleAmenityAdd={handleAmenityAdd} />}
-                {currentStep === 5 && <Step5 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} setFormData={setFormData}/>}
-                {currentStep === 6 && <Step6 formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} setCurrentStep={setCurrentStep} setFormData={setFormData}/>}
+                {/*currentStep === 5 && <Step5 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} setFormData={setFormData}/>*/}
+                {/*currentStep === 6 && <Step6 formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} setCurrentStep={setCurrentStep} setFormData={setFormData}/>*/}
+
+                {currentStep === 5 && (
+                    <Step5
+                        uploadMethod={uploadMethod}
+                        setUploadMethod={setUploadMethod}
+                        setCurrentStep={setCurrentStep}
+                    />
+                )}
+                {uploadMethod === 'url' && currentStep === 6 && (
+                    <Step6 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} setFormData={setFormData} />
+                )}
+                {uploadMethod === 'url' && currentStep === 7 && (
+                    <Step7 formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} setCurrentStep={setCurrentStep} />
+                )}
+                {uploadMethod === 'file' && currentStep === 8 && (
+                    <Step8 handleFileChange={handleFileChange} setFormData={setFormData} setCurrentStep={setCurrentStep} />
+                )}
+                {uploadMethod === 'file' && currentStep === 9 && (
+                    <Step9 handleFileSubmit={handleFileSubmit} setFormData={setFormData} setCurrentStep={setCurrentStep} />
+                )}
             </div>
         </main>
     );
