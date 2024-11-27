@@ -128,10 +128,10 @@ const EditListing = () => {
     <div className='bg-gray-50 flex px-4 flex-col justify-center pt-[110px] min-h-screen items-center'>
 
       <div className="max-w-[950px] p-6 bg-white border rounded-lg shadow-md">
-      <h3 className='text-[24px] mb-[15px] text-rose-600 font-[700] text-center'>Edit Property Details Listing</h3>
+        <h3 className='text-[24px] mb-[15px] text-rose-600 font-[700] text-center'>Edit Property Details Listing</h3>
         <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* First Column */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:col-span-1 col-span-3">
             <div>
               <label className="text-gray-600 mb-1 flex items-center">
                 <FaHome className="mr-2" />
@@ -176,7 +176,7 @@ const EditListing = () => {
 
           </div>
           {/* Second Column */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:col-span-1 col-span-3">
             <div>
               <label className="text-gray-600 mb-1 flex items-center">
                 <FaDollarSign className="mr-2" />
@@ -221,7 +221,7 @@ const EditListing = () => {
             </div>
           </div>
           {/* Tjird Column */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:col-span-1 col-span-3">
             <div>
               <label className="text-gray-600 mb-1 flex items-center">
                 <MdLocationOn className="mr-2" />
@@ -265,6 +265,7 @@ const EditListing = () => {
               />
             </div>
           </div>
+
           {/* 4th column */}
           <div className="col-span-3 space-y-4">
             <div>
@@ -358,47 +359,47 @@ const EditListing = () => {
             </button>
           </div>
           <aside className="col-span-3 space-y-4 space-x-[35px]">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Image Preview</h3> 
-            <div className='flex flex-wrap'>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Image Preview</h3>
+            <div className='md:flex'>
               {/* Preview of Place Picture */}
-            {formData.images.placePicture && (
-              <div className="mb-4">
-                <label className="block text-gray-600 mb-1">Place Picture Preview</label>
-                <img
-                  src={formData.images.placePicture}
-                  alt="Place Picture"
-                  className="w-[150px] h-[100px] object-cover rounded-md"
-                />
-              </div>
-            )}
-            
-
-            {/* Preview of Cover Picture */}
-            {formData.images.coverPicture && (
-              <div className="mb-4 ml-[45px]">
-                <label className="block text-gray-600 mb-1">Cover Picture Preview</label>
-                <img
-                  src={formData.images.coverPicture}
-                  alt="Cover Picture"
-                  className="w-[150px] h-[100px] object-cover rounded-md"
-                />
-              </div>
-            )} 
-            </div>
-            <div className='grid grid-cols-3'>
-              {/* Preview of Additional Pictures */}
-            {formData.images.additionalPictures.map((url, index) =>
-              url ? (
-                <div key={index} className="mb-4">
-                  <label className="block text-gray-600 mb-1">Property Image {index + 1}'s' Preview</label>
+              {formData.images.placePicture && (
+                <div className="mb-4">
+                  <label className="block text-gray-600 mb-1">Place Picture Preview</label>
                   <img
-                    src={url}
-                    alt={`Additional Picture ${index + 1}`}
-                    className="w-[150px] h-[100px] object-cover rounded-md"
+                    src={formData.images.placePicture}
+                    alt="Place Picture"
+                    className="w-[250px] md:w-[150px] h-[160px] md:h-[100px] object-cover rounded-md"
                   />
                 </div>
-              ) : null
-            )}
+              )}
+
+              {/* Preview of Cover Picture */}
+              {formData.images.coverPicture && (
+                <div className="mb-4 md:ml-[45px]">
+                  <label className="block text-gray-600 mb-1">Cover Picture Preview</label>
+                  <img
+                    src={formData.images.coverPicture}
+                    alt="Cover Picture"
+                    className="w-[250px] md:w-[150px] h-[160px] md:h-[100px] object-cover rounded-md"
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className='grid grid-cols-1 md:grid-cols-3'>
+              {/* Preview of Additional Pictures */}
+              {formData.images.additionalPictures.map((url, index) =>
+                url ? (
+                  <div key={index} className="mb-4">
+                    <label className="block text-gray-600 mb-1">Property Image {index + 1}'s' Preview</label>
+                    <img
+                      src={url}
+                      alt={`Additional Picture ${index + 1}`}
+                      className="w-[250px] md:w-[150px] h-[160px] md:h-[100px] object-cover rounded-md"
+                    />
+                  </div>
+                ) : null
+              )}
             </div>
           </aside>
         </form>

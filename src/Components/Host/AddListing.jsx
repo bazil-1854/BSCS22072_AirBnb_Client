@@ -2,6 +2,259 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { RiDeleteBinLine } from 'react-icons/ri';
 
+const Step1 = ({ formData, handleChange, setCurrentStep }) => (
+    <div>
+        <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Property's Info:</h2>
+        <div>
+            <label>Name</label>
+            <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+            />
+            <label>Summary</label>
+            <textarea
+                name="summary"
+                value={formData.summary}
+                onChange={handleChange}
+                className="w-full py-2 appearance-none border-b style-none border-gray-400 focus:outline-none mb-4"
+            />
+            <label>Property Type</label>
+            <input
+                type="text"
+                name="property_type"
+                value={formData.property_type}
+                onChange={handleChange}
+                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+            />
+        </div>
+        <button
+            onClick={() => setCurrentStep(2)}
+            className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+        >
+            Next
+        </button>
+    </div>
+);
+
+const Step2 = ({ formData, handleChange, setCurrentStep }) => (
+    <div>
+        <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Property Details:</h2>
+        <label>Bedrooms</label>
+        <input
+            type="number"
+            name="bedrooms"
+            value={formData.bedrooms}
+            onChange={handleChange}
+            className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+        />
+        <label>Bathrooms</label>
+        <input
+            type="number"
+            name="bathrooms"
+            value={formData.bathrooms}
+            onChange={handleChange}
+            className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+        />
+        <label>Price</label>
+        <input
+            type="number"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+        />
+        <button
+            onClick={() => setCurrentStep(1)}
+            className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+        >
+            Back
+        </button>
+        <button
+            onClick={() => setCurrentStep(3)}
+            className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+        >
+            Next
+        </button>
+    </div>
+);
+
+const Step3 = ({ formData, handleChange, setCurrentStep }) => (
+    <div>
+        <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Property's Address:</h2>
+        <label>Street</label>
+        <input
+            type="text"
+            name="address.street"
+            value={formData.address.street}
+            onChange={handleChange}
+            className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+        />
+        <label>Suburb</label>
+        <input
+            type="text"
+            name="address.suburb"
+            value={formData.address.suburb}
+            onChange={handleChange}
+            className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+        />
+        <label>Country</label>
+        <input
+            type="text"
+            name="address.country"
+            value={formData.address.country}
+            onChange={handleChange}
+            className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+        />
+        <button
+            onClick={() => setCurrentStep(2)}
+            className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+        >
+            Back
+        </button>
+        <button
+            onClick={() => setCurrentStep(4)}
+            className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+        >
+            Next
+        </button>
+    </div>
+);
+
+const Step4 = ({ formData, setCurrentStep, handleAmenityChange, handleAmenityRemove, handleAmenityAdd }) => (
+    <div className='lg:w-[750px] w-[350px] md:w-[450px]'>
+        <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Customer Rules and Guidelines</h2>
+        {formData.amenities.map((amenity, index) => (
+            <div key={index} className="flex items-center mb-2">
+                <input
+                    type="text"
+                    value={amenity}
+                    onChange={(e) => handleAmenityChange(index, e.target.value)}
+                    className="w-[80%] lg:w-[77%] p-2 border-b border-gray-400"
+                />
+                <button
+                    onClick={() => handleAmenityRemove(index)}
+                    className="text-red-700 text-[15px] lg:text-[22px] mb-[-20px] ml-[15px]"
+                >
+                    
+                <RiDeleteBinLine />
+                </button>
+            </div>
+        ))}
+        <button
+            onClick={handleAmenityAdd}
+            className="bg-green-700 text-[14px] mb-[12px] text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+        >
+            Add Amenity
+        </button>
+        <br />
+        <button
+            onClick={() => setCurrentStep(3)}
+            className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+        >
+            Back
+        </button>
+        <button
+            onClick={() => setCurrentStep(5)}
+            className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+        >
+            Next
+        </button>
+    </div>
+);
+
+const Step5 = ({ formData, handleChange, setCurrentStep }) => (
+    <div>
+        <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Place Link for Place and Cover Image:</h2>
+        <label>Place Picture</label>
+        <input
+            type="text"
+            name="images.placePicture"
+            placeholder='Enter image URL for Place Picture'
+            value={formData.images.placePicture}
+            onChange={handleChange}
+            className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4 placeholder:text-[14px]"
+        />
+        <label>Cover Picture</label>
+        <input
+            type="text"
+            name="images.coverPicture"
+            value={formData.images.coverPicture}
+            onChange={handleChange}
+            placeholder='Enter image URL for Cover Picture'
+            className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4 placeholder:text-[14px]"
+        />
+        <button
+            onClick={() => setCurrentStep(4)}
+            className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+        >
+            Back
+        </button>
+        <button
+            onClick={() => setCurrentStep(6)}
+            className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+        >
+            Next
+        </button>
+    </div>
+);
+
+const Step6 = ({ formData,setFormData, handleSubmit, setCurrentStep }) => (
+    <div>
+        <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Place Links Property Images:</h2>
+        {formData.images.additionalPictures.map((url, index) => (
+            <input
+                key={index}
+                type="text"
+                value={url}
+                placeholder={`Enter image URL for Image ${index + 1}`}
+                onChange={(e) =>
+                    setFormData((prevState) => {
+                        const updatedPictures = [...prevState.images.additionalPictures];
+                        updatedPictures[index] = e.target.value;
+                        return {
+                            ...prevState,
+                            images: { ...prevState.images, additionalPictures: updatedPictures },
+                        };
+                    })
+                }
+                className="w-full p-2 border rounded mb-2 placeholder:text-[14px]"
+            />
+        ))}
+        <p className=' mt-[15px]'></p>
+        {formData.images.additionalPictures.length < 5 && (
+            <button
+                onClick={() =>
+                    setFormData((prevState) => ({
+                        ...prevState,
+                        images: {
+                            ...prevState.images,
+                            additionalPictures: [...prevState.images.additionalPictures, ''],
+                        },
+                    }))
+                }
+                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+            >
+                Add Picture
+            </button>
+        )}
+        <button
+            onClick={() => setCurrentStep(5)}
+            className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+        >
+            Back
+        </button>
+        <button
+            onClick={handleSubmit}
+            className="bg-green-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
+        >
+            Submit
+        </button>
+    </div>
+);
+
 const AddListing = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -19,27 +272,26 @@ const AddListing = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name.includes('address.')) {
-            const field = name.split('.')[1];
-            setFormData((prevState) => ({
-                ...prevState,
-                address: { ...prevState.address, [field]: value },
-            }));
-        }
-        else if (name.includes('images.')) {
-            const field = name.split('.')[1];
-            setFormData((prevState) => ({
-                ...prevState,
-                images: { ...prevState.images, [field]: value },
-            }));
-        }
-        else {
-            setFormData((prevState) => ({
-                ...prevState,
-                [name]: value,
-            }));
-        }
+    
+        setFormData((prevState) => {
+            if (name.includes('address.')) {
+                const field = name.split('.')[1];
+                return {
+                    ...prevState,
+                    address: { ...prevState.address, [field]: value },
+                };
+            } else if (name.includes('images.')) {
+                const field = name.split('.')[1];
+                return {
+                    ...prevState,
+                    images: { ...prevState.images, [field]: value },
+                };
+            } else {
+                return { ...prevState, [name]: value };
+            }
+        });
     };
+    
 
     const handleAmenityAdd = () => {
         setFormData((prevState) => {
@@ -88,258 +340,7 @@ const AddListing = () => {
         }
     };
 
-    const Step1 = () => (
-        <div>
-            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Property's Info:</h2>
-            <div>
-                <label>Name</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
-                />
-                <label>Summary</label>
-                <textarea
-                    name="summary"
-                    value={formData.summary}
-                    onChange={handleChange}
-                    className="w-full py-2 appearance-none border-b style-none border-gray-400 focus:outline-none mb-4"
-                />
-                <label>Property Type</label>
-                <input
-                    type="text"
-                    name="property_type"
-                    value={formData.property_type}
-                    onChange={handleChange}
-                    className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
-                />
-            </div>
-            <button
-                onClick={() => setCurrentStep(2)}
-                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
-            >
-                Next
-            </button>
-        </div>
-    );
-
-    const Step2 = () => (
-        <div>
-            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Property Details:</h2>
-            <label>Bedrooms</label>
-            <input
-                type="number"
-                name="bedrooms"
-                value={formData.bedrooms}
-                onChange={handleChange}
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
-            />
-            <label>Bathrooms</label>
-            <input
-                type="number"
-                name="bathrooms"
-                value={formData.bathrooms}
-                onChange={handleChange}
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
-            />
-            <label>Price</label>
-            <input
-                type="number"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
-            />
-            <button
-                onClick={() => setCurrentStep(1)}
-                className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
-            >
-                Back
-            </button>
-            <button
-                onClick={() => setCurrentStep(3)}
-                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
-            >
-                Next
-            </button>
-        </div>
-    );
-
-    const Step3 = () => (
-        <div>
-            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Property's Address:</h2>
-            <label>Street</label>
-            <input
-                type="text"
-                name="address.street"
-                value={formData.address.street}
-                onChange={handleChange}
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
-            />
-            <label>Suburb</label>
-            <input
-                type="text"
-                name="address.suburb"
-                value={formData.address.suburb}
-                onChange={handleChange}
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
-            />
-            <label>Country</label>
-            <input
-                type="text"
-                name="address.country"
-                value={formData.address.country}
-                onChange={handleChange}
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
-            />
-            <button
-                onClick={() => setCurrentStep(2)}
-                className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
-            >
-                Back
-            </button>
-            <button
-                onClick={() => setCurrentStep(4)}
-                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
-            >
-                Next
-            </button>
-        </div>
-    );
-
-    const Step4 = () => (
-        <div className='lg:w-[750px] w-[350px] md:w-[450px]'>
-            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Customer Rules and Guidelines</h2>
-            {formData.amenities.map((amenity, index) => (
-                <div key={index} className="flex items-center mb-2">
-                    <input
-                        type="text"
-                        value={amenity}
-                        onChange={(e) => handleAmenityChange(index, e.target.value)}
-                        className="w-[80%] lg:w-[77%] p-2 border-b border-gray-400"
-                    />
-                    <button
-                        onClick={() => handleAmenityRemove(index)}
-                        className="text-red-700 text-[15px] lg:text-[22px] mb-[-20px] ml-[15px]"
-                    >
-                        
-                    <RiDeleteBinLine />
-                    </button>
-                </div>
-            ))}
-            <button
-                onClick={handleAmenityAdd}
-                className="bg-green-700 text-[14px] mb-[12px] text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
-            >
-                Add Amenity
-            </button>
-            <br />
-            <button
-                onClick={() => setCurrentStep(3)}
-                className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
-            >
-                Back
-            </button>
-            <button
-                onClick={() => setCurrentStep(5)}
-                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
-            >
-                Next
-            </button>
-        </div>
-    );
-
-    const Step5 = () => (
-        <div>
-            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Place Link for Place and Cover Image:</h2>
-            <label>Place Picture</label>
-            <input
-                type="text"
-                name="images.placePicture"
-                placeholder='Enter image URL for Place Picture'
-                value={formData.images.placePicture}
-                onChange={handleChange}
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4 placeholder:text-[14px]"
-            />
-            <label>Cover Picture</label>
-            <input
-                type="text"
-                name="images.coverPicture"
-                value={formData.images.coverPicture}
-                onChange={handleChange}
-                placeholder='Enter image URL for Cover Picture'
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4 placeholder:text-[14px]"
-            />
-            <button
-                onClick={() => setCurrentStep(4)}
-                className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
-            >
-                Back
-            </button>
-            <button
-                onClick={() => setCurrentStep(6)}
-                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
-            >
-                Next
-            </button>
-        </div>
-    );
-
-    const Step6 = () => (
-        <div>
-            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Place Links Property Images:</h2>
-            {formData.images.additionalPictures.map((url, index) => (
-                <input
-                    key={index}
-                    type="text"
-                    value={url}
-                    placeholder={`Enter image URL for Image ${index + 1}`}
-                    onChange={(e) =>
-                        setFormData((prevState) => {
-                            const updatedPictures = [...prevState.images.additionalPictures];
-                            updatedPictures[index] = e.target.value;
-                            return {
-                                ...prevState,
-                                images: { ...prevState.images, additionalPictures: updatedPictures },
-                            };
-                        })
-                    }
-                    className="w-full p-2 border rounded mb-2 placeholder:text-[14px]"
-                />
-            ))}
-            <p className=' mt-[15px]'></p>
-            {formData.images.additionalPictures.length < 5 && (
-                <button
-                    onClick={() =>
-                        setFormData((prevState) => ({
-                            ...prevState,
-                            images: {
-                                ...prevState.images,
-                                additionalPictures: [...prevState.images.additionalPictures, ''],
-                            },
-                        }))
-                    }
-                    className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
-                >
-                    Add Picture
-                </button>
-            )}
-            <button
-                onClick={() => setCurrentStep(5)}
-                className="bg-gray-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
-            >
-                Back
-            </button>
-            <button
-                onClick={handleSubmit}
-                className="bg-green-600 text-white mr-[10px] mt-auto ml-auto  px-[25px] py-[5px] rounded-lg"
-            >
-                Submit
-            </button>
-        </div>
-    );
+    
 
     // Render the correct step
     return (
@@ -352,12 +353,12 @@ const AddListing = () => {
 
             </div>
             <div className="max-w-2xl overflow-hidden p-6 h-[420px] bg-white shadow border rounded-[25px]">
-                {currentStep === 1 && <Step1 />}
-                {currentStep === 2 && <Step2 />}
-                {currentStep === 3 && <Step3 />}
-                {currentStep === 4 && <Step4 />}
-                {currentStep === 5 && <Step5 />}
-                {currentStep === 6 && <Step6 />}
+                {currentStep === 1 && <Step1 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} />}
+                {currentStep === 2 && <Step2 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} />}
+                {currentStep === 3 && <Step3 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} />}
+                {currentStep === 4 && <Step4 formData={formData} setCurrentStep={setCurrentStep} handleAmenityChange={handleAmenityChange} handleAmenityRemove={handleAmenityRemove} handleAmenityAdd={handleAmenityAdd} />}
+                {currentStep === 5 && <Step5 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} setFormData={setFormData}/>}
+                {currentStep === 6 && <Step6 formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} setCurrentStep={setCurrentStep} setFormData={setFormData}/>}
             </div>
         </main>
     );

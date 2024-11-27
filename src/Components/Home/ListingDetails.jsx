@@ -61,7 +61,7 @@ const ListingDetails = () => {
   }
 
   if (error) {
-    return <div className="text-center mt-10 text-red-500">{error}</div>;
+    return <div className="text-center min-h-screen mt-[250px] text-red-500">{error}</div>;
   }
 
   const handleBooking = (id) => {

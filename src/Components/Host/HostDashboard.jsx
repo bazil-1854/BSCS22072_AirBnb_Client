@@ -79,7 +79,7 @@ const HostBookings = () => {
     return (
         <div className='bg-gray-50 pt-[115px] p-6 min-h-screen justify-center items-center '>
             <div className="max-w-[1350px] mx-auto" >
-                <h3 className='text-[24px] mb-[15px] text-rose-600 font-[700]'>Applied Bookings For Your Properties:</h3>
+                <h3 className='text-[20px] md:text-[24px] mb-[15px] text-rose-600 font-[700]'>Applied Bookings For Your Properties:</h3>
                 <div className='h-[2.5px] bg-rose-600 mb-[35px] lg:mb-[55px]'></div>
                 <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
                     {bookings.map((booking) => (
@@ -109,17 +109,15 @@ const HostBookings = () => {
 
                             <div className='ml-[53px] flex items-center space-x-2'>
                                 <p className='text-[13px] font-[600] text-gray-500 '>Status</p>
-                                <p className={`scale-[0.95] font-[600] px-[12px] py-[2px] mt-[5px] text-white rounded-[30px] text-[12px] ${booking.status === 'paid' ? 'bg-green-800' : booking.status === 'pending' ? 'bg-yellow-600' : booking.status === 'confirmed' ? 'bg-blue-800' : booking.status === 'canceled' ? 'bg-red-800' : booking.status === 'completed' ? 'text-gray-800' : ''}`}>{booking.status}</p>
+                                <span className={`font-[600] px-[12px] pb-[1.8px] mt-[5px] text-white rounded-[30px] text-[11px] ${booking.status === 'paid' ? 'bg-green-800' : booking.status === 'pending' ? 'bg-yellow-600' : booking.status === 'confirmed' ? 'bg-blue-800' : booking.status === 'canceled' ? 'bg-red-800' : booking.status === 'completed' ? 'text-gray-800' : ''}`}>{booking.status}</span>
                             </div>
 
                             <div className='ml-[53px] flex items-center space-x-2'>
                                 <p className='text-[13px] font-[600] text-gray-500 '>Property Type</p>
                                 <p className='font-[600] text-[14px] text-rose-800'>{booking.listingDetails.property_type}</p>
                             </div>
-                            <p
-                                className="mt-[15px] ml-[53px] flex space-x-3 items-center text-rose-600 cursor-pointer underline"
-                                onClick={() => fetchGuestDetails(booking.userID)}
-                            >
+
+                            <p className="mt-[15px] ml-[53px] flex space-x-3 items-center text-rose-600 cursor-pointer underline" onClick={() => fetchGuestDetails(booking.userID)} >
                                 <FaInfoCircle size={20} />
                                 <span>User Contact/Info</span>
                             </p>
