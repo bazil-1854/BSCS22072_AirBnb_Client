@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { FaBars, FaHeart, FaSearch, FaSlidersH, FaTimes, FaUser, FaUserCircle } from 'react-icons/fa';
+import { FaBars, FaBed, FaHeart, FaSearch, FaSlidersH, FaTimes, FaUser, FaUserCircle } from 'react-icons/fa';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import airbnb from "../logo.svg";
 import { LuGlobe } from 'react-icons/lu';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { FiHome } from 'react-icons/fi';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -162,7 +163,7 @@ const Navbar = () => {
                                     Host Dashboard
                                 </NavLink>
                                 <NavLink to="/add-listing" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                   Add Listing
+                                    Add Listing
                                 </NavLink>
                                 <NavLink to="/favourite-listings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Favourites
@@ -217,20 +218,29 @@ const Navbar = () => {
                         </div>
                     </div>
                 )}
-                <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg flex px-[55px] justify-around py-2">
-                    <div className="flex flex-col items-center">
-                        <FaSearch className="text-red-500 mb-[6px]" size={22} />
-                        <span className="text-xs text-gray-600">Explore</span>
-                    </div>
-                    <div className="flex flex-col items-center">
-                        <FaHeart className="text-gray-400 mb-[6px]" size={22} />
-                        <span className="text-xs text-gray-600">Wishlist</span>
-                    </div>
-                    <div className="flex flex-col items-center">
-                        <FaUser className="text-gray-400 mb-[6px]" size={22} />
-                        <span className="text-xs text-gray-600">Login</span>
-                    </div>
+                <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg flex px-[40px] justify-between py-2">
+                    <NavLink to="/" className={({ isActive }) =>`flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400' }`} >
+                        <FiHome className="mb-[6px]" size={22} />
+                        <span className="text-xs">Home</span>
+                    </NavLink>
+                    <NavLink to="/search" className={({ isActive }) =>`flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400' }`} >
+                        <FaSearch className="mb-[6px]" size={22} />
+                        <span className="text-xs">Explore</span>
+                    </NavLink>
+                    <NavLink to="/favourite-listings" className={({ isActive }) =>`flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400' }`} >
+                        <FaHeart className="mb-[6px]" size={22} />
+                        <span className="text-xs">Favourites</span>
+                    </NavLink>
+                    <NavLink to="/reserved-bookings" className={({ isActive }) =>`flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400' }`} >
+                        <FaBed className="scale-[1.2] mb-[6px]" size={22} />
+                        <span className="text-xs">MyBookings</span>
+                    </NavLink>
+                    <NavLink to="/profile" className={({ isActive }) =>`flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400' }`} >
+                        <FaUser className="mb-[6px]" size={22} />
+                        <span className="text-xs">Profile</span>
+                    </NavLink>
                 </div>
+
             </nav>
         </header>
     );
