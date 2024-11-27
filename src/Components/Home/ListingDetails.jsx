@@ -45,7 +45,10 @@ const ListingDetails = () => {
         setIsInitiallyFavorited(response.data.isLiked);
         setHostdetails(response.data.hostDetails);
         
-        console.log(response.data.listing.images.coverPicture)
+        //console.log(response.data.listing.images.coverPicture)
+        
+        //console.log(hostdetails.name)
+        
         setLoading(false);
       }
       catch (err) {
@@ -76,8 +79,10 @@ const ListingDetails = () => {
     <div className="w-full overflow-x-hidden xl:px-[180px] min-h-screen p-6 bg-white">
 
       {showModal && <Reviews listingId={id} ratingReviews={ratingReviews} onClose={() => setShowModal(false)} />}
-      <div className='mt-[120px] grid w-full overflow-hidden gap-[6px] grid-cols-5 rounded-[25px]'>
-        <div className="col-span-5 h-[430px] md:col-span-3">
+      <h2 className="mt-[85px] mb-[20px] md:text-[30px] text-rose-950  font-semibold">{listing.name}</h2>
+             
+      <div className='grid w-full overflow-hidden gap-[6px] grid-cols-5 rounded-[25px]'>
+        <div className="col-span-5 h-[250px] sm:h-[350px] md:h-[430px] md:col-span-3">
           <img
             src={listing.images.coverPicture}
             alt={listing.title}
@@ -93,28 +98,29 @@ const ListingDetails = () => {
           ))}
         </div>
       </div>
-      <div className="container mx-auto p-4 space-y-6 md:space-y-8 lg:grid lg:grid-cols-3 lg:gap-6 lg:space-y-0">
+
+      <div className="mt-[15px] container mx-auto md:p-4 space-y-6 md:space-y-8 lg:grid lg:grid-cols-3 lg:gap-6 lg:space-y-0">
         <div className="lg:col-span-2 space-y-4">
-          <div className='flex justify-between items-center'>
+          <div className='flex md:flex-row flex-col md:justify-between md:items-center space-y-4'>
             <div>
-              <h2 className="text-2xl font-semibold">{listing.name}</h2>
-              <p className="text-gray-600">1 bed · Shared bathroom</p>
+              <h2 className="text-2xl font-semibold">{listing.property_type || ''} In {listing.address.suburb || ''}, {listing.address.country || ''}</h2>
+              <p className="text-gray-600">{listing.bedrooms} beds · {listing.bathrooms} Shared bathroom</p>
             </div>
             <FavoriteButton listingId={id} isInitiallyFavorited={isInitiallyFavorited} />
           </div>
 
-          <div className="grid grid-cols-5 border shadow-md px-[45px] py-[15px] rounded-[28px] space-y-2 md:space-y-0 md:flex-row md:items-center md:space-x-4">
-            <div className="flex flex-col items-center font-[500] text-lg">
+          <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 border shadow-md px-[8px] md:px-[45px] py-[15px] rounded-[28px] space-y-2 md:space-y-0 md:flex-row md:items-center md:space-x-4">
+            <div className="md:scale-[1] scale-[0.8] flex flex-col items-center border-r-[2px] font-[500] text-lg">
               <span>Guest</span>
               <span className='mt-[-5px]'>favorite</span>
             </div>
 
-            <p className="text-[14px] font-[600] border-r-[2px] border-l-[2px] col-span-2 lg:block hidden text-center">
+            <p className="text-[14px] font-[600] border-r-[2px] col-span-2 lg:block hidden text-center">
               One of the most loved homes on Airbnb, according to guests
             </p>
 
             <div className='flex flex-col items-center border-r-[2px] justify-center'>
-              <p className="font-semibold text-[18px]">{ratingReviews.averageRating}</p>
+              <p className="font-semibold text-[15px] md:text-[18px]">{ratingReviews.averageRating}</p>
               <div className='flex'>
                 {[...Array(Math.floor(ratingReviews.averageRating))].map((_, index) => (
                   <FaStar size={15} key={`full-${index}`} className="text-yellow-500" />
@@ -129,8 +135,8 @@ const ListingDetails = () => {
             </div>
 
             <button onClick={() => setShowModal(true)} className="flex flex-col items-center justify-center">
-              <span className='text-[24px] text-rose-700 font-[600]'>{ratingReviews.arraySize}</span>
-              <span className='text-rose-900 mt-[-8px] underline'>Review</span>
+              <span className='text-[20px] md:text-[24px] text-rose-700 font-[600]'>{ratingReviews.arraySize}</span>
+              <span className='text-rose-900 mt-[-8px] text-[14px] md:text-[19px] underline'>Review</span>
             </button>
             
           </div>
@@ -140,8 +146,8 @@ const ListingDetails = () => {
               <div className='h-full w-full rounded-full bg-gray-600'></div>
             </div>
             <div>
-              <p className="font-semibold">{hostdetails.username}</p>
-              <p className="text-gray-500 text-sm">SuperHost ·
+              <p className="font-semibold text-red-700">{hostdetails.name}</p>
+              <p className="text-gray-500 text-sm">{ratingReviews.averageRating > 4 ? 'Super Host' : 'Host'} ·
                 {(() => {
                   const reviewDate = new Date(hostdetails.createdAt);
                   const now = new Date();
