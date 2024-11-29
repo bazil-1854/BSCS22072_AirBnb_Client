@@ -11,12 +11,11 @@ const HostBookings = () => {
     const [showModal, setShowModal] = useState(false);
     const [guestDetails, setGuestDetails] = useState(null);
     const [modalLoading, setModalLoading] = useState(false);
-
-    // Fetch bookings for host listings
+ 
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const token = localStorage.getItem('token'); // Retrieve token for authentication
+                const token = localStorage.getItem('token'); 
                 const response = await axios.get(
                     `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/manage-bookings/host-listings-bookings`,
                     {
@@ -35,8 +34,7 @@ const HostBookings = () => {
 
         fetchBookings();
     }, []);
-
-    // Update booking status
+ 
     const updateStatus = async (bookingID, status) => {
         try {
             const token = localStorage.getItem('token');
@@ -51,8 +49,7 @@ const HostBookings = () => {
             alert('Failed to update booking status.');
         }
     };
-
-    // Fetch guest details
+ 
     const fetchGuestDetails = async (userId) => {
         setModalLoading(true);
         console.log(userId);
@@ -93,7 +90,7 @@ const HostBookings = () => {
                                 </div>
                                 <div className='flex md:flex-row flex-col ml-[15px] md:items-center justify-center'>
                                     <p className='text-[12px] md:text-[15px] font-[600] text-gray-500 '>Property Name:</p>
-                                    <p className='font-[600] text-[15px] md:text-[18px] md:ml-[10px] text-rose-800'><p>{`${booking.listingDetails.name.slice(0, 35)}...` || 'N/A'}</p></p>
+                                    <div className='font-[600] text-[15px] md:text-[18px] md:ml-[10px] text-rose-800'><p>{`${booking.listingDetails.name.slice(0, 35)}...` || 'N/A'}</p></div>
                                 </div>
                             </div>
 

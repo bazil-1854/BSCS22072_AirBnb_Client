@@ -8,6 +8,8 @@ import { LuGlobe } from 'react-icons/lu';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FiHome } from 'react-icons/fi';
 import { useAuthContext } from '../AuthProvider';
+import { MdAssessment } from 'react-icons/md';
+import { IoBookmarksOutline } from 'react-icons/io5';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -159,21 +161,35 @@ const Navbar = () => {
                                 )}
 
                                 <div className="w-full bg-gray-200 h-[2px] my-2"></div>
+
+                                {user &&
+                                    <>{userRole === 'Host' ? <>
+                                        <NavLink to="/host-listing" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                            Host Listing
+                                        </NavLink>
+                                        <NavLink to="/host-bookings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                            Host Bookings
+                                        </NavLink>
+                                        <NavLink to="/add-listing" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                            Add Listing
+                                        </NavLink>
+                                    </>
+                                        : <>
+                                            <NavLink to="/favourite-listings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                                Favourites
+                                            </NavLink>
+                                            <NavLink to="/reserved-bookings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                                Reserved Bookings
+                                            </NavLink>
+                                        </>}
+                                    </>
+                                }
                                 <NavLink to="/host-listing" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Host Listing
+                                    Gift Cards
                                 </NavLink>
-                                <NavLink to="/host-dashboard" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Host Dashboard
-                                </NavLink>
-                                <NavLink to="/add-listing" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Add Listing
-                                </NavLink>
-                                <NavLink to="/favourite-listings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Favourites
-                                </NavLink>
-                                <NavLink to="/reserved-bookings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Reserved Bookings
-                                </NavLink>
+                                <NavLink to="/host-bookings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                    Help Center
+                                </NavLink> 
                             </div>
                         </div>
                     )}
@@ -190,34 +206,49 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className='w-[15%] flex justify-center'>
-                        <button className=" border-[2px] p-2 border-gray-500 rounded-full bg-gray-100">
+                        <p className=" border-[2px] p-2 border-gray-500 rounded-full bg-gray-100">
                             <FaSlidersH onClick={toggleMenu} className="text-gray-500" size={20} />
-                        </button>
+                        </p>
                     </div>
 
                 </div>
                 {isOpen && (
                     <div className="sm:hidden">
                         <div className="flex flex-col bg-white rounded-lg shadow-md mt-2 p-4">
-                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                Sign up
-                            </NavLink>
-                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                Log in
-                            </NavLink>
-                            <div className="w-full bg-gray-200 h-[2px] my-2"></div>
-                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+
+                            <NavLink to="/" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 Gift Cards
                             </NavLink>
-                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <NavLink to="/" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 Airbnb Your Home
                             </NavLink>
-                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <NavLink to="/" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 Host an Experience
                             </NavLink>
-                            <NavLink to="/" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <NavLink to="/" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 Help Center
                             </NavLink>
+
+                            <div className="w-full bg-gray-200 h-[2px] my-2"></div>
+                            {user ? (
+                                <>
+                                    <NavLink to="/profile" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        Profile
+                                    </NavLink>
+                                    <button onClick={handleLogout} className="pl-[12px] text-start block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        Logout
+                                    </button>
+                                </>
+                            ) : (<>
+                                <NavLink to="/signUp" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                    Sign up
+                                </NavLink>
+                                <NavLink to="/signIn" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                    Log in
+                                </NavLink>
+                            </>
+                            )}
+
                         </div>
                     </div>
                 )}
@@ -230,14 +261,30 @@ const Navbar = () => {
                         <FaSearch className="mb-[6px]" size={22} />
                         <span className="text-xs">Explore</span>
                     </NavLink>
-                    <NavLink to="/favourite-listings" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
-                        <FaHeart className="mb-[6px]" size={22} />
-                        <span className="text-xs">Favourites</span>
-                    </NavLink>
-                    <NavLink to="/reserved-bookings" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
-                        <FaBed className="scale-[1.2] mb-[6px]" size={22} />
-                        <span className="text-xs">MyBookings</span>
-                    </NavLink>
+
+                    {user &&
+                        <>{userRole === 'Host' ? <>
+                            <NavLink to="/host-bookings" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
+                                <IoBookmarksOutline className="mb-[6px]" size={22} />
+                                <span className="text-xs">Bookly</span>
+                            </NavLink>
+                            <NavLink to="/host-listing" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
+                                <MdAssessment className="scale-[1.2] mb-[6px]" size={22} />
+                                <span className="text-xs">Dashboard</span>
+                            </NavLink></>
+                            : <>
+                                <NavLink to="/favourite-listings" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
+                                    <FaHeart className="mb-[6px]" size={22} />
+                                    <span className="text-xs">Favourites</span>
+                                </NavLink>
+                                <NavLink to="/reserved-bookings" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
+                                    <FaBed className="scale-[1.2] mb-[6px]" size={22} />
+                                    <span className="text-xs">MyBookings</span>
+                                </NavLink>
+                            </>}
+                        </>
+                    }
+
                     <NavLink to="/profile" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                         <FaUser className="mb-[6px]" size={22} />
                         <span className="text-xs">Profile</span>
@@ -245,7 +292,7 @@ const Navbar = () => {
                 </div>
 
             </nav>
-        </header>
+        </header >
     );
 };
 

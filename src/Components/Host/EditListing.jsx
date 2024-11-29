@@ -108,7 +108,7 @@ const EditListing = () => {
       );
 
       alert(response.data.message);
-      navigate('/hosted-listings');
+      navigate('/host-listing');
     }
     catch (err) {
       console.error('Error updating listing:', err);
