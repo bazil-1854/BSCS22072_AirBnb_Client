@@ -7,9 +7,12 @@ import airbnb from "../logo.svg";
 import { LuGlobe } from 'react-icons/lu';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FiHome } from 'react-icons/fi';
+import { useAuthContext } from '../AuthProvider';
 
 const Navbar = () => {
     const navigate = useNavigate();
+
+  const { user, logout } = useAuthContext();
 
     const [isOpen, setIsOpen] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
@@ -67,7 +70,8 @@ const Navbar = () => {
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
+        //localStorage.removeItem('token');
+        logout();
         navigate('/signin');
     };
 

@@ -7,6 +7,7 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         localStorage.removeItem("token");
         setUser(null);
+        setUserRole(null);
         setLoading(false);
       }
     } else {
@@ -48,10 +50,12 @@ export const AuthProvider = ({ children }) => {
         }
       );
       setUser(response.data);
+      setUserRole(response.data.role);
     } catch (error) {
       console.error("Error fetching user data:", error);
       localStorage.removeItem("token");
       setUser(null);
+      setUserRole(null);
     } finally {
       setLoading(false);
     }
@@ -65,10 +69,11 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
+    setUserRole(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, userRole, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

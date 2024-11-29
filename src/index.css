@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+Integrate UseContext for Global User's Role Managment
+*/
+
 .reserved-date { 
     color: #545454 ;
     pointer-events: none; 
