@@ -12,13 +12,13 @@ import { useAuthContext } from '../AuthProvider';
 const Navbar = () => {
     const navigate = useNavigate();
 
-  const { user, logout } = useAuthContext();
+    const { user, userRole, logout } = useAuthContext();
 
     const [isOpen, setIsOpen] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [homePath, sethomePath] = useState(true);
     const location = useLocation();
-    function isTokenValid() {
+    /*function isTokenValid() {
         const token = localStorage.getItem('token');
 
         if (!token) {
@@ -38,7 +38,7 @@ const Navbar = () => {
         }
     }
 
-    const isUserLoggedIn = isTokenValid();
+    const isUserLoggedIn = isTokenValid();*/
 
     const { scrollY } = useScroll();
     const opacity = useTransform(scrollY, [0, 150], [1, 0]);
@@ -139,16 +139,7 @@ const Navbar = () => {
                     {isOpen && (
                         <div className="lg:block hidden">
                             <div onClick={toggleMenu} className="flex flex-col absolute z-[90] right-0 mr-[75px] w-[250px] bg-white rounded-lg border shadow-xl mt-2 p-4">
-                                {!isUserLoggedIn ? (
-                                    <>
-                                        <NavLink to="/signUp" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                            Sign up
-                                        </NavLink>
-                                        <NavLink to="/signIn" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                            Log in
-                                        </NavLink>
-                                    </>
-                                ) : (
+                                {user ? (
                                     <>
                                         <NavLink to="/profile" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                             Profile
@@ -157,6 +148,14 @@ const Navbar = () => {
                                             Logout
                                         </button>
                                     </>
+                                ) : (<>
+                                    <NavLink to="/signUp" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        Sign up
+                                    </NavLink>
+                                    <NavLink to="/signIn" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        Log in
+                                    </NavLink>
+                                </>
                                 )}
 
                                 <div className="w-full bg-gray-200 h-[2px] my-2"></div>
@@ -223,23 +222,23 @@ const Navbar = () => {
                     </div>
                 )}
                 <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg flex px-[40px] justify-between py-2">
-                    <NavLink to="/" className={({ isActive }) =>`flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400' }`} >
+                    <NavLink to="/" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                         <FiHome className="mb-[6px]" size={22} />
                         <span className="text-xs">Home</span>
                     </NavLink>
-                    <NavLink to="/search" className={({ isActive }) =>`flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400' }`} >
+                    <NavLink to="/search" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                         <FaSearch className="mb-[6px]" size={22} />
                         <span className="text-xs">Explore</span>
                     </NavLink>
-                    <NavLink to="/favourite-listings" className={({ isActive }) =>`flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400' }`} >
+                    <NavLink to="/favourite-listings" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                         <FaHeart className="mb-[6px]" size={22} />
                         <span className="text-xs">Favourites</span>
                     </NavLink>
-                    <NavLink to="/reserved-bookings" className={({ isActive }) =>`flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400' }`} >
+                    <NavLink to="/reserved-bookings" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                         <FaBed className="scale-[1.2] mb-[6px]" size={22} />
                         <span className="text-xs">MyBookings</span>
                     </NavLink>
-                    <NavLink to="/profile" className={({ isActive }) =>`flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400' }`} >
+                    <NavLink to="/profile" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                         <FaUser className="mb-[6px]" size={22} />
                         <span className="text-xs">Profile</span>
                     </NavLink>

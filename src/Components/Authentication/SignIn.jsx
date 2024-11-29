@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../AuthProvider';
 
 const SignInnForm = () => {
+  const { login } = useAuthContext();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -20,14 +22,15 @@ const SignInnForm = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/auth/login`,
         formData
-      );
-  
-      // Store the token in localStorage or sessionStorage
-      localStorage.setItem('token', response.data.token);
-  
+      ); 
+      
+      //localStorage.setItem('token', response.data.token);
+      login(response.data.token);
+
       alert('Login successful!');
-      navigate('/profile'); // Redirect to profile page
-    } catch (error) {
+      navigate('/profile'); 
+    } 
+    catch (error) {
       console.error(error);
       alert('Login failed!');
     }
