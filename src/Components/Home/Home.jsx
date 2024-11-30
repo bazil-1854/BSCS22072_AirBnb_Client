@@ -56,26 +56,26 @@ const Home = () => {
         */
       }
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 py-4 xl:px-[75px] px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 pt-4 xl:px-[75px] pb-[45px] px-4">
         {listings.map(listing => (
           <div
             key={listing._id}
             onClick={() => navigate(`/listing/${listing._id}`)}
-            className="overflow-hidden cursor-pointer"
+            className="overflow-hidden mt-[15px] cursor-pointer"
           >
             <img
-              src={listing.images.coverPicture || 'https://via.placeholder.com/300'}
+              src={listing.images.placePicture || 'https://via.placeholder.com/300'}
               alt={listing.name}
               loading='lazy'
-              className="m-2 h-[290px] w-[95%] border rounded-xl hover:shadow-xl transition duration-200"
+              className="m-2 h-[290px] lg:h-[230px] xl:h-[240px] w-[95%] border rounded-xl hover:shadow-xl transition duration-200"
             />
-            <div className="p-4">
-              <h2 className="font-semibold text-lg">{listing.name}</h2>
-              <p className="text-gray-500">{listing.property_type}</p>
-              <p className="text-gray-500">{listing.category}</p>
-              <p className="text-gray-700">Bedrooms: {listing.bedrooms}</p>
-              <p className="font-bold text-lg">${listing.price} / night</p>
-              <div className="flex">
+            <div className="px-4">
+              <h2 className="font-semibold text-lg">{listing.address.suburb}, {listing.address.country}</h2>
+              <p className="text-rose-600 font-[700] text-[12px]">{listing.property_type}</p>              <p className="text-gray-500">{listing.category}</p> 
+              <p className="font-bold text-[14px] mt-[6px]">${listing.price} / night</p>
+             {
+              /*
+               <div className="flex">
                 {[...Array(Math.floor(listing.rating))].map((_, index) => (
                   <FaStar
                     size={22}
@@ -98,6 +98,8 @@ const Home = () => {
                   />
                 ))}
               </div>
+              */
+             }
             </div>
           </div>
         ))}
@@ -107,7 +109,7 @@ const Home = () => {
         <div className="text-center mt-6">
           <button
             onClick={loadMore}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+            className="text-rose-500 font-[600] py-2 px-4 rounded hover:bg-text-600 underline mb-[25px] transition"
             disabled={loading}
           >
             {loading ? 'Loading...' : 'Show More'}

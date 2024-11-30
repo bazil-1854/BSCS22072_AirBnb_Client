@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import './react-theme.css';
 import axios from 'axios';
 import { useLocation, useParams } from 'react-router-dom';
 import { FaStar, FaShieldAlt, FaInfoCircle } from "react-icons/fa";

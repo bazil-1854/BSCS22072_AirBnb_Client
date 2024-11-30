@@ -1,0 +1,187 @@
+.react-calendar {
+    width: 350px;
+    max-width: 100%;
+    border-bottom: 2px solid #fce7f3;
+    border: 1px solid #be123c; /* Rose-800 border */
+    border-radius: 8px; /* Rounded corners */
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    line-height: 1.125em;
+}
+
+.react-calendar--doubleView {
+    width: 700px;
+}
+
+.react-calendar--doubleView .react-calendar__viewContainer {
+    display: flex;
+    margin: -0.5em;
+}
+
+.react-calendar--doubleView .react-calendar__viewContainer > * {
+    width: 50%;
+    margin: 0.5em;
+}
+
+.react-calendar,
+.react-calendar * {
+    box-sizing: border-box;
+}
+
+.react-calendar button {
+    margin: 0;
+    border: 0;
+    outline: none; 
+    background: white; /* White button background */
+    color: #be123c; /* Rose-800 text color */
+}
+
+.react-calendar button:enabled:hover {
+    cursor: pointer;
+    background: #fbb6ce; /* Light rose hover */
+}
+
+.react-calendar__navigation {
+    display: flex;
+    height: 44px;
+    margin-bottom: 1em;
+}
+
+.react-calendar__navigation button {
+    min-width: 44px;
+    background: white; /* White background for navigation buttons */
+    color: #be123c;  
+}
+
+.react-calendar__navigation button:disabled {
+    background-color: #f5d0d9; /* Light rose for disabled state */
+    color: #ababab;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+    background-color: #fbb6ce; /* Light rose hover */
+}
+
+.react-calendar__month-view__weekdays {
+    text-align: center;
+    text-transform: uppercase;
+    font: inherit;
+    font-size: 0.75em;
+    font-weight: bold;
+    color: #be123c; /* Rose-800 */
+}
+
+.react-calendar__month-view__weekdays__weekday {
+    padding: 0.5em;
+}
+
+.react-calendar__month-view__weekNumbers .react-calendar__tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: inherit;
+    font-size: 0.75em;
+    font-weight: bold;
+    color: #be123c; /* Rose-800 */
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: #e11d48; /* Rose-600 */
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+    color: #f5d0d9; /* Lighter rose */
+}
+
+.react-calendar__year-view .react-calendar__tile,
+.react-calendar__decade-view .react-calendar__tile,
+.react-calendar__century-view .react-calendar__tile {
+    padding: 2em 0.5em;
+}
+
+.react-calendar__tile {
+    max-width: 100%;
+    padding: 10px 6.6667px;
+    background: white; /* White background for tiles */
+    text-align: center;
+    font: inherit;
+    font-size: 0.833em;
+    color: #be123c;  
+}
+
+.react-calendar__tile:disabled {
+    background-color: #f5d0d9;
+    color: #be123c;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    background-color: #fbb6ce; /* Light rose hover */
+}
+
+.react-calendar__tile--now {
+    background: white; /* White for the current day */
+    border: 2px solid #be123c; /* Rose-800 border for emphasis */
+    border-radius: 6px;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+    background: #fbb6ce; /* Light rose hover */
+}
+
+.react-calendar__tile--hasActive {
+    background: #be123c; /* Rose-800 for active range */
+    color: white;
+    border-radius: 6px;
+}
+
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+    background: #e11d48; /* Rose-600 */
+}
+
+.react-calendar__tile--active {
+    background: #be123c;
+    color: white;
+    border-radius: 6px;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+    background: #e11d48; /* Rose-600 */
+}
+
+.react-calendar--selectRange .react-calendar__tile--hover {
+    background-color: #fbb6ce; /* Lighter rose */
+}
+
+/* Marking Occupied Dates */
+.react-calendar__tile--occupied {
+    background-color: #d1d5db; /* Gray-400 background */
+    color: #4b5563; /* Gray-800 text */
+    text-decoration: line-through; /* Strikethrough */
+}
+
+/* Selection for Source and Destination */
+.react-calendar__tile--selectRange-source {
+    background-color: #9b1d20; /* Rose-900 for source date */
+    color: white;
+    border-radius: 6px;
+}
+
+.react-calendar__tile--selectRange-source:enabled:hover,
+.react-calendar__tile--selectRange-source:enabled:focus {
+    background-color: #7f1d1d; /* Darker rose hover */
+}
+
+.react-calendar__tile--selectRange-destination {
+    background-color: #c026d3; /* Rose-950 for destination date */
+    color: white;
+    border-radius: 6px;
+}
+
+.react-calendar__tile--selectRange-destination:enabled:hover,
+.react-calendar__tile--selectRange-destination:enabled:focus {
+    background-color: #9d1cbe; /* Darker rose hover */
+}
