@@ -10,6 +10,7 @@ import { FiHome } from 'react-icons/fi';
 import { useAuthContext } from '../AuthProvider';
 import { MdAssessment } from 'react-icons/md';
 import { IoBookmarksOutline } from 'react-icons/io5';
+import { BiLogIn } from 'react-icons/bi';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -74,6 +75,7 @@ const Navbar = () => {
     const handleLogout = () => {
         //localStorage.removeItem('token');
         logout();
+        toggleMenu();
         navigate('/signin');
     };
 
@@ -189,7 +191,7 @@ const Navbar = () => {
                                 </NavLink>
                                 <NavLink to="/host-bookings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Help Center
-                                </NavLink> 
+                                </NavLink>
                             </div>
                         </div>
                     )}
@@ -252,6 +254,7 @@ const Navbar = () => {
                         </div>
                     </div>
                 )}
+
                 <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg flex px-[40px] justify-between py-2">
                     <NavLink to="/" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                         <FiHome className="mb-[6px]" size={22} />
@@ -285,10 +288,18 @@ const Navbar = () => {
                         </>
                     }
 
-                    <NavLink to="/profile" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
-                        <FaUser className="mb-[6px]" size={22} />
-                        <span className="text-xs">Profile</span>
-                    </NavLink>
+                    {user ?
+                        <NavLink to="/profile" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
+                            <FaUser className="mb-[6px]" size={22} />
+                            <span className="text-xs">Profile</span>
+                        </NavLink>
+                        :
+                        <NavLink to="/signIn" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
+                            <BiLogIn className="mb-[6px]" size={22} />
+                            <span className="text-xs">JoinUs</span>
+                        </NavLink>
+                    }
+
                 </div>
 
             </nav>
@@ -296,6 +307,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
-/*
-                <HorizontalScrollList setCategory={setCategory} /> */
+export default Navbar; 
