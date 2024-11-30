@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaUserAlt, FaCheckCircle, FaCamera } from "react-icons/fa";
+import { FaUserAlt, FaCheckCircle, FaCamera, FaPlusCircle } from "react-icons/fa";
+import { RiDeleteBinLine } from 'react-icons/ri';
 
 const Profile = () => {
-    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState(null);
     const [updatedData, setUpdatedData] = useState({});
     const [isEditing, setIsEditing] = useState(false);
@@ -31,23 +31,27 @@ const Profile = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUpdatedData({
-            ...updatedData,
-            [name]: value,
-        });
-    };
-
-    const handleArrayChange = (attribute, value) => {
-        setUpdatedData({
-            ...updatedData,
-            [attribute]: [...(updatedData[attribute] || userInfo[attribute]), value],
-        });
+        if (name === "city" || name === "country") {
+            setUpdatedData({
+                ...updatedData,
+                location: {
+                    ...userInfo.location, // Retain existing location fields
+                    ...updatedData.location, // Retain previously updated location fields
+                    [name]: value, // Update the specific field
+                },
+            });
+        } else {
+            setUpdatedData({
+                ...updatedData,
+                [name]: value,
+            });
+        }
     };
 
     const handleArrayDelete = (attribute, value) => {
         setUpdatedData({
             ...updatedData,
-            [attribute]: (updatedData[attribute] || userInfo[attribute]).filter((item) => item !== value),
+            [attribute]: (updatedData[attribute] || userInfo[attribute] || []).filter((item) => item !== value),
         });
     };
 
@@ -73,7 +77,22 @@ const Profile = () => {
         return <div className="flex justify-center items-center h-screen text-red-500">{error}</div>;
     }
 
-    const placeholderText = (attribute) => userInfo[attribute] || `Enter ${attribute}`;
+    const addNewField = (attribute) => {
+        setUpdatedData({
+            ...updatedData,
+            [attribute]: [...(updatedData[attribute] || userInfo[attribute] || []), ''],
+        });
+    };
+
+    const updateFieldValue = (attribute, index, value) => {
+        const updatedArray = [...(updatedData[attribute] || userInfo[attribute] || [])];
+        updatedArray[index] = value;
+        setUpdatedData({
+            ...updatedData,
+            [attribute]: updatedArray,
+        });
+    };
+
 
     return (
         <main className='px-6 min-h-screen bg-gray-100 pt-[150px]'>
@@ -175,12 +194,82 @@ const Profile = () => {
                                 />
                             </p>
                             <p>
-                                <span className='font-[700]  mr-[4px]'>Location:</span>
-                                {userInfo.location.city}, {userInfo.location.country}
+                                <span className="font-[700] mr-[4px]">Location:</span>
+                                <input
+                                    type="text"
+                                    id="city"
+                                    name="city"
+                                    value={(updatedData.location?.city) || userInfo.location.city || ''}
+                                    onChange={handleChange}
+                                    placeholder="Enter City"
+                                    className="p-[5px] placeholder:text-gray-800 border w-full my-[12px] border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                />
+                                <input
+                                    type="text"
+                                    id="country"
+                                    name="country"
+                                    value={(updatedData.location?.country) || userInfo.location.country || ''}
+                                    onChange={handleChange}
+                                    placeholder="Enter Country"
+                                    className="p-[5px] border placeholder:text-gray-800 w-full my-[12px] border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                />
                             </p>
-
                         </div>
+                        <div className="lg:flex lg:space-x-8 lg:items-start max-w-5xl mx-auto">
+                            {/* Edit Right Section */}
+                            <div className="lg:flex-1">
+                                <div className="mt-8 bg-white p-6 rounded-[22px] border ">
+                                    <h3 className="text-[20px] font-semibold">Ask Me In</h3>
+                                    <div className="mt-8">
+                                        <h3 className="text-[17px] font-semibold">Languages</h3>
+                                        {(updatedData.languages || userInfo.languages || []).map((language, index) => (
+                                            <div key={index} className="flex items-center my-2">
+                                                <input
+                                                    type="text"
+                                                    value={language}
+                                                    onChange={(e) => updateFieldValue('languages', index, e.target.value)}
+                                                    className="p-2 border rounded-md w-full"
+                                                />
+                                                <button
+                                                    onClick={() => handleArrayDelete('languages', language)}
+                                                    className="ml-2 px-2 py-1 bg-red-100 text-red-800 rounded-md"
+                                                >
+                                                    <RiDeleteBinLine />
+                                                </button>
+                                            </div>
+                                        ))}
+                                        <button type="button" onClick={() => addNewField('languages')} className="bg-green-700 flex items-center mt-[15px] text-white px-3 py-1 rounded-xl hover:bg-green-600 focus:outline-none">
+                                            <FaPlusCircle className="mr-2" />
+                                            Add Language
+                                        </button>
+                                    </div>
 
+                                    <div className="mt-8">
+                                        <h3 className="text-[17px] font-semibold">Interests</h3>
+                                        {(updatedData.interests || userInfo.interests || []).map((interest, index) => (
+                                            <div key={index} className="flex items-center my-2">
+                                                <input
+                                                    type="text"
+                                                    value={interest}
+                                                    onChange={(e) => updateFieldValue('interests', index, e.target.value)}
+                                                    className="px-2 py-[3px] border rounded-md w-full"
+                                                />
+                                                <button
+                                                    onClick={() => handleArrayDelete('interests', interest)}
+                                                    className="ml-2 px-2 py-1 bg-red-100 text-red-800 rounded-md"
+                                                >
+                                                    <RiDeleteBinLine />
+                                                </button>
+                                            </div>
+                                        ))}
+                                        <button type="button" onClick={() => addNewField('interests')} className="bg-blue-500 flex items-center mt-[15px] text-white px-3 py-1 rounded-xl hover:bg-green-600 focus:outline-none">
+                                            <FaPlusCircle className="mr-2" />
+                                            Add Amenity
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div className="mt-8 bg-white p-6 rounded-[22px] border ">
                             <h3 className="text-[20px] font-semibold">Ask Me In</h3>
                             <div className="list-disc list-inside space-y-2">
