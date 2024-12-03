@@ -4,7 +4,7 @@ import { MdOutlineBeachAccess, MdOutlineNature, MdOutlineStar, MdOutlineAttachMo
 
 const categories = [
     { name: 'All', category: '', icon: <MdOutlineHome className='text-[25px] mb-[5px]' /> },
-    { name: 'Beachfront', category: 'Beachfront', icon: <MdOutlineBeachAccess className='text-[25px] mb-[5px]' /> },
+    { name: 'Apartment', category: 'Apartment', icon: <MdOutlineBeachAccess className='text-[25px] mb-[5px]' /> },
     { name: 'Cabins', category: 'Cabins', icon: <FaTree className='text-[25px] mb-[5px]' /> },
     { name: 'Trending', category: 'Trending', icon: <MdOutlineStar className='text-[25px] mb-[5px]' /> },
     { name: 'Luxury', category: 'Luxury', icon: <FaMoneyBillAlt className='text-[25px] mb-[5px]' /> },
