@@ -66,7 +66,7 @@ const GuestBookings = () => {
     }
 
     if (error) {
-        return <div className="text-center text-red-500 mt-10">{error}</div>;
+        return <div className="text-center min-h-screen w-full pt-[150px] text-red-500 mt-10">{error}</div>;
     }
 
     return (

@@ -13,6 +13,7 @@ const ListingDetails = () => {
   const [isInitiallyFavorited, setIsInitiallyFavorited] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [ratingerror, setRatingerror] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const [ratingReviews, setRatingReviews] = useState([]);
@@ -24,7 +25,7 @@ const ListingDetails = () => {
       setRatingReviews(response.data);
     }
     catch (err) {
-      setError('Failed to fetch reviews. Please try again.');
+      setRatingerror('Failed to fetch reviews. Please try again.');
       console.error('Error fetching reviews:', err.response?.data || err.message);
     }
   };
@@ -45,8 +46,7 @@ const ListingDetails = () => {
         setIsInitiallyFavorited(response.data.isLiked);
         setHostdetails(response.data.hostDetails);
         
-        //console.log(response.data.listing.images.coverPicture)
-        
+        //console.log(response.data.listing.images.coverPicture) 
         //console.log(hostdetails.name)
         
         setLoading(false);

@@ -3,6 +3,7 @@ import axios from 'axios';
 import SearchBar from './SearchBar';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import HorizontalScrollList from './HorizontalScrollList';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ const Home = () => {
   return (
     <div className='mt-[150px] min-h-screen md:mt-[95px]'>
       <SearchBar />
-
+      <HorizontalScrollList />
       {
         /*
         <div className='top-[60px] w-full bg-white sticky'>
