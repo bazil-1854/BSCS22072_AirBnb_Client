@@ -5,10 +5,28 @@ import axios from 'axios';
 import { FaMedal, FaHome, FaDoorOpen, FaToilet, FaStarHalfAlt, FaStar } from 'react-icons/fa';
 import { AddRating, FavoriteButton, Reviews } from './ListingRating';
 
+const isLoggedIn = () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return false;
+  }
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const isTokenExpired = payload.exp * 1000 < Date.now();
+    return !isTokenExpired;
+  }
+  catch (err) {
+    console.warn('Invalid token structure');
+    return false;
+  }
+};
+
 const ListingDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [listing, setListing] = useState(null);
+  const [userLoginStatus, setUserLoginStatus] = useState(null);
   const [hostdetails, setHostdetails] = useState(null);
   const [isInitiallyFavorited, setIsInitiallyFavorited] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -31,24 +49,26 @@ const ListingDetails = () => {
   };
 
   useEffect(() => {
+    const status = isLoggedIn();
+    setUserLoginStatus(status);
     fetch_Review_count_and_rating();
   }, []);
 
   useEffect(() => {
     const fetchListingDetails = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-        );
+        const token = userLoginStatus ? localStorage.getItem('token') : null;
+        const response = await axios.get( `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/${userLoginStatus ? 'listings' : 'listing-details'}/${id}`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+
         setListing(response.data.listing);
         setIsInitiallyFavorited(response.data.isLiked);
         setHostdetails(response.data.hostDetails);
-        
+
         //console.log(response.data.listing.images.coverPicture) 
         //console.log(hostdetails.name)
-        
+
         setLoading(false);
       }
       catch (err) {
@@ -59,7 +79,7 @@ const ListingDetails = () => {
     };
 
     fetchListingDetails();
-  }, [id]);
+  }, []);
 
   if (loading) {
     return <div className="text-center mt-10">Loading...</div>;
@@ -80,7 +100,7 @@ const ListingDetails = () => {
 
       {showModal && <Reviews listingId={id} ratingReviews={ratingReviews} onClose={() => setShowModal(false)} />}
       <h2 className="mt-[85px] mb-[20px] md:text-[30px] text-rose-950  font-semibold">{listing.name}</h2>
-             
+
       <div className='grid w-full overflow-hidden gap-[6px] grid-cols-5 rounded-[25px]'>
         <div className="col-span-5 h-[250px] sm:h-[350px] md:h-[430px] md:col-span-3">
           <img
@@ -106,7 +126,9 @@ const ListingDetails = () => {
               <h2 className="text-2xl font-semibold">{listing.property_type || ''} In {listing.address.suburb || ''}, {listing.address.country || ''}</h2>
               <p className="text-gray-600">{listing.bedrooms} beds · {listing.bathrooms} Shared bathroom</p>
             </div>
-            <FavoriteButton listingId={id} isInitiallyFavorited={isInitiallyFavorited} />
+            {userLoginStatus &&
+              <FavoriteButton listingId={id} isInitiallyFavorited={isInitiallyFavorited} />
+            }
           </div>
 
           <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 border shadow-md px-[8px] md:px-[45px] py-[15px] rounded-[28px] space-y-2 md:space-y-0 md:flex-row md:items-center md:space-x-4">
@@ -138,7 +160,7 @@ const ListingDetails = () => {
               <span className='text-[20px] md:text-[24px] text-rose-700 font-[600]'>{ratingReviews.arraySize}</span>
               <span className='text-rose-900 mt-[-8px] text-[14px] md:text-[19px] underline'>Review</span>
             </button>
-            
+
           </div>
 
           <div className="flex items-center space-x-3">
@@ -151,7 +173,7 @@ const ListingDetails = () => {
                 {(() => {
                   const reviewDate = new Date(hostdetails.createdAt);
                   const now = new Date();
-                  const timeDiff = now - reviewDate; 
+                  const timeDiff = now - reviewDate;
 
                   const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
                   const months = Math.floor(days / 30);
@@ -210,7 +232,10 @@ const ListingDetails = () => {
             </p>
           </div>
 
-          <AddRating listingId={id} />
+          {userLoginStatus &&
+            <AddRating listingId={id} />
+          }
+
         </div>
 
         <div className="space-y-4">
