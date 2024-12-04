@@ -1,48 +1,118 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { RiDeleteBinLine } from 'react-icons/ri';
-import { FaRegImage, FaLink } from 'react-icons/fa'; 
+import { FaRegImage, FaLink } from 'react-icons/fa';
+import { RiCloseFill } from 'react-icons/ri';
+import { categories } from './AddListings/AddListings_Utility';
 
-const Step1 = ({ formData, handleChange, setCurrentStep }) => (
-    <div>
-        <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Property's Info:</h2>
+
+const Step1 = ({ formData, handleChange, setCurrentStep }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleCategoryClick = (category) => {
+        handleChange({ target: { name: 'category', value: category } }); // Simulate form input change
+        setIsModalOpen(false); // Close modal after selection
+    };
+
+    return (
         <div>
-            <label>Name</label>
-            <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
-            />
-            <label>Summary</label>
-            <textarea
-                name="summary"
-                value={formData.summary}
-                onChange={handleChange}
-                className="w-full py-2 appearance-none border-b style-none border-gray-400 focus:outline-none mb-4"
-            />
-            <label>Property Type</label>
-            <input
-                type="text"
-                name="property_type"
-                value={formData.property_type}
-                onChange={handleChange}
-                className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
-            />
+            <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">
+                Enter Property's Info:
+            </h2>
+            <div>
+                <label>Name</label>
+                <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+                />
+                <label>Description</label>
+                <textarea
+                    name="summary"
+                    placeholder='Write a short Description about your property ...'
+                    value={formData.summary}
+                    onChange={handleChange}
+                    className="w-full py-2 appearance-none border-b border-gray-400 focus:outline-none mb-4"
+                />
+                <label>Property Type</label>
+                <input
+                    type="text"
+                    name="property_type"
+                    value={formData.property_type}
+                    onChange={handleChange}
+                    className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+                />
+                <div onClick={() => setIsModalOpen(true)} className='flex items-center'>
+                    <div className='text-[17px] text-rose-800 font-[600]'>Selected Category:</div>
+                    <div className="bg-gradient-to-r text-[12px] ml-[20px] from-rose-600 to-rose-900 text-white px-[15px] py-[3px] rounded-lg">
+                    {formData.category || 'Select a category'}
+                    </div>
+                </div>
+               {
+                /*
+                 <label>Category</label>
+                <div
+                    className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4 cursor-pointer text-gray-700"
+                    onClick={() => setIsModalOpen(true)}
+                >
+                    {formData.category || 'Select a category'}
+                </div>
+                */
+               }
+            </div>
+
+            {/* Modal for Categories */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white w-3.5/4 max-w-3xl h-[70vh] overflow-y-auto flex flex-col  no-scrollbar p-6 rounded-lg">
+                    <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="text-[28px] ml-auto text-gray-700 hover:text-gray-400"
+                        >
+                            <RiCloseFill />
+                        </button>
+                        <h3 className="text-xl mt-[-20px] font-semibold text-center mb-4">Choose a Category</h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                            {categories.map((category) => (
+                                <div
+                                    key={category.name}
+                                    className="flex flex-col items-center justify-center p-4 border rounded-lg shadow-md cursor-pointer hover:bg-rose-100"
+                                    onClick={() => handleCategoryClick(category.name)}
+                                >
+                                    <category.icon className="text-[20px] text-rose-600 mb-2" />
+                                    <span className="text-center whitespace-nowrap text-gray-700">{category.name}</span>
+                                </div>
+                            ))}
+                        </div>
+                      
+                    </div>
+                </div>
+            )}
+
+            <button
+                onClick={() => setCurrentStep(2)}
+                className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
+            >
+                Next
+            </button>
         </div>
-        <button
-            onClick={() => setCurrentStep(2)}
-            className="bg-gradient-to-r from-rose-600 to-rose-900 text-white ml-auto mt-[8px] px-[25px] py-[5px] rounded-lg"
-        >
-            Next
-        </button>
-    </div>
-);
+    );
+};
+
 
 const Step2 = ({ formData, handleChange, setCurrentStep }) => (
     <div>
         <h2 className="text-[18px] lg:text-xl text-rose-600 font-semibold mb-4">Enter Property Details:</h2>
+        <label>Max Number Of Guests</label>
+        <input
+            type="number"
+            name="maxGuests"
+            value={formData.maxGuests}
+            onChange={handleChange}
+            className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
+        />
         <label>Bedrooms</label>
         <input
             type="number"
@@ -437,9 +507,11 @@ const AddListing = () => {
         name: '',
         summary: '',
         property_type: '',
-        bedrooms: 0,
-        bathrooms: 0,
-        price: 0,
+        maxGuests: 2,
+        bedrooms: 1,
+        bathrooms: 1,
+        category: 'Apartment',
+        price: 100,
         address: { street: '', suburb: '', country: '' },
         amenities: [''],
         images: { placePicture: '', coverPicture: '', additionalPictures: ['', '', '', '', ''] },
@@ -460,13 +532,15 @@ const AddListing = () => {
                     ...prevState,
                     address: { ...prevState.address, [field]: value },
                 };
-            } else if (name.includes('images.')) {
+            }
+            else if (name.includes('images.')) {
                 const field = name.split('.')[1];
                 return {
                     ...prevState,
                     images: { ...prevState.images, [field]: value },
                 };
-            } else {
+            }
+            else {
                 return { ...prevState, [name]: value };
             }
         });
@@ -508,8 +582,7 @@ const AddListing = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post(
-                `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/hosting/add-listing`,
+            const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/hosting/add-listing`,
                 formData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -536,7 +609,10 @@ const AddListing = () => {
         // Appened All listng to the from
         formDataToSend.append('name', formData.name);
         formDataToSend.append('summary', formData.summary);
+        formDataToSend.append('category', formData.category);
         formDataToSend.append('property_type', formData.property_type);
+        formDataToSend.append('category', formData.category);
+        formDataToSend.append('maxGuests', formData.maxGuests);
         formDataToSend.append('bedrooms', formData.bedrooms);
         formDataToSend.append('bathrooms', formData.bathrooms);
         formDataToSend.append('price', formData.price);
@@ -583,7 +659,7 @@ const AddListing = () => {
                 </p>
 
             </div>
-            <div className="max-w-2xl overflow-hidden p-6 h-[430px] bg-white shadow border rounded-[25px]">
+            <div className="max-w-2xl overflow-hidden p-6 h-[460px] bg-white shadow border rounded-[25px]">
                 {currentStep === 1 && <Step1 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} />}
                 {currentStep === 2 && <Step2 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} />}
                 {currentStep === 3 && <Step3 formData={formData} handleChange={handleChange} setCurrentStep={setCurrentStep} />}
