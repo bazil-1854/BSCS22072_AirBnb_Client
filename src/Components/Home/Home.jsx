@@ -13,14 +13,24 @@ const Home = () => {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [category, setCategory] = useState('All'); // Category state
+  const [category, setCategory] = useState('All');
+  const [searchParams, setSearchParams] = useState(null);
 
   const fetchListings = async (page, category) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings`, {
+      /*const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings`, {
         params: { page, limit: 10, category },
-      });
+      });*/
+      let url = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings`;
+      let params = { page, limit: 10, category };
+
+      if (searchParams) {
+        url = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listing-searched`;
+        params = { ...params, ...searchParams };
+      }
+      const response = await axios.get(url, { params });
+
       const newListings = response.data.listings;
 
       if (page === 1) {
@@ -30,9 +40,11 @@ const Home = () => {
         setListings((prev) => [...prev, ...newListings]);
       }
       setHasMore(page < response.data.totalPages);
-    } catch (err) {
+    } 
+    catch (err) {
       setError('Failed to fetch listings. Please try again later.');
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
@@ -46,17 +58,32 @@ const Home = () => {
     fetchListings(currentPage);
   }, [currentPage]);
 
-  const loadMore = () => {
+  const handleSearch = (location, guests) => {
+    // Prepare search parameters and reset current page
+    setSearchParams({ location, guests });
+    setCurrentPage(1); // Reset to first page for search
+    fetchListings(1, category, { location, guests });
+  };
+
+
+  /*const loadMore = () => {
     if (hasMore) {
       setCurrentPage((prev) => prev + 1);
     }
-  };
+  };*/
 
+  const loadMore = () => {
+    if (hasMore && !searchParams) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+  
+  //if (error.status === 404) return <p className="h-screen bg-green-800 -center text-lg text-red-500">{error}</p>;
   if (error) return <p className="text-center text-lg text-red-500">{error}</p>;
 
   return (
     <div className='mt-[85px] min-h-screen md:mt-[95px]'>
-      <SearchBar />
+      <SearchBar handleSearch={handleSearch} />
 
       <div className='top-[60px] w-full bg-white sticky'>
         <HorizontalScrollList setCategory={setCategory} />

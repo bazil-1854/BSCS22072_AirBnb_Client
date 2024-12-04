@@ -256,12 +256,11 @@ const ListingDetails = () => {
                   <p className="text-sm font-medium text-gray-800">7/4/2025</p>
                 </div>
               </div>
-              <div className="px-4 pt-4 flex justify-between items-center">
+              <div className="px-4 pt-4">
                 <div className="space-y-1">
                   <p className="text-xs font-semibold text-gray-600">Max Accomodation</p>
-                  <p className="text-sm font-medium text-gray-800">8 guests</p>
-                </div>
-                <span className="text-gray-500">▼</span>
+                  <p className="text-sm font-medium text-gray-800">{listing.maxGuests} {listing.maxGuests > 1 ? 'Guests' : 'Guest'}</p>
+                </div> 
               </div>
             </div>
 

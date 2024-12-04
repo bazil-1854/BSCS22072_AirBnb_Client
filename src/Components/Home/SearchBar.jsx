@@ -3,21 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { motion } from 'framer-motion';
 
-const SearchBar = () => {
+const SearchBar = ({handleSearch}) => { 
+    const [scrollY, setScrollY] = useState(0);
     const [location, setLocation] = useState('');
     const [checkIn, setCheckIn] = useState('');
     const [checkOut, setCheckOut] = useState('');
     const [guests, setGuests] = useState(1);
-    const [scrollY, setScrollY] = useState(0);
-
-    const handleSearch = () => {
-        console.log({
-            location,
-            checkIn,
-            checkOut,
-            guests,
-        });
+  
+    const onSearch = () => {
+      handleSearch(location, guests); // Pass location and guests to parent component
     };
+  
 
     useEffect(() => {
         const handleScroll = () => {
@@ -88,7 +84,7 @@ const SearchBar = () => {
             </div>
 
             <button
-                onClick={handleSearch}
+                onClick={onSearch}
                 className=" bg-red-500 ml-[85px] mr-[35px] text-white text-[22px] p-[10px] rounded-full hover:bg-red-600 transition duration-200"
             >
                 <AiOutlineSearch />
