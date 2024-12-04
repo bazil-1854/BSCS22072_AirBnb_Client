@@ -34,7 +34,7 @@ const Step1 = ({ formData, handleChange, setCurrentStep }) => {
                     placeholder='Write a short Description about your property ...'
                     value={formData.summary}
                     onChange={handleChange}
-                    className="w-full py-2 appearance-none border-b border-gray-400 focus:outline-none mb-4"
+                    className="w-full py-2 placeholder:text-[14px] appearance-none border-b border-gray-400 focus:outline-none mb-4"
                 />
                 <label>Property Type</label>
                 <input
@@ -44,7 +44,7 @@ const Step1 = ({ formData, handleChange, setCurrentStep }) => {
                     onChange={handleChange}
                     className="w-full py-2 border-b border-gray-400 focus:outline-none mb-4"
                 />
-                <div onClick={() => setIsModalOpen(true)} className='flex items-center'>
+                <div onClick={() => setIsModalOpen(true)} className='flex items-center mb-[20px]'>
                     <div className='text-[17px] text-rose-800 font-[600]'>Selected Category:</div>
                     <div className="bg-gradient-to-r text-[12px] ml-[20px] from-rose-600 to-rose-900 text-white px-[15px] py-[3px] rounded-lg">
                     {formData.category || 'Select a category'}
@@ -66,22 +66,22 @@ const Step1 = ({ formData, handleChange, setCurrentStep }) => {
             {/* Modal for Categories */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
-                    <div className="bg-white w-3.5/4 max-w-3xl h-[70vh] overflow-y-auto flex flex-col  no-scrollbar p-6 rounded-lg">
+                    <div className="bg-white w-[85vw] md:max-w-3xl h-[70vh] overflow-y-auto flex flex-col  no-scrollbar p-6 rounded-lg">
                     <button
                             onClick={() => setIsModalOpen(false)}
                             className="text-[28px] ml-auto text-gray-700 hover:text-gray-400"
                         >
                             <RiCloseFill />
                         </button>
-                        <h3 className="text-xl mt-[-20px] font-semibold text-center mb-4">Choose a Category</h3>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        <h3 className="text-xl sm:mt-[-20px] font-semibold text-center mb-4">Choose a Category</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
                             {categories.map((category) => (
                                 <div
                                     key={category.name}
-                                    className="flex flex-col items-center justify-center p-4 border rounded-lg shadow-md cursor-pointer hover:bg-rose-100"
+                                    className="flex items-center p-4 border rounded-lg shadow-md cursor-pointer hover:bg-rose-100"
                                     onClick={() => handleCategoryClick(category.name)}
                                 >
-                                    <category.icon className="text-[20px] text-rose-600 mb-2" />
+                                    <category.icon className="text-[20px] text-rose-600 mb-[3px] mr-[8px]" />
                                     <span className="text-center whitespace-nowrap text-gray-700">{category.name}</span>
                                 </div>
                             ))}

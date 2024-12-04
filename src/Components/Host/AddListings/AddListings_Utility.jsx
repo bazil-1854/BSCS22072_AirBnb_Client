@@ -18,31 +18,32 @@ import {
     FaGlobe, 
     FaSwimmingPool, 
     FaDog, 
-    FaSpa 
-  } from 'react-icons/fa'; // Example icons from React Icons
+    FaSpa, 
+    FaBorderAll
+  } from 'react-icons/fa';
   
   const categories = [
+    { name: 'All', icon: FaBorderAll },
     { name: 'Apartment', icon: FaBuilding },
+    { name: 'Mountain', icon: FaMountain },
+    { name: 'Mansions', icon: FaSnowflake },
+    { name: 'Hotel', icon: FaHotel },
+    { name: 'Castle', icon: FaFortAwesome },
     { name: 'House', icon: FaHome },
     { name: 'Villa', icon: FaTree },
-    { name: 'City Condo', icon: FaCity },
-    { name: 'Mountain Retreat', icon: FaMountain },
+    { name: 'Condo', icon: FaCity },
+    { name: 'Cabin', icon: FaFireAlt },
     { name: 'Beachfront', icon: FaUmbrellaBeach },
     { name: 'Campground', icon: FaCampground },
-    { name: 'Private Room', icon: FaBed },
-    { name: 'Warehouse Loft', icon: FaWarehouse },
-    { name: 'Boat Stay', icon: FaShip },
-    { name: 'Ski Lodge', icon: FaSnowflake },
-    { name: 'Hotel Room', icon: FaHotel },
-    { name: 'Castle', icon: FaFortAwesome },
-    { name: 'Rustic Cabin', icon: FaFireAlt },
-    { name: 'RV Stay', icon: FaCaravan },
-    { name: 'Island Retreat', icon: FaAnchor },
-    { name: 'Eco-Friendly', icon: FaGlobe },
+    { name: 'Room', icon: FaBed },
+    { name: 'Warehouse', icon: FaWarehouse },
+    { name: 'Boat', icon: FaShip },
+    { name: 'RV', icon: FaCaravan },
+    { name: 'Island', icon: FaAnchor },
+    { name: 'Eco', icon: FaGlobe },
     { name: 'Poolside', icon: FaSwimmingPool },
-    { name: 'Pet-Friendly', icon: FaDog },
-    { name: 'Spa Retreat', icon: FaSpa }
+    { name: 'Pet', icon: FaDog },
+    { name: 'Spa', icon: FaSpa }
   ];
-
   export {categories};
   
