@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaBed, FaBath, FaDollarSign, FaHome, FaImage, FaPlusCircle } from 'react-icons/fa';
 import { MdLocationOn } from 'react-icons/md';
-import { RiDeleteBinLine } from 'react-icons/ri';
+import { RiCloseFill, RiDeleteBinLine } from 'react-icons/ri';
+import { categories } from './AddListings/AddListings_Utility';
 
 const EditListing = () => {
   const { id } = useParams();
@@ -23,6 +24,12 @@ const EditListing = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCategoryClick = (category) => {
+    handleChange({ target: { name: 'category', value: category } }); // Simulate form input change
+    setIsModalOpen(false); // Close modal after selection
+  };
 
   const fetchListingDetails = async () => {
     try {
@@ -132,7 +139,7 @@ const EditListing = () => {
         <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* First Column */}
           <div className="space-y-4 md:col-span-1 col-span-3">
-            <div>
+            <div className='pt-[18px]'>
               <label className="text-gray-600 mb-1 flex items-center">
                 <FaHome className="mr-2" />
                 Name
@@ -156,7 +163,7 @@ const EditListing = () => {
                 value={formData.summary}
                 onChange={handleChange}
                 required
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full h-[120px] p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -177,6 +184,23 @@ const EditListing = () => {
           </div>
           {/* Second Column */}
           <div className="space-y-4 md:col-span-1 col-span-3">
+            <div>
+              <label className="text-gray-600 mb-1 flex items-center">
+                <FaDollarSign className="mr-2" />
+                Category
+              </label>
+              <div onClick={() => setIsModalOpen(true)} className="mt-[8px] mb-[27px] bg-gradient-to-r text-[14px] text-center w-[95px] from-rose-600 to-rose-900 text-white py-[3px] rounded-[28px]">
+                {formData.category || 'Select a category'}
+              </div>
+            </div>
+
+            {/*<div onClick={() => setIsModalOpen(true)} className='flex items-center mb-[20px]'>
+              <div className='text-[17px] text-rose-800 font-[600]'>Selected Category:</div>
+              <div className="bg-gradient-to-r text-[12px] ml-[20px] from-rose-600 to-rose-900 text-white px-[15px] py-[3px] rounded-lg">
+                {formData.category || 'Select a category'}
+              </div>
+            </div>
+            */}
             <div>
               <label className="text-gray-600 mb-1 flex items-center">
                 <FaDollarSign className="mr-2" />
@@ -222,6 +246,20 @@ const EditListing = () => {
           </div>
           {/* Tjird Column */}
           <div className="space-y-4 md:col-span-1 col-span-3">
+            <div>
+              <label className="text-gray-600 mb-1 flex items-center">
+                <MdLocationOn className="mr-2" />
+                Max Accomodation
+              </label>
+              <input
+                type="text"
+                name="maxGuests"
+                value={formData.maxGuests}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
             <div>
               <label className="text-gray-600 mb-1 flex items-center">
                 <MdLocationOn className="mr-2" />
@@ -406,7 +444,32 @@ const EditListing = () => {
 
       </div>
 
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white w-[85vw] md:max-w-3xl h-[70vh] overflow-y-auto flex flex-col  no-scrollbar p-6 rounded-lg">
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="text-[28px] ml-auto text-gray-700 hover:text-gray-400"
+            >
+              <RiCloseFill />
+            </button>
+            <h3 className="text-xl sm:mt-[-20px] font-semibold text-center mb-4">Choose a Category</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {categories.map((category) => (
+                <div
+                  key={category.name}
+                  className="flex items-center p-4 border rounded-lg shadow-md cursor-pointer hover:bg-rose-100"
+                  onClick={() => handleCategoryClick(category.name)}
+                >
+                  <category.icon className="text-[20px] text-rose-600 mb-[3px] mr-[8px]" />
+                  <span className="text-center whitespace-nowrap text-gray-700">{category.name}</span>
+                </div>
+              ))}
+            </div>
 
+          </div>
+        </div>
+      )}
     </div>
   );
 };
