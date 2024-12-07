@@ -13,6 +13,7 @@ const Home = () => {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  //const [errorStatus, setErrorSttaus] = useState('');
   const [category, setCategory] = useState('All');
   const [searchParams, setSearchParams] = useState(null);
 
@@ -42,7 +43,8 @@ const Home = () => {
       setHasMore(page < response.data.totalPages);
     } 
     catch (err) {
-      setError('Failed to fetch listings. Please try again later.');
+      setError(err)
+      //setError('Failed to fetch listings. Please try again later.');
     } 
     finally {
       setLoading(false);
@@ -60,6 +62,9 @@ const Home = () => {
 
   const handleSearch = (location, guests) => {
     // Prepare search parameters and reset current page
+    console.log(location)
+    console.log(guests)
+    
     setSearchParams({ location, guests });
     setCurrentPage(1); // Reset to first page for search
     fetchListings(1, category, { location, guests });
@@ -79,7 +84,24 @@ const Home = () => {
   };
   
   //if (error.status === 404) return <p className="h-screen bg-green-800 -center text-lg text-red-500">{error}</p>;
-  if (error) return <p className="text-center text-lg text-red-500">{error}</p>;
+  if (error) {
+    return (
+      <div className='mt-[85px] min-h-screen md:mt-[95px]'>
+        <SearchBar handleSearch={handleSearch} />
+
+      <div className='top-[60px] w-full bg-white sticky'>
+        <HorizontalScrollList setCategory={setCategory} />
+      </div>
+        {error.message} {/*error.statusCode && `(Status Code: ${error.statusCode})`*/}
+        {error.statusCode && 
+      <div>
+        No Listings Found with this filter
+      </div>
+      }
+      </div>
+    );
+  }
+  
 
   return (
     <div className='mt-[85px] min-h-screen md:mt-[95px]'>

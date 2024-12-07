@@ -11,11 +11,11 @@ const HostBookings = () => {
     const [showModal, setShowModal] = useState(false);
     const [guestDetails, setGuestDetails] = useState(null);
     const [modalLoading, setModalLoading] = useState(false);
- 
+
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const token = localStorage.getItem('token'); 
+                const token = localStorage.getItem('token');
                 const response = await axios.get(
                     `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/manage-bookings/host-listings-bookings`,
                     {
@@ -24,17 +24,20 @@ const HostBookings = () => {
                 );
 
                 setBookings(response.data.bookings);
-            } catch (err) {
-                setError('Failed to fetch bookings. Please try again.');
+            }
+            catch (err) {
+                //setError('Failed to fetch bookings. Please try again.');
+                setError(err);
                 console.error('Error fetching bookings:', err.response?.data || err.message);
-            } finally {
+            }
+            finally {
                 setLoading(false);
             }
         };
 
         fetchBookings();
     }, []);
- 
+
     const updateStatus = async (bookingID, status) => {
         try {
             const token = localStorage.getItem('token');
@@ -49,7 +52,7 @@ const HostBookings = () => {
             alert('Failed to update booking status.');
         }
     };
- 
+
     const fetchGuestDetails = async (userId) => {
         setModalLoading(true);
         console.log(userId);
@@ -70,9 +73,22 @@ const HostBookings = () => {
     }
 
     if (error) {
-        return <div className="text-center text-red-500 mt-10">{error}</div>;
+        return (
+            <div className='bg-gray-50 pt-[115px] p-6 min-h-screen justify-center items-center '>
+                <div className="max-w-[1350px] mx-auto" >
+                    <h3 className='text-[20px] md:text-[24px] mb-[15px] text-rose-600 font-[700]'>Applied Bookings For Your Properties:</h3>
+                    <div className='h-[2.5px] bg-rose-600 mb-[35px] lg:mb-[55px]'></div>
+                    asd  {error.statusCode} {error.message}
+                    {/*error.message*/} {/*error.statusCode && `(Status Code: ${error.statusCode})`*/}
+                    {error.statusCode &&
+                        <div>
+                            No Listings Found with this filter
+                        </div>
+                    }
+                </div>
+            </div>
+        );
     }
-
     return (
         <div className='bg-gray-50 pt-[115px] p-6 min-h-screen justify-center items-center '>
             <div className="max-w-[1350px] mx-auto" >

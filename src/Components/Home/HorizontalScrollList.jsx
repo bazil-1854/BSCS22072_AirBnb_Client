@@ -10,7 +10,7 @@ const HorizontalScrollList = ({ setCategory }) => {
                 <div
                     key={index}
                     onClick={() => setCategory(category.name)}
-                    className="flex flex-col justify-center items-center hover:text-gray-800 text-gray-400 font-[600] transition duration-200"
+                    className="flex cursor-pointer flex-col justify-center items-center hover:text-gray-800 text-gray-400 font-[600] transition duration-200"
                 >
                     <category.icon className="text-[25px] mb-[3px]" />
                     <p className="text-center text-[12px]">{category.name}</p>

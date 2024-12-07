@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { TbBrandBooking } from 'react-icons/tb';
+import { AiOutlineCalendar, AiOutlineUser } from 'react-icons/ai';
+import { MdClose } from 'react-icons/md';
+import { BiArrowFromLeft } from 'react-icons/bi';
+import { FaArrowRight } from 'react-icons/fa';
 
 const GuestBookings = () => {
     const [bookings, setBookings] = useState([]);
@@ -139,10 +143,10 @@ const GuestBookings = () => {
 
                                 </div>
                                 <button onClick={() => openModal(booking)}
-                                        className="mt-[15px] bg-gradient-to-r from-rose-600 to-rose-900 hover:bg-rose-600 text-white rounded-[18px] px-[15px] py-[8px] text-[13px]"
-                                    >
-                                        View Details
-                                    </button>
+                                    className="mt-[15px] bg-gradient-to-r from-rose-600 to-rose-900 hover:bg-rose-600 text-white rounded-[18px] px-[15px] py-[8px] text-[13px]"
+                                >
+                                    View Details
+                                </button>
                             </div>
                         </div>
                     ))}
@@ -150,41 +154,82 @@ const GuestBookings = () => {
 
                 {showModal && selectedBooking && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                        <div className="bg-white rounded-lg p-6 shadow-lg w-[400px]">
-                            <h2 className="text-xl font-semibold mb-4 text-center">
-                                Booking Details
-                            </h2>
-                            <p className="text-gray-600">Listing ID: {selectedBooking.listingId}</p>
-                            <p className="text-gray-600">Listing ID: {selectedBooking.listing.name}</p>
-                            <p className="text-gray-600">Listing ID: {selectedBooking.listing.property_type}</p>
-                            <p className="text-gray-600">
-                                Check-In: {new Date(selectedBooking.checkIn).toDateString()}
+                        <div className="bg-white rounded-lg p-6 shadow-lg lg:w-[600px] w-[400px] relative">
+                            {/* Close Button */}
+                            <button
+                                onClick={closeModal}
+                                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                                aria-label="Close Modal"
+                            >
+                                <MdClose size={24} />
+                            </button>
+
+                            {/* Header */}
+                            <div className=" flex justify-center items-center font-semibold mb-4 fkex text-center text-gray-800">
+                                <p className='w-[38px] h-[38px] rounded-full flex items-center justify-center text-[28px] text-rose-100 bg-rose-600'>
+                                    <TbBrandBooking />
+                                </p>
+                                <p className='ml-[10px] text-rose-600 text-[25px]'>Booking Details</p>
+                            </div>
+
+                            {/* Booking Information */}
+                            <div className="space-y-2">
+                                {/*  <p className="text-gray-700 font-medium">
+                                    Listing ID: <span className="font-normal">{selectedBooking.listingId}</span>
+                                </p>
+                                */}
+                                <div className='border-b-[2px] border-rose-700 pb-[8px] flex justify-between items-center'>
+                                    <p className="text-gray-700 font-medium">
+                                        Name: <span className="font-normal">{selectedBooking.listing.name}</span>
+                                    </p>
+                                    <p className='text-rose-700 hover:text-red-500 cursor-pointer flex items-center '>
+                                        See Listings <FaArrowRight className='pl-[5px] mt-[2px]' />
+                                    </p>
+                                </div>
+                                <p className="text-gray-700 mb-[15px] font-medium">
+                                    Property Type: <span className="font-normal">{selectedBooking.listing.property_type}</span>
+                                </p>
+                                <p className="text-gray-700 mt-[15px] font-medium flex items-center gap-2">
+                                  <label className='w-[30px] h-[30px] text-[18px] bg-rose-600 flex justify-center items-center rounded-full text-white'><AiOutlineCalendar /></label>
+                                    Check-In: <span className="font-[600] text-green-700">{new Date(selectedBooking.checkIn).toDateString()}</span>
+                                </p>
+                                <p className="text-gray-700 font-medium flex items-center gap-2">
+                                <label className='w-[30px] h-[30px] text-[18px] bg-rose-600 flex justify-center items-center rounded-full text-white'><AiOutlineCalendar /></label>
+                                Check-Out: <span className="font-[600] text-red-700">{new Date(selectedBooking.checkOut).toDateString()}</span>
+                                </p>
+                            </div>
+
+                            {/* Guests Section */}
+                            <div className="mt-4">
+                                <p className="text-gray-700 font-medium mb-1 flex items-center gap-2">
+                                <label className='w-[30px] h-[30px] text-[18px] bg-rose-600 flex justify-center items-center rounded-full text-white'><AiOutlineUser /></label>
+                                
+                                    Guests:
+                                </p>
+                                <ul className="list-disc list-inside ml-4 text-gray-600">
+                                    <li>Adults: {selectedBooking.guests.adults}</li>
+                                    <li>Children: {selectedBooking.guests.children}</li>
+                                    <li>Infants: {selectedBooking.guests.infants}</li>
+                                </ul>
+                            </div>
+
+                            {/* Total Amount */}
+                            <p className="text-gray-700 font-medium mt-4">
+                                Total Amount: <span className="font-bold text-green-500">${selectedBooking.totalAmount}</span>
                             </p>
-                            <p className="text-gray-600">
-                                Check-Out: {new Date(selectedBooking.checkOut).toDateString()}
-                            </p>
-                            <p className="text-gray-600">Guests:</p>
-                            <ul className="list-disc list-inside">
-                                <li>Adults: {selectedBooking.guests.adults}</li>
-                                <li>Children: {selectedBooking.guests.children}</li>
-                                <li>Infants: {selectedBooking.guests.infants}</li>
-                            </ul>
-                            <p className="text-gray-600">Total Amount: ${selectedBooking.totalAmount}</p>
+
+                            {/* Special Requests */}
                             {selectedBooking.specialRequests && (
-                                <p className="text-sm text-gray-500 italic">
+                                <p className="text-sm text-gray-500 italic mt-2">
                                     Special Requests: {selectedBooking.specialRequests}
                                 </p>
                             )}
+
+                            {/* Buttons */}
                             <div className="mt-6 flex justify-end gap-4">
                                 <button
-                                    onClick={closeModal}
-                                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
-                                >
-                                    Close
-                                </button>
-                                <button
-                                    onClick={finalizeBooking} // Replace with any specific action
-                                    className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                    onClick={finalizeBooking}
+                                    className="px-4 py-[5px] bg-red-500 text-white rounded-xl hover:bg-red-600"
                                 >
                                     Finalize Booking
                                 </button>
