@@ -57,18 +57,26 @@ const Booking = () => {
     }, [selectedDates]);
 
     const handleDateChange = (date) => {
+        const today = new Date();
+         // Set the time to midnight to compare only the date
+        today.setHours(0, 0, 0, 0);
+    
+        if (date < today) {
+            alert('Selected date cannot be before the current date.');
+            return;
+        }
+    
         if (!selectedDates.checkIn || (selectedDates.checkIn && selectedDates.checkOut)) {
             setSelectedDates({ checkIn: date, checkOut: null });
-        }
-        else {
+        } else {
             if (date > selectedDates.checkIn) {
                 setSelectedDates({ ...selectedDates, checkOut: date });
-            }
-            else {
+            } else {
                 alert('Check-Out date must be after Check-In date.');
             }
         }
     };
+    
 
     const tileDisabled = ({ date, view }) => {
         if (view === 'month') {
@@ -121,7 +129,7 @@ const Booking = () => {
     };
 
     return (
-        <div className="flex flex-col md:flex-row my-[120px] justify-between max-w-6xl mx-auto p-4 space-y-6 md:space-y-0 md:space-x-6">
+        <div className="flex flex-col md:flex-row my-[120px] justify-between max-w-6xl xl:max-w-[1020px] mx-auto p-4 space-y-6 md:space-y-0 md:space-x-6">
             <div className="flex-1 space-y-6">
                 <div className="border rounded-lg p-4 space-y-2 bg-gray-50">
                     <h2 className="text-lg font-semibold">Request to book</h2>
@@ -130,13 +138,15 @@ const Booking = () => {
                         <span>This is a rare find. Bo's place is usually booked.</span>
                     </p>
                 </div>
-                <Calendar
+               <div className='w-full xl:px-[15px]'>
+               <Calendar
                     onChange={handleDateChange}
                     value={[selectedDates.checkIn, selectedDates.checkOut]}
                     tileDisabled={tileDisabled}
                     tileClassName={tileClassName}
                     selectRange={false}
                 />
+               </div>
                 <div className="space-y-4">
 
                     <div className='p-[15px] bg-gray-50 border border-gray-300 rounded-lg'>
