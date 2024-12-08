@@ -7,6 +7,7 @@ import { div } from 'framer-motion/client';
 export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
     const [isFavorited, setIsFavorited] = useState(isInitiallyFavorited);
     const [error, setError] = useState('');
+    console.log(isInitiallyFavorited)
 
     const toggleFavorite = async () => {
         try {

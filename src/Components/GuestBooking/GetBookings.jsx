@@ -90,11 +90,11 @@ const GuestBookings = () => {
                                 </div>
                                 <div className='ml-[20px] hidden md:flex flex-col items-center justify-center'>
                                     <p className='text-[13px] font-[600] text-gray-500 '>Listing Title</p>
-                                    <p className='font-[600] w-[110px] text-[19px] text-rose-800'><p>{`${booking.listing.name.slice(0, 11)}...`}</p></p>
+                                    <p className='font-[600] w-[110px] text-[19px] text-rose-800'>{`${booking.listing.name.slice(0, 11)}...`}</p>
                                 </div>
                                 <div className='md:hidden flex ml-[15px] items-center justify-center'>
                                     <p className='text-[15px] font-[600] text-gray-500 '>Property Name:</p>
-                                    <p className='font-[600] w-[110px] text-[18px] ml-[10px] text-rose-800'><p>{`${booking.listing.name.slice(0, 11)}...`}</p></p>
+                                    <p className='font-[600] w-[110px] text-[18px] ml-[10px] text-rose-800'>{`${booking.listing.name.slice(0, 11)}...`}</p>
                                 </div>
                             </div>
 
@@ -111,12 +111,12 @@ const GuestBookings = () => {
                             </div>
 
                             <div className='md:hidden justify-between mt-[15px] flex items-center'>
-                                <div className='flex flex-col items-center justify-center'>
+                                <div className='flex flex-col md:items-center justify-center'>
                                     <p className='text-[13px] font-[600] text-gray-500 '>Check-In</p>
                                     <p className='font-[600] text-[14px] text-rose-800'>{new Date(booking.checkIn).toDateString()}</p>
                                 </div>
 
-                                <div className='ml-[20px] xl:ml-[50px] flex flex-col items-center justify-center'>
+                                <div className='ml-[20px] xl:ml-[50px] flex flex-col md:items-center justify-center'>
                                     <p className='text-[13px] font-[600] text-gray-500 '>Check Out</p>
                                     <p className='font-[600] text-[14px] text-rose-800'>{new Date(booking.checkOut).toDateString()}</p>
                                 </div>
@@ -190,20 +190,20 @@ const GuestBookings = () => {
                                     Property Type: <span className="font-normal">{selectedBooking.listing.property_type}</span>
                                 </p>
                                 <p className="text-gray-700 mt-[15px] font-medium flex items-center gap-2">
-                                  <label className='w-[30px] h-[30px] text-[18px] bg-rose-600 flex justify-center items-center rounded-full text-white'><AiOutlineCalendar /></label>
+                                    <label className='w-[30px] h-[30px] text-[18px] bg-rose-600 flex justify-center items-center rounded-full text-white'><AiOutlineCalendar /></label>
                                     Check-In: <span className="font-[600] text-green-700">{new Date(selectedBooking.checkIn).toDateString()}</span>
                                 </p>
                                 <p className="text-gray-700 font-medium flex items-center gap-2">
-                                <label className='w-[30px] h-[30px] text-[18px] bg-rose-600 flex justify-center items-center rounded-full text-white'><AiOutlineCalendar /></label>
-                                Check-Out: <span className="font-[600] text-red-700">{new Date(selectedBooking.checkOut).toDateString()}</span>
+                                    <label className='w-[30px] h-[30px] text-[18px] bg-rose-600 flex justify-center items-center rounded-full text-white'><AiOutlineCalendar /></label>
+                                    Check-Out: <span className="font-[600] text-red-700">{new Date(selectedBooking.checkOut).toDateString()}</span>
                                 </p>
                             </div>
 
                             {/* Guests Section */}
                             <div className="mt-4">
                                 <p className="text-gray-700 font-medium mb-1 flex items-center gap-2">
-                                <label className='w-[30px] h-[30px] text-[18px] bg-rose-600 flex justify-center items-center rounded-full text-white'><AiOutlineUser /></label>
-                                
+                                    <label className='w-[30px] h-[30px] text-[18px] bg-rose-600 flex justify-center items-center rounded-full text-white'><AiOutlineUser /></label>
+
                                     Guests:
                                 </p>
                                 <ul className="list-disc list-inside ml-4 text-gray-600">

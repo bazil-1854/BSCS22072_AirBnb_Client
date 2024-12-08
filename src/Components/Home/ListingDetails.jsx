@@ -55,6 +55,8 @@ const ListingDetails = () => {
   }, []);
 
   useEffect(() => {
+    if (userLoginStatus === null) return; 
+    
     const fetchListingDetails = async () => {
       try {
         const token = userLoginStatus ? localStorage.getItem('token') : null;
@@ -79,7 +81,7 @@ const ListingDetails = () => {
     };
 
     fetchListingDetails();
-  }, []);
+  }, [userLoginStatus]);
 
   if (loading) {
     return <div className="text-center mt-10">Loading...</div>;
