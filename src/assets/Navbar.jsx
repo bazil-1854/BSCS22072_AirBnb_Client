@@ -85,7 +85,7 @@ const Navbar = () => {
                 <div className={`${location.pathname === '/' ? 'border-white pt-4' : 'border-b-[3px] border-gray-100 py-4'} mx-auto px-4 sm:px-6 md:px-[15px] lg:px-[35px] xl:px-[75px]`}>
                     <div className="flex justify-between items-center ">
                         <div className="flex items-center">
-                            <img src={airbnb} alt="" className='w-[32px] mr-[5px] h-[32px]' />
+                            <img src={airbnb} alt="" className='w-[32px] mr-[5px] h-[27px] mt-[2px]' />
                             <NavLink to="/" className="text-[24px] font-[780] text-red-500">
                                 airbnb
                             </NavLink>

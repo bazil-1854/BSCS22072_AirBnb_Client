@@ -18,7 +18,7 @@ const HostedListings = () => {
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/hosting/hosted-listings`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`, // Include the token in the request headers
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         }
       );
@@ -101,7 +101,7 @@ const HostedListings = () => {
                   <FaEdit size={20}/>
                 </button>
               </div>
-              <p className="text-[14px] mt-[8px] text-gray-700">{listing.summary}</p>
+              <p className="text-[14px] break-words mt-[8px] text-gray-700">{listing.summary.slice(0,150)}</p>
               <p className="mt-2 text-[14px] text-green-700 font-medium">${listing.price} /night</p>
 
             </div>
