@@ -3,10 +3,10 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../AuthProvider';
 import { AiOutlineLock, AiOutlineMail } from 'react-icons/ai';
-import collaboratorLogo from "../../logo.svg";
-import { FaGoogle } from 'react-icons/fa';
+import collaboratorLogo from "../../logo.svg"; 
 
 const SignInnForm = () => {
+  const navigate = useNavigate();
   const { login } = useAuthContext();
   const [focusField, setFocusField] = useState('');
   const [formData, setFormData] = useState({
@@ -14,7 +14,6 @@ const SignInnForm = () => {
     password: '',
   });
   const { email, password } = formData;
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,10 +52,10 @@ const SignInnForm = () => {
       <div className='flex flex-col w-[90%] md:w-[500px] md:scale-[1] scale-[0.9]'>
 
         <div className="scale-[1.2] flex mx-auto">
-          <img src={collaboratorLogo} alt="Connection Failed" className="w-[34px] h-[34px]" />
-          <div className="text-rose-500 ml-[4px] md:text-[25px] text-[25px] font-[700]">Air<span className='text-red-700'>BnB</span></div>
+          <img src={collaboratorLogo} alt="Connection Failed" className="w-[34px] h-[31px] mt-[4px]" />
+          <div className="text-rose-600 ml-[4px] md:text-[25px] text-[25px] font-[700]">Air<span className='text-red-400'>BnB</span></div>
         </div>
-        <p className='text-[15px] mb-[15px] text-center mt-[8px] text-gray-500 font-[400]'>Simplify Teamwork, Streamline Success</p>
+        <p className='text-[15px] mb-[15px] text-center mt-[8px] text-gray-500 font-[400]'>Stay, Host, Explore !! Your Next Adventure Starts Here.</p>
 
         <div className='py-[35px] px-[25px] flex flex-col bg-white rounded-xl'>
           <form onSubmit={handleSubmit} className='lg:px-[15px]'>
@@ -117,7 +116,7 @@ const SignInnForm = () => {
             <div className='w-[47%] h-[2px] bg-[#c5c5c5]'></div>
           </div>
 
-          <p className='mx-auto mt-[18px] text-gray-500 font-medium'>Dont Have An Account?<span onClick={() => navigate("/signUp")} className='text-rose-700 ml-[8px] underline'>Sign Up</span></p>
+          <p className='mx-auto cursor-pointer mt-[18px] text-gray-500 font-medium'>Dont Have An Account?<span onClick={() => navigate("/signUp")} className='text-rose-700 ml-[8px] underline'>Sign Up</span></p>
 
         </div>
 
