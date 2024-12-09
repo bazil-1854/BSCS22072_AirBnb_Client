@@ -98,7 +98,7 @@ const HostBookings = () => {
             <div className="max-w-[1350px] mx-auto" >
                 <h3 className='text-[20px] md:text-[24px] mb-[15px] text-rose-600 font-[700]'>Applied Bookings For Your Properties:</h3>
                 <div className='h-[2.5px] bg-rose-600 mb-[35px] lg:mb-[55px]'></div>
-                <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
+                <div className="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 ">
                     {bookings.map((booking) => (
                         <div
                             key={booking._id}

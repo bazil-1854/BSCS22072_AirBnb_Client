@@ -1,9 +1,9 @@
-import React from "react";
-import { useSocketContext } from "../../Socket";
+import React from "react"; 
 import { TbBrandBooking } from "react-icons/tb";
+import { useAuthContext } from "../../AuthProvider";
 
-const Notifications = () => {
-    const { notifications } = useSocketContext();
+const GuestNotifications = () => {
+    const { notifications } = useAuthContext();
 
     return (
         <div className='bg-gray-50 pt-[100px] min-h-screen pb-[65px] justify-center items-center '>
@@ -21,7 +21,7 @@ const Notifications = () => {
                         <div key={index}>
                             <h3>{notification.title}</h3>
                             <p>{notification.details}</p>
-                            <p>{notification.bookingId}</p>
+                            <p>{notification.listingId}</p>
                         </div>
                     ))}
                 </div>
@@ -30,4 +30,4 @@ const Notifications = () => {
     );
 };
 
-export default Notifications;
+export default GuestNotifications;
