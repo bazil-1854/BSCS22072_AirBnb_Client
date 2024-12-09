@@ -15,6 +15,7 @@ import GuestBookings from './Components/GuestBooking/GetBookings';
 import HostBookings from './Components/Host/HostBookings';
 import FinalizeBooking from './Components/GuestBooking/FinalizeBooking';
 import FavoriteListings from './Components/Authentication/FavoriteListings';
+import Notifications from './Components/Home/Notifications';
 
 function App() {
 
@@ -33,7 +34,8 @@ function App() {
         <Route path="/signIn" element={<SignInnForm />} />
 
         <Route path="/profile" element={<Profile />} />
-
+ 
+        <Route path="/notifications" element={<Notifications />} />  
 
         <Route path="/add-listing" element={<AddListing />} />
         <Route path="/host-listing" element={<HostedListings />} /> 

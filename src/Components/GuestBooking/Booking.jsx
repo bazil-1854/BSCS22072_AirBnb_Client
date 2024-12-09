@@ -251,7 +251,7 @@ const Booking = () => {
                             onChange={(e) => setGuests({ ...guests, adults: parseInt(e.target.value, 10) })}
                             className="w-full border rounded-md p-2"
                         />
-                        <p className="text-xs text-gray-500 mt-1">We’ll call or text you to confirm your number. Standard message and data rates apply. <p className="text-blue-500 underline">Privacy Policy</p></p>
+                        <p className="text-xs text-gray-500 mt-1">We’ll call or text you to confirm your number. Standard message and data rates apply. <span className="text-blue-500 underline">Privacy Policy</span></p>
                     </div>
                     {numberOfDays !== null ?
                         <button onClick={handleBooking} className="w-full py-3 bg-gradient-to-r from-pink-700 to-pink-900 text-white font-semibold rounded-lg" >

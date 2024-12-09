@@ -124,9 +124,9 @@ const Navbar = () => {
 
                         <div className="flex items-center space-x-4">
                             <span className='text-gray-700 xl:block hidden text-md'>Airbnb Your Home</span>
-                            <button className="hidden md:inline-flex items-center text-gray-600 space-x-2 hover:text-black">
+                            <NavLink to="/notifications" className="hidden md:inline-flex items-center text-gray-600 space-x-2 hover:text-black">
                                 <LuGlobe className="text-xl" />
-                            </button>
+                            </NavLink>
                             <div onClick={toggleMenu} className="flex items-center space-x-2 border rounded-full px-3 py-2 hover:shadow-lg transition-shadow">
                                 <div className='sm:block hidden'><GiHamburgerMenu className="text-xl text-gray-500" /></div>
                                 <div className="sm:hidden">
