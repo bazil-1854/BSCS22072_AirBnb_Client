@@ -6,7 +6,7 @@ import { FaBookmark, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
     const [isFavorited, setIsFavorited] = useState(isInitiallyFavorited);
     const [error, setError] = useState('');
-    console.log(isInitiallyFavorited)
+    //console.log(isInitiallyFavorited)
 
     const toggleFavorite = async () => {
         try {

@@ -27,7 +27,7 @@ export const SocketProvider = ({ children }) => {
 
       newSocket.on("notification", (data) => {
         console.log("Notification received:", data);
-        setNotifications((prev) => [...prev, data]); // Save notifications
+        setNotifications((prev) => [...prev, data]);
       });
 
       newSocket.on("disconnect", () => {

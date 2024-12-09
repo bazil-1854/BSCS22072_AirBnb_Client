@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaBars, FaBed, FaHeart, FaSearch, FaSlidersH, FaTimes, FaUser, FaUserCircle } from 'react-icons/fa';
+import { FaBars, FaBed, FaBell, FaHeart, FaSearch, FaSlidersH, FaTimes, FaUser, FaUserCircle } from 'react-icons/fa';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -125,7 +125,7 @@ const Navbar = () => {
                         <div className="flex items-center space-x-4">
                             <span className='text-gray-700 xl:block hidden text-md'>Airbnb Your Home</span>
                             <NavLink to="/notifications" className="hidden md:inline-flex items-center text-gray-600 space-x-2 hover:text-black">
-                                <LuGlobe className="text-xl" />
+                                <FaBell className="text-xl" />
                             </NavLink>
                             <div onClick={toggleMenu} className="flex items-center space-x-2 border rounded-full px-3 py-2 hover:shadow-lg transition-shadow">
                                 <div className='sm:block hidden'><GiHamburgerMenu className="text-xl text-gray-500" /></div>
@@ -141,7 +141,7 @@ const Navbar = () => {
                     </div>
 
                     {isOpen && (
-                        <div className="lg:block hidden">
+                        <div className="md:block hidden">
                             <div onClick={toggleMenu} className="flex flex-col absolute z-[90] right-0 mr-[75px] w-[250px] bg-white rounded-lg border shadow-xl mt-2 p-4">
                                 {user ? (
                                     <>

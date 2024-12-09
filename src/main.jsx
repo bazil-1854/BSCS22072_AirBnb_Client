@@ -8,9 +8,7 @@ import { SocketProvider } from './Socket.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
-      <SocketProvider>
-        <App />
-      </SocketProvider>
+      <App />
     </AuthProvider>
-  </StrictMode>,
+  </StrictMode>
 )
