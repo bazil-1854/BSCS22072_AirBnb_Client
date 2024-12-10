@@ -138,7 +138,6 @@ const HostBookings = () => {
                                 <div className='flex  mt-[8px] items-center space-x-2'>
                                     <GrStatusInfo className='text-rose-800 text-[18px]' />
                                     <p className='text-[15px] font-[600] text-gray-500 '>Status</p>
-                                    <span className={`scale-[0.9]  mt-[5px] font-[600] px-[12px] pb-[2px] text-white rounded-[30px] text-[11px] ${booking.status === 'approved' ? 'bg-green-800' : booking.status === 'pending' ? 'bg-yellow-600' : booking.status === 'confirmed' ? 'bg-blue-800' : booking.status === 'rejected' ? 'bg-red-800' : booking.status === 'completed' ? 'text-gray-800' : ''}`}>{booking.status}</span>
                                 </div>
 
                             </div>

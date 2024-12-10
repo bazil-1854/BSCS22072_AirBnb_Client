@@ -15,7 +15,7 @@ import { BiLogIn } from 'react-icons/bi';
 const Navbar = () => {
     const navigate = useNavigate();
 
-    const { user, userRole, logout } = useAuthContext();
+    const { user, userRole, notificationsCount, logout } = useAuthContext();
 
     const [isOpen, setIsOpen] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
@@ -124,8 +124,9 @@ const Navbar = () => {
 
                         <div className="flex items-center space-x-4">
                             <span className='text-gray-700 xl:block hidden text-md'>Airbnb Your Home</span>
-                            <NavLink to={userRole === "guest" ? "/guest_notifications" : "/host_notifications"} className="hidden md:inline-flex items-center text-gray-600 space-x-2 hover:text-black">
-                                <FaBell className="text-xl" />
+                            <NavLink to={userRole === "Guest" ? "/guest_notifications" : "/host_notifications"} className="hidden md:inline-flex items-center  space-x-2 hover:text-black">
+                                <FaBell className={`text-xl ${notificationsCount === 0 ? 'text-gray-500' : ' mr-[-20px]'}`} />
+                                {notificationsCount !== 0 && <div className='text-[12px] font-[600] rounded-full w-[20px] h-[20px] text-white text-center bg-rose-600 mt-[-20px]'>{notificationsCount}</div>}
                             </NavLink>
                             <div onClick={toggleMenu} className="flex items-center space-x-2 border rounded-full px-3 py-2 hover:shadow-lg transition-shadow">
                                 <div className='sm:block hidden'><GiHamburgerMenu className="text-xl text-gray-500" /></div>

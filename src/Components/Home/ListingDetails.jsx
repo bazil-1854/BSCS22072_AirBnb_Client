@@ -232,9 +232,7 @@ const ListingDetails = () => {
 
           <div>
             <h3 className="font-semibold text-lg">About this place</h3>
-            <p className="text-sm text-gray-600">
-              {listing.summary}
-            </p>
+            <p className="text-sm break-words text-gray-600">{listing.summary}</p>
           </div>
 
           {userLoginStatus &&
@@ -250,7 +248,7 @@ const ListingDetails = () => {
               <p className="text-sm text-gray-600 font-[600]">/ night</p>
             </div>
 
-            <div className="border border-[#818181] rounded-lg py-4 w-full max-w-sm">
+            <div className="border border-[#818181] rounded-lg py-4 w-full">
               <div className="grid grid-cols-2 px-[15px] border-b border-[#818181] pb-4 gap-4">
                 <div className="space-y-1">
                   <p className="text-xs font-semibold text-gray-600">CHECK-IN</p>
@@ -320,4 +318,3 @@ const ListingDetails = () => {
 };
 
 export default ListingDetails;
- 

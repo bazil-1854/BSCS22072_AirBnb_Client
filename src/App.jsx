@@ -36,8 +36,8 @@ function App() {
 
         <Route path="/profile" element={<Profile />} />
  
-        <Route path="/guest_notifications" element={<HostNotifications />} />  
-        <Route path="/host_notifications" element={<GuestNotifications />} />  
+        <Route path="/guest_notifications" element={<GuestNotifications />} />  
+        <Route path="/host_notifications" element={<HostNotifications />} />  
 
         <Route path="/add-listing" element={<AddListing />} />
         <Route path="/host-listing" element={<HostedListings />} /> 

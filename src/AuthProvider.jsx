@@ -129,6 +129,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [socket, setSocket] = useState(null);
   const [notifications, setNotifications] = useState([]);
+  const [notificationsCount, setNotificationsCount] = useState(0);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -202,6 +203,8 @@ export const AuthProvider = ({ children }) => {
     newSocket.on("notification", (data) => {
       console.log(`Notification received:`, data);
       setNotifications((prev) => [...prev, data]);
+      //setNotificationsCount(notificationsCount + 1);
+      setNotificationsCount((prev) => prev + 1);
     });
 
     newSocket.on("disconnect", () => {
@@ -242,6 +245,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         socket,
         notifications,
+        notificationsCount,
       }}
     >
       {children}
