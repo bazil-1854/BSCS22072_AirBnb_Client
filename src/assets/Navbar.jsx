@@ -200,7 +200,7 @@ const Navbar = () => {
             </nav>
 
             <nav className='md:hidden block'>
-                <div className="flex items-center pt-[15px] px-[18px] w-screen">
+                <div className="flex items-center py-[10px] px-[18px] w-screen">
                     <div className='border-[2px] w-[85%] border-gray-300 rounded-[25px] flex items-center py-[5px] px-3'>
                         <FaSearch className="text-gray-700 mr-5" size={25} />
                         <div className="flex-1 text-[14px] text-gray-500">
@@ -213,7 +213,6 @@ const Navbar = () => {
                             <FaSlidersH onClick={toggleMenu} className="text-gray-500" size={20} />
                         </p>
                     </div>
-
                 </div>
                 {isOpen && (
                     <div className="sm:hidden">
@@ -261,7 +260,7 @@ const Navbar = () => {
                         <FiHome className="mb-[6px]" size={22} />
                         <span className="text-xs">Home</span>
                     </NavLink>
-                 
+
 
                     {user &&
                         <>{userRole === 'Host' ? <>
@@ -285,11 +284,11 @@ const Navbar = () => {
                             </>}
                         </>
                     }
-   <NavLink to={userRole === "Guest" ? "/guest_notifications" : "/host_notifications"}  className={({ isActive }) => `relative flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
+                    <NavLink to={userRole === "Guest" ? "/guest_notifications" : "/host_notifications"} className={({ isActive }) => `relative flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                         <FaBell className="mb-[6px]" size={22} />
                         {notificationsCount !== 0 && <div className='absolute text-[12px] font-[600] rounded-full w-[22px] h-[22px] ml-[20px] text-white text-center bg-rose-800 border-[2px] border-white mt-[-10px]'>{notificationsCount}</div>}
                         <span className="text-xs">Alerts</span>
-                    </NavLink> 
+                    </NavLink>
                     {user ?
                         <NavLink to="/profile" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                             <FaUser className="mb-[6px]" size={22} />

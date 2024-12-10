@@ -25,3 +25,29 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #c3c3c3;
 }
+
+
+.slider-thumb{ 
+  border-radius: 50%;
+}
+.slider-thumb::-webkit-slider-thumb {
+  appearance: none;
+  width: 8px; 
+  padding-bottom: 20px;
+  background-color: #e4266c;  
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.slider-thumb2{ 
+  border-radius: 50%;
+}
+.slider-thumb2::-webkit-slider-thumb {
+  appearance: none;
+  width: 8px; 
+  margin-top: -15px;
+  padding-top: 21px;
+  background-color: #e4266c;  
+  border-radius: 15px;
+  cursor: pointer;
+}

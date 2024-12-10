@@ -17,6 +17,7 @@ import FinalizeBooking from './Components/GuestBooking/FinalizeBooking';
 import FavoriteListings from './Components/Authentication/FavoriteListings'; 
 import GuestNotifications from './Components/Notifications/guest_Notifications';
 import HostNotifications from './Components/Notifications/Host_Notifications';
+import FiltersModal from './Components/FilterModal';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<SearchListings />} />
+        <Route path="/stays" element={<FiltersModal />} />
         <Route path="/listing/:id" element={<ListingDetails />} />
 
         <Route path="/booking/:hostId/:listingId" element={<Booking />} />

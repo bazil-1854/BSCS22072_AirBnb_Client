@@ -4,7 +4,7 @@ import axios from 'axios';
 import { FaBed, FaBath, FaDollarSign, FaHome, FaImage, FaPlusCircle } from 'react-icons/fa';
 import { MdLocationOn } from 'react-icons/md';
 import { RiCloseFill, RiDeleteBinLine } from 'react-icons/ri';
-import { categories } from './AddListings/AddListings_Utility';
+import { categories } from './AddListings_Utility';
 
 const EditListing = () => {
   const { id } = useParams();

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { FaRegImage, FaLink } from 'react-icons/fa';
 import { RiCloseFill } from 'react-icons/ri';
-import { categories } from './AddListings/AddListings_Utility';
+import { categories } from './AddListings_Utility';
 
 
 const Step1 = ({ formData, handleChange, setCurrentStep }) => {

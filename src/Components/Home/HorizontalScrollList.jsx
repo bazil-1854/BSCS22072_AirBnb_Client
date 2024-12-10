@@ -1,5 +1,5 @@
 import React from 'react';
-import { categories } from '../Host/AddListings/AddListings_Utility';
+import { categories } from '../Host/AddListings_Utility';
 
 
 const HorizontalScrollList = ({ setCategory }) => {
