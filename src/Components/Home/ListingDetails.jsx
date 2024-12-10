@@ -235,9 +235,7 @@ const ListingDetails = () => {
             <p className="text-sm break-words text-gray-600">{listing.summary}</p>
           </div>
 
-          {userLoginStatus &&
-            <AddRating listingId={id} />
-          }
+          {userLoginStatus && <AddRating listingId={id} /> }
 
         </div>
 

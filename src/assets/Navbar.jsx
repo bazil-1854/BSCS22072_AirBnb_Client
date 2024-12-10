@@ -261,10 +261,7 @@ const Navbar = () => {
                         <FiHome className="mb-[6px]" size={22} />
                         <span className="text-xs">Home</span>
                     </NavLink>
-                    <NavLink to="/search" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
-                        <FaSearch className="mb-[6px]" size={22} />
-                        <span className="text-xs">Explore</span>
-                    </NavLink>
+                 
 
                     {user &&
                         <>{userRole === 'Host' ? <>
@@ -288,7 +285,11 @@ const Navbar = () => {
                             </>}
                         </>
                     }
-
+   <NavLink to={userRole === "Guest" ? "/guest_notifications" : "/host_notifications"}  className={({ isActive }) => `relative flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
+                        <FaBell className="mb-[6px]" size={22} />
+                        {notificationsCount !== 0 && <div className='absolute text-[12px] font-[600] rounded-full w-[22px] h-[22px] ml-[20px] text-white text-center bg-rose-800 border-[2px] border-white mt-[-10px]'>{notificationsCount}</div>}
+                        <span className="text-xs">Alerts</span>
+                    </NavLink> 
                     {user ?
                         <NavLink to="/profile" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                             <FaUser className="mb-[6px]" size={22} />

@@ -8,11 +8,9 @@ import { TbBrandBooking } from "react-icons/tb";
 import { FaArrowRight } from "react-icons/fa";
 import { AiOutlineCalendar, AiOutlineUser } from "react-icons/ai";
 
-
-
 const HostNotifications = () => {
     const navigate = useNavigate();
-    const { notifications } = useAuthContext();
+    const { notifications, userNotifications } = useAuthContext();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [bookingDetails, setBookingDetails] = useState(null);
 
@@ -45,7 +43,7 @@ const HostNotifications = () => {
                     {notifications.map((notification, index) => (
                         <div key={index} className="border-b-[2px] border-rose-700 lg:px-[20px] py-[15px] flex flex-col">
                             <div className="flex items-center">
-                                <div className="w-[32px] h-[32px] md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center text-[28px] bg-rose-100 text-rose-600">
+                            <div className="w-[32px] h-[32px] md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center text-[28px] bg-rose-800 text-rose-50">
                                     <TbBrandBooking />
                                 </div>
                                 <h3 className="text-[16px] ml-[12px] text-rose-600 font-[500]">
@@ -56,6 +54,32 @@ const HostNotifications = () => {
 
                             <p className="ml-[49px]">
                                 <span className="text-rose-500 text-[16px] font-[700]">Special Requests: </span>{notification.details}
+                            </p>
+                            <button
+                                onClick={() => fetchBookingDetails(notification.bookingId)} // Call to fetch booking details
+                                className="ml-[48px] text-rose-700 underline underline-offset-2 font-[500] mt-[4px] text-start"
+                            >
+                                See Booking
+                            </button>
+                        </div>
+                    ))}
+                    <div className="underline underline-offset-1  text-rose-600 text-center font-[600]">Older Notifications</div>
+
+                    {/* Older notificaitons */}
+                    {userNotifications.map((notification, index) => (
+                        <div key={index} className="bg-rose-50 rounded-[25px] lg:px-[20px] py-[15px] flex flex-col">
+                            <div className="flex items-center">
+                            <div className="w-[32px] h-[32px] md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center text-[28px] bg-rose-100 text-rose-600">
+                                    <TbBrandBooking />
+                                </div>
+                                <h3 className="text-[16px] ml-[12px] text-rose-400 font-[500]">
+                                    Booking Created at Your Property In{" "}
+                                    <span onClick={() => navigate(`/listing/${notification.listing_Id}`)} className="text-rose-500 text-[17px] cursor-pointer underline underline-offset-1 font-[600]">{notification.location}</span>
+                                </h3>
+                            </div>
+
+                            <p className="ml-[49px] text-rose-800   ">
+                                <span className="text-rose-400 text-[16px] font-[600]">Special Requests: </span>{notification.details}
                             </p>
                             <button
                                 onClick={() => fetchBookingDetails(notification.bookingId)} // Call to fetch booking details

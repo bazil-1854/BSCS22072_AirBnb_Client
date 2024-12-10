@@ -125,6 +125,7 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userNotifications, setUserNotifications] = useState([]);
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
   const [socket, setSocket] = useState(null);
@@ -138,6 +139,7 @@ export const AuthProvider = ({ children }) => {
       const isValid = validateToken(token);
       if (isValid) {
         fetchUserData(token);
+        fetchUserNotifications(token);
         connectSocket(token);
       } else {
         handleLogout();
@@ -182,6 +184,21 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
+  };
+  const fetchUserNotifications = async (token) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/profile/notifications`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setUserNotifications(response.data);
+      //console.log(response.data) 
+    } 
+    catch (error) {
+      console.error("Error fetching user data:", error); 
+    }  
   };
 
   const connectSocket = (token) => {
@@ -246,6 +263,7 @@ export const AuthProvider = ({ children }) => {
         socket,
         notifications,
         notificationsCount,
+        userNotifications,
       }}
     >
       {children}
