@@ -125,6 +125,7 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [searchfilters, setSearchFilters] = useState({});
   const [userNotifications, setUserNotifications] = useState([]);
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -264,6 +265,8 @@ export const AuthProvider = ({ children }) => {
         notifications,
         notificationsCount,
         userNotifications,
+        setSearchFilters,
+        searchfilters,
       }}
     >
       {children}

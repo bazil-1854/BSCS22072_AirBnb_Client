@@ -26,6 +26,10 @@ const EditListing = () => {
   const [error, setError] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleCategoryClick = (category) => {
     handleChange({ target: { name: 'category', value: category } }); // Simulate form input change
     setIsModalOpen(false); // Close modal after selection

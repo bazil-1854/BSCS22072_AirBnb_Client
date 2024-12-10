@@ -522,6 +522,10 @@ const AddListing = () => {
     const [uploadMethod, setUploadMethod] = useState('url');
     const [files, setFiles] = useState([]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 

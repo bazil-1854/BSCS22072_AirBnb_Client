@@ -23,6 +23,10 @@ const Booking = () => {
     const [numberOfDays, setNumberOfDays] = useState(null);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+
+    useEffect(() => {
         const fetchBlockedDates = async () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/reservation/get-reserved-bookings/${listingId}`);

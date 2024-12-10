@@ -12,6 +12,10 @@ const FavoriteListings = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+
+    useEffect(() => {
         fetchListings();
     }, [currentPage]);
 

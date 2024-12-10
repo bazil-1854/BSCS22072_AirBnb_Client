@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../../AuthProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,6 +13,10 @@ const HostNotifications = () => {
     const { notifications, userNotifications } = useAuthContext();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [bookingDetails, setBookingDetails] = useState(null);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
     const fetchBookingDetails = async (bookingId) => {
         console.log(bookingId)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AiOutlineLock, AiOutlineMail } from 'react-icons/ai';
 import collaboratorLogo from "../../logo.svg";
@@ -17,6 +17,10 @@ const SignUpForm = () => {
   });
 
   const { email, password, fullName } = formData;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleChange = (e) => {
     //const { name, value, type, checked } = e.target;

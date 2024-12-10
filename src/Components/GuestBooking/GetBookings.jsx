@@ -15,6 +15,7 @@ const GuestBookings = () => {
 
     // Fetch bookings
     useEffect(() => {
+        window.scrollTo(0, 0);
         const fetchBookings = async () => {
             try {
                 const token = localStorage.getItem('token'); // Retrieve token for authentication

@@ -114,7 +114,7 @@ const Navbar = () => {
                                         <NavLink to="/stays" className="text-gray-600 hover:text-black font-medium">
                                             Stays
                                         </NavLink>
-                                        <NavLink to="/experiences" className="text-gray-600 hover:text-black font-medium">
+                                        <NavLink to="/search" className="text-gray-600 hover:text-black font-medium">
                                             Experiences
                                         </NavLink>
                                     </motion.div>

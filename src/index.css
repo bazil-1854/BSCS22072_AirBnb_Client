@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
+*{
+  scroll-behavior: smooth;
+}
+
 .reserved-date { 
     color: #545454 ;
     pointer-events: none; 
-  }
-  
-  
+}
+    
 ::-webkit-scrollbar {
   width: 8px;
   height: 12px;
@@ -39,9 +43,10 @@
   cursor: pointer;
 }
 
-.slider-thumb2{ 
+.slider-thumb2 { 
   border-radius: 50%;
 }
+
 .slider-thumb2::-webkit-slider-thumb {
   appearance: none;
   width: 8px; 

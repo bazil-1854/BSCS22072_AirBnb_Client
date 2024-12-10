@@ -58,7 +58,8 @@ const HostedListings = () => {
     setShowModal(false);
   };
 
-  useEffect(() => {
+  useEffect(() => { 
+      window.scrollTo(0, 0); 
     fetchHostedListings();
   }, []);
 

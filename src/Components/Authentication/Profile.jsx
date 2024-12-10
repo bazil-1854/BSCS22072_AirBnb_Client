@@ -10,8 +10,9 @@ const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+   
     useEffect(() => {
+        window.scrollTo(0, 0);
         const fetchUserProfile = async () => {
             try {
                 const token = localStorage.getItem('token');

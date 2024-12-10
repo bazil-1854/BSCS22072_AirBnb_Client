@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TbBrandBooking } from "react-icons/tb";
 import { useAuthContext } from "../../AuthProvider";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 const GuestNotifications = () => {
     const navigate = useNavigate();
     const { notifications, userNotifications } = useAuthContext();
-
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
     return (
         <div className='bg-gray-50 pt-[100px] min-h-screen pb-[65px] justify-center items-center '>
             <div className="max-w-[950px] mx-auto px-6" >

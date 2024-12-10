@@ -38,6 +38,10 @@ const ListingDetails = () => {
 
   const [ratingReviews, setRatingReviews] = useState([]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const fetch_Review_count_and_rating = async () => {
     try {
       setLoading(true);

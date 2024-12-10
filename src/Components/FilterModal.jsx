@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { FaWifi, FaSnowflake, FaTshirt } from 'react-icons/fa';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { useAuthContext } from '../AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const FiltersModal = () => {
+    const navigate = useNavigate();
+    const { setSearchFilters } = useAuthContext();
     const [title, setTitle] = useState('');
     const [suburb, setSuburb] = useState('');
     const [country, setCountry] = useState('');
@@ -40,6 +44,16 @@ const FiltersModal = () => {
             beds,
             bathrooms,
         });
+        setSearchFilters({
+            title,
+            suburb,
+            country,
+            minPrice,
+            maxPrice,
+            beds,
+            bathrooms,
+        })
+        navigate("/search");
     };
 
     return (

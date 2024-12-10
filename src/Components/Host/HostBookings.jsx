@@ -16,7 +16,8 @@ const HostBookings = () => {
     const [guestDetails, setGuestDetails] = useState(null);
     const [modalLoading, setModalLoading] = useState(false);
 
-    useEffect(() => {
+    useEffect(() => { 
+            window.scrollTo(0, 0); 
         const fetchBookings = async () => {
             try {
                 const token = localStorage.getItem('token');

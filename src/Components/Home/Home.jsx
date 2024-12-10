@@ -17,6 +17,10 @@ const Home = () => {
   const [category, setCategory] = useState('All');
   const [searchParams, setSearchParams] = useState(null);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const fetchListings = async (page, category) => {
     setLoading(true);
     try {

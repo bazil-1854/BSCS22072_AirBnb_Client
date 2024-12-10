@@ -1,79 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { useAuthContext } from '../AuthProvider';
 
 const SearchListings = () => {
-    const [type, setType] = useState('');
-    const [title, setTitle] = useState('');
-    const [category, setCategory] = useState('');
-    const [results, setResults] = useState([]);
+    const { searchfilters } = useAuthContext(); // Get filters from context
+    const [results, setResults] = useState([]); // Full list of results
+    const [displayedResults, setDisplayedResults] = useState([]); // Paginated results
+    const [currentPage, setCurrentPage] = useState(1); // Current page
+    const resultsPerPage = 1; // Number of results per page (change to 10, etc., as needed)
 
-    const handleSearch = async (e) => {
-        e.preventDefault();
-        setResults([]);
-        try {
-            const response = await axios.get('http://localhost:3001/api/search', {
-                params: { type, title, category }
-            });
-            setResults(response.data);
-        } catch (error) {
-            console.error('Error fetching search results:', error);
-        }
+    // Fetch listings based on filters on component load
+    useEffect(() => {
+        const fetchListings = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/fltered-listings`, searchfilters);
+                setResults(response.data); // Full results
+                console.log(response.data)
+                setDisplayedResults(response.data.data.slice(0, resultsPerPage)); // Initial results
+            } catch (error) {
+                console.error('Error fetching listings:', error);
+            }
+        };
+
+        fetchListings();
+    }, [searchfilters]);
+
+    // Function to load more results
+    const loadMoreResults = () => {
+        const nextPage = currentPage + 1;
+        const start = currentPage * resultsPerPage;
+        const end = start + resultsPerPage;
+
+        setDisplayedResults([...displayedResults, ...results.slice(start, end)]);
+        setCurrentPage(nextPage);
     };
 
     return (
-        <div className="mt-[150px] min-h-screen md:mt-[110px]  xl:px-[75px] px-4">
-            <h2 className="text-[24px] lg:text-[30px] underline  font-[700] mb-[8px] text-rose-500 tracking-wide">
+        <div className="mt-[150px] min-h-screen md:mt-[110px] xl:px-[75px] px-4">
+            <h2 className="text-[24px] lg:text-[30px] underline font-[700] mb-[8px] text-rose-500 tracking-wide">
                 Search Listings
             </h2>
-            <p className="text-base mb-6 text-gray-600">
-                Search by <span className="font-semibold text-blue-600">type</span>, <span className="font-semibold text-blue-600">title</span>, or <span className="font-semibold text-blue-600">category</span>. Only one field is required.
-            </p>
-
-            <form onSubmit={handleSearch} className="w-full flex flex-col lg:flex-row items-center bg-white border-[2px] border-gray-200 rounded-[45px] shadow-md mx-auto gap-4 p-4">
-                <div className="relative flex flex-col py-[10px] rounded-[45px] px-[35px] w-full lg:w-1/3 hover:bg-gray-100 transition group">
-                    <label className="text-[12px] font-[700] mb-[-2px] text-gray-600">Type</label>
-                    <input
-                        type="text"
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
-                        className="outline-none focus:none w-full mt-[6px] group-hover:bg-gray-100 transition duration-200"
-                        placeholder="Type (optional)"
-                    />
-                </div>
-
-                <div className="relative flex flex-col py-[10px] rounded-[45px] px-[35px] w-full lg:w-1/3 hover:bg-gray-100 transition group">
-                    <label className="text-[12px] font-[700] mb-[-2px] text-gray-600">Title</label>
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className="outline-none focus:none w-full mt-[6px] group-hover:bg-gray-100 transition duration-200"
-                        placeholder="Title (optional)"
-                    />
-                </div>
-
-                <div className="relative flex flex-col py-[10px] rounded-[45px] px-[35px] w-full lg:w-1/3 hover:bg-gray-100 transition group">
-                    <label className="text-[12px] font-[700] mb-[-2px] text-gray-600">Category</label>
-                    <input
-                        type="text"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        className="outline-none focus:none w-full mt-[6px] group-hover:bg-gray-100 transition duration-200"
-
-                        placeholder="Category (optional)"
-                    />
-                </div>
-
-                <button type="submit" className=" bg-red-500 ml-[85px] mr-[35px] text-white text-[22px] p-[10px] rounded-full hover:bg-red-600 transition duration-200">
-                    <AiOutlineSearch />
-                </button>
-            </form>
-
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 py-4">
-                {results.map(listing => (
+                {displayedResults.map(listing => (
                     <div
                         key={listing.id}
                         onClick={() => window.location.href = `/listing/${listing.id}`}
@@ -81,7 +51,7 @@ const SearchListings = () => {
                     >
                         <img
                             src={listing.image}
-                            loading='lazy'
+                            loading="lazy"
                             alt={listing.title}
                             className="m-2 h-[290px] w-[95%] border rounded-xl hover:shadow-xl transition duration-200"
                         />
@@ -106,7 +76,7 @@ const SearchListings = () => {
                                         className="text-yellow-500"
                                     />
                                 )}
-                                {[...Array(5 - (Math.floor(listing.rating)) - ((listing.rating % 1 >= 0.5) ? 1 : 0))].map((_, index) => (
+                                {[...Array(5 - Math.floor(listing.rating) - ((listing.rating % 1 >= 0.5) ? 1 : 0))].map((_, index) => (
                                     <FaStar
                                         size={22}
                                         key={`empty-${index}`}
@@ -118,8 +88,19 @@ const SearchListings = () => {
                     </div>
                 ))}
             </div>
-        </div>
 
+            {/* Show More Button */}
+            {displayedResults.length < results.length && (
+                <div className="text-center mt-6">
+                    <button
+                        onClick={loadMoreResults}
+                        className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+                    >
+                        Show More
+                    </button>
+                </div>
+            )}
+        </div>
     );
 };
 
