@@ -3,7 +3,7 @@ import Navbar from './assets/Navbar';
 import Home from './Components/Home/Home';
 import Footer from './assets/Footer';
 import ListingDetails from './Components/Home/ListingDetails';
-import SearchListings from './Components/SearchListings';
+import SearchListings from './Components/Home/SearchListings';
 import Booking from './Components/GuestBooking/Booking';
 import SignUpForm from './Components/Authentication/SignUp';
 import SignInnForm from './Components/Authentication/SignIn';
@@ -17,7 +17,6 @@ import FinalizeBooking from './Components/GuestBooking/FinalizeBooking';
 import FavoriteListings from './Components/Authentication/FavoriteListings'; 
 import GuestNotifications from './Components/Notifications/guest_Notifications';
 import HostNotifications from './Components/Notifications/Host_Notifications';
-import FiltersModal from './Components/FilterModal';
 
 function App() {
 
@@ -27,8 +26,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/search" element={<SearchListings />} />
-        <Route path="/stays" element={<FiltersModal />} />
+        <Route path="/search" element={<SearchListings />} /> 
         <Route path="/listing/:id" element={<ListingDetails />} />
 
         <Route path="/booking/:hostId/:listingId" element={<Booking />} />

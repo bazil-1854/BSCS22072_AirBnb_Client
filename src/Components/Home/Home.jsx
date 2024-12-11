@@ -45,11 +45,11 @@ const Home = () => {
         setListings((prev) => [...prev, ...newListings]);
       }
       setHasMore(page < response.data.totalPages);
-    } 
+    }
     catch (err) {
       setError(err)
       //setError('Failed to fetch listings. Please try again later.');
-    } 
+    }
     finally {
       setLoading(false);
     }
@@ -68,7 +68,7 @@ const Home = () => {
     // Prepare search parameters and reset current page
     console.log(location)
     console.log(guests)
-    
+
     setSearchParams({ location, guests });
     setCurrentPage(1); // Reset to first page for search
     fetchListings(1, category, { location, guests });
@@ -86,26 +86,26 @@ const Home = () => {
       setCurrentPage((prev) => prev + 1);
     }
   };
-  
+
   //if (error.status === 404) return <p className="h-screen bg-green-800 -center text-lg text-red-500">{error}</p>;
   if (error) {
     return (
       <div className='mt-[85px] min-h-screen md:mt-[95px]'>
         <SearchBar handleSearch={handleSearch} />
 
-      <div className='top-[60px] w-full bg-white sticky'>
-        <HorizontalScrollList setCategory={setCategory} />
-      </div>
+        <div className='top-[60px] w-full bg-white sticky'>
+          <HorizontalScrollList setCategory={setCategory} />
+        </div>
         {error.message} {/*error.statusCode && `(Status Code: ${error.statusCode})`*/}
-        {error.statusCode && 
-      <div>
-        No Listings Found with this filter
-      </div>
-      }
+        {error.statusCode &&
+          <div>
+            No Listings Found with this filter
+          </div>
+        }
       </div>
     );
   }
-  
+
 
   return (
     <div className='mt-[85px] min-h-screen md:mt-[95px]'>
@@ -129,8 +129,12 @@ const Home = () => {
               className="m-2 h-[290px] lg:h-[230px] xl:h-[240px] w-[95%] border rounded-xl hover:shadow-xl transition duration-200"
             />
             <div className="px-4">
-              <h2 className="font-semibold text-lg">{listing.address.suburb}, {listing.address.country}</h2>
-              <p className="text-rose-600 font-[700] text-[12px]">{listing.property_type}</p>              <p className="text-gray-500">{listing.category}</p>
+              <div className='w-full flex justify-between'>
+                <h2 className="font-semibold text-lg">{listing.address.suburb.substring(0, 8)}, {listing.address.country.substring(0, 8)}</h2>
+                {listing.rating > 0 && <p className='flex items-center'>{listing.rating} <FaStar size={18} className="text-yellow-500" /></p>}
+              </div>
+              <p className="text-rose-600 font-[700] text-[12px]">{listing.property_type}</p>
+              <p className="text-gray-500">{listing.category}</p>
               <p className="font-bold text-[14px] mt-[6px]">${listing.price} / night</p>
               {
                 /*

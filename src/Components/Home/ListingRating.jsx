@@ -14,12 +14,12 @@ export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings/${listingId}/toggle-favorite`, {}, {
-                headers: { Authorization: `Bearer ${token}` },
-            }
+                headers: { Authorization: `Bearer ${token}` }, }
             );
 
             setIsFavorited(!isFavorited);
-        } catch (err) {
+        } 
+        catch (err) {
             setError('Failed to toggle favorite. Please try again.');
             console.error('Error toggling favorite:', err.response?.data || err.message);
         }
@@ -67,9 +67,11 @@ export const AddRating = ({ listingId }) => {
             setError('Failed to submit review. Please try again.');
         }
     };
+
     const handleStarClick = (index) => {
-        setRating(index + 1); // Set rating based on star index (1-based)
+        setRating(index + 1);
     };
+
     return (
         <div className="w-full">
             <div className="bg-white border-t-[3px] border-gray-300 mt-[25px] pt-[15px]">
@@ -220,7 +222,7 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
                                                 <div className="w-10 h-10 flex justify-center items-center text-[22px] font-[600] bg-rose-500 text-white rounded-full mr-4"><p>{review.user?.username?.charAt(0) || 'P'}</p></div>
                                                 <div className=''>
                                                     <h4 className="text-[16px] font-medium">{review.user?.username || 'Anonymous'}</h4>
-                                                    <p className='text-gray-500 text-[12px] font-[500]'>{review.user?.location.suburb || ''}, {review.user?.location.country || ''}</p>
+                                                    <p className='text-gray-500 text-[12px] font-[500]'>{review.user?.location.city || ''}, {review.user?.location.country || ''}</p>
                                                 </div>
                                             </div>
                                             <div className='flex my-[4px] items-center'>

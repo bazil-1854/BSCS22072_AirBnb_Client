@@ -4,13 +4,14 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import airbnb from "../logo.svg";
-import { LuGlobe } from 'react-icons/lu';
+
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FiHome } from 'react-icons/fi';
 import { useAuthContext } from '../AuthProvider';
 import { MdAssessment } from 'react-icons/md';
 import { IoBookmarksOutline } from 'react-icons/io5';
 import { BiLogIn } from 'react-icons/bi';
+import FiltersModal from '../Components/Home/FilterModal';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -27,6 +28,8 @@ const Navbar = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isScrollingUp, setIsScrollingUp] = useState(true);
     const [prevScrollPosition, setPrevScrollPosition] = useState(0); 
+
+    const [showFilterModal, setShowFilterModal] = useState(false);
 
     /*function isTokenValid() {
         const token = localStorage.getItem('token');
@@ -119,8 +122,13 @@ const Navbar = () => {
         return 'translate-y-0';
     };
 
+    const closeFilterModal=()=>{
+        setShowFilterModal(false);
+    }
+
     return (
         <header className="bg-white fixed w-full z-50 top-0">
+            {showFilterModal && <FiltersModal closeFilterModal={closeFilterModal}/>}
             <nav className='md:block hidden'>
                 <div className={`${location.pathname === '/' ? 'border-white pt-4' : 'border-b-[3px] border-gray-100 py-4'} mx-auto px-4 sm:px-6 md:px-[15px] lg:px-[35px] xl:px-[75px]`}>
                     <div className="flex justify-between items-center ">
@@ -132,7 +140,7 @@ const Navbar = () => {
                         </div>
 
                         {!homePath ?
-                            <div className="hidden sm:flex items-cente border-[2px] xl:mr-[-165px] z-90 rounded-full py-2 px-4 shadow-md">
+                            <div onClick={()=>setShowFilterModal(true)} className="hidden cursor-pointer sm:flex items-cente border-[2px] xl:mr-[-165px] z-90 rounded-full py-2 px-4 shadow-md">
                                 <p className="bg-transparent flex-grow outline-none border-r-[2px] border-gray-200 px-[8px] font-[600] text-gray-700">Anywhere</p>
                                 <p className="bg-transparent flex-grow outline-none border-r-[2px] border-gray-200 px-[8px] font-[600] text-[15px] text-gray-700">Any week</p>
                                 <p className="bg-transparent flex-grow outline-none px-[8px] font-[600] text-[15px] text-gray-500">Any Guests</p>
@@ -140,7 +148,7 @@ const Navbar = () => {
                             </div>
                             : <>
                                 {showSearchBar ? (
-                                    <div className="hidden sm:flex z-50 items-cente border-[2px] xl:mr-[-165px] z-90 rounded-full py-2 px-4 shadow-md">
+                                    <div onClick={()=>setShowFilterModal(true)} className="hidden cursor-pointer sm:flex z-50 items-cente border-[2px] xl:mr-[-165px] z-90 rounded-full py-2 px-4 shadow-md">
                                         <p className="bg-transparent flex-grow outline-none border-r-[2px] border-gray-200 px-[8px] font-[600] text-gray-700">Anywhere</p>
                                         <p className="bg-transparent flex-grow outline-none border-r-[2px] border-gray-200 px-[8px] font-[600] text-[15px] text-gray-700">Any week</p>
                                         <p className="bg-transparent flex-grow outline-none px-[8px] font-[600] text-[15px] text-gray-500">Any Guests</p>
@@ -241,7 +249,7 @@ const Navbar = () => {
 
             <nav className='md:hidden block'>
                 <div className="flex items-center py-[10px] px-[18px] w-screen">
-                    <div className='border-[2px] w-[85%] border-gray-300 rounded-[25px] flex items-center py-[5px] px-3'>
+                    <div onClick={()=>setShowFilterModal(true)} className='border-[2px] w-[85%] border-gray-300 rounded-[25px] flex items-center py-[5px] px-3'>
                         <FaSearch className="text-gray-700 mr-5" size={25} />
                         <div className="flex-1 text-[14px] text-gray-500">
                             <div className="font-medium">Where to?</div>
