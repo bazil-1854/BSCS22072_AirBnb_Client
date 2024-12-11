@@ -23,6 +23,7 @@ import TermsOfService from './Components/FooterPages/TermsOfService';
 import AccessibilityPage from './Components/FooterPages/AccessibilityPage';
 import HelpCenter from './Components/FooterPages/HelpCenter';
 import AboutUs from './Components/FooterPages/AboutUs';
+import TrustAndSafetyPage from './Components/FooterPages/TrustAndSafetyPage';
 
 function App() {
 
@@ -66,6 +67,7 @@ function App() {
         <Route path="/accessibility" element={<AccessibilityPage />} /> 
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/trust-and-safety" element={<TrustAndSafetyPage />} />
         
       </Routes>
       <Footer />

@@ -22,9 +22,8 @@ const Footer = () => {
                     <ul>
                         <li><Link to="signUp" className="text-gray-600 hover:text-gray-800">Host your home</Link></li>
                         <li><Link to="signUp" className="text-gray-600 hover:text-gray-800">Host an Online Experience</Link></li>
-                        <li><Link to="help-center" className="text-gray-600 hover:text-gray-800">Help Center</Link></li>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Cancellation Options</Link></li>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Trust & Safety</Link></li> 
+                        <li><Link to="help-center" className="text-gray-600 hover:text-gray-800">Help Center</Link></li> 
+                        <li><Link to="trust-and-safety" className="text-gray-600 hover:text-gray-800">Trust & Safety</Link></li> 
                     </ul>
                 </div>
                 <div className="flex-1">
