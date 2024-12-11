@@ -231,10 +231,10 @@ const FiltersModal = ({ closeFilterModal }) => {
                         Clear all
                     </button>
                     <button
-                        className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+                        className="bg-rose-700 flex items-center text-white font-[600] px-[15px] py-[3px] rounded-[20px] hover:bg-rose-900 duration-200"
                         onClick={logValues}
                     >
-                        Show 1,000+ places
+                       <MdSearch className="text-[20px] mt-[3px] mr-[3px]"/> Search
                     </button>
                 </div>
             </div>

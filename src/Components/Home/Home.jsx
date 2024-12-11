@@ -24,20 +24,18 @@ const Home = () => {
   const fetchListings = async (page, category) => {
     setLoading(true);
     try {
-      /*const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings`, {
-        params: { page, limit: 10, category },
-      });*/
       let url = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings`;
       let params = { page, limit: 10, category };
 
       if (searchParams) {
-        url = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listing-searched`;
-        params = { ...params, ...searchParams };
+        const tempLocation = searchParams.location || 'invalid'
+        url = `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listing-searched/${searchParams.guests}/${tempLocation}`;
+        //console.log(searchParams)
       }
       const response = await axios.get(url, { params });
-
       const newListings = response.data.listings;
 
+      //console.log(newListings)
       if (page === 1) {
         setListings(newListings);
       }
@@ -66,11 +64,11 @@ const Home = () => {
 
   const handleSearch = (location, guests) => {
     // Prepare search parameters and reset current page
-    console.log(location)
-    console.log(guests)
+    //console.log(location)
+    //console.log(guests)
 
     setSearchParams({ location, guests });
-    setCurrentPage(1); // Reset to first page for search
+    setCurrentPage(1);
     fetchListings(1, category, { location, guests });
   };
 
