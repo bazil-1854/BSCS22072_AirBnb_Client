@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaBookmark, FaStar, FaStarHalfAlt } from 'react-icons/fa';
-import LeftWing from "../../assets/leftWing.png";
-import RightWing from "../../assets/rightWing.png";
+import LeftWing from "../../assets//PhotosAssets/leftWing.png";
+import RightWing from "../../assets/PhotosAssets/rightWing.png";
 
 export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
     const [isFavorited, setIsFavorited] = useState(isInitiallyFavorited);

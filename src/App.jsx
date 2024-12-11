@@ -17,6 +17,7 @@ import FinalizeBooking from './Components/GuestBooking/FinalizeBooking';
 import FavoriteListings from './Components/Authentication/FavoriteListings'; 
 import GuestNotifications from './Components/Notifications/guest_Notifications';
 import HostNotifications from './Components/Notifications/Host_Notifications';
+import PrivacyPolicy from './Components/FooterPages/PrivacyPolicy';
 
 function App() {
 
@@ -52,7 +53,11 @@ function App() {
         <Route path="/finalize-booking" element={<FinalizeBooking />} />
 
         <Route path="/favourite-listings" element={<FavoriteListings />} />
-
+{/*===================*/}
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/term-of-service" element={<PrivacyPolicy />} />
+        <Route path="/faq" element={<PrivacyPolicy />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
       </Routes>
       <Footer />
