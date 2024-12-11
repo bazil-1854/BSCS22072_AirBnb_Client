@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaBookmark, FaStar, FaStarHalfAlt } from 'react-icons/fa';
+import LeftWing from "../../assets/leftWing.png";
+import RightWing from "../../assets/rightWing.png";
 
 export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
     const [isFavorited, setIsFavorited] = useState(isInitiallyFavorited);
@@ -185,8 +187,10 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
                 </div>
                 <div className="grid lg:grid-cols-5 grid-cols-1 p-4">
                     <div className="lg:col-span-2">
-                        <div className='text-center'>
-                            <p className='text-[38px] font-[600]'>{ratingReviews.averageRating}</p>
+                        <div className='flex items-center justify-center mb-[25px]'>
+                            <img src={LeftWing} alt="img1" className='w-[75px] mt-[28px]' />
+                            <p className='text-[65px] ml-[12px] mr-[-5px] font-[600]'>{ratingReviews.averageRating}</p>
+                            <img src={RightWing} alt="img1" className='w-[75px] mt-[28px]'/>
                         </div>
                         <p className="text-sm text-center text-yellow-700 font-[600] underline">Guest favorite</p>
                         <p className='mt-[15px] text-[13px] text-gray-600'>One of the most loved homes on Airbnb based on ratings, reviews, and reliability</p>
@@ -201,7 +205,8 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
                                 <>
                                     {reviews.map((review, index) => (
                                         <div key={index} className="mb-6 p-4 bg-white">
-                                            <div className="flex items-center">
+                                            <div className="mb-[8px] flex items-center">
+                                                {/*
                                                 {review.user?.profilePicture ?
                                                     <img
                                                         src={review.user.profilePicture}
@@ -211,8 +216,11 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
                                                     :
                                                     <div className="w-10 h-10 bg-gray-300 rounded-full mr-4"></div>
                                                 }
-                                                <div>
-                                                    <h4 className="text-[15px] font-medium">{review.user?.username || 'Anonymous'}</h4>
+                                                */}
+                                                <div className="w-10 h-10 flex justify-center items-center text-[22px] font-[600] bg-rose-500 text-white rounded-full mr-4"><p>{review.user?.username?.charAt(0) || 'P'}</p></div>
+                                                <div className=''>
+                                                    <h4 className="text-[16px] font-medium">{review.user?.username || 'Anonymous'}</h4>
+                                                    <p className='text-gray-500 text-[12px] font-[500]'>{review.user?.location.suburb || ''}, {review.user?.location.country || ''}</p>
                                                 </div>
                                             </div>
                                             <div className='flex my-[4px] items-center'>

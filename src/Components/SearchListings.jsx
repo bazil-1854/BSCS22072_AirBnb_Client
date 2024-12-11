@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { useAuthContext } from '../AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const SearchListings = () => {
-    const { searchfilters } = useAuthContext(); // Get filters from context
-    const [results, setResults] = useState([]); // Full list of results
+    const navigate = useNavigate()
+    const { searchfilters } = useAuthContext();
+    const [results, setResults] = useState([]); 
     const [displayedResults, setDisplayedResults] = useState([]); // Paginated results
     const [currentPage, setCurrentPage] = useState(1); // Current page
     const resultsPerPage = 1; // Number of results per page (change to 10, etc., as needed)
@@ -14,7 +16,9 @@ const SearchListings = () => {
     useEffect(() => {
         const fetchListings = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/fltered-listings`, searchfilters);
+                console.log(searchfilters)
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/filtered-listings`, searchfilters);
+
                 setResults(response.data); // Full results
                 console.log(response.data)
                 setDisplayedResults(response.data.data.slice(0, resultsPerPage)); // Initial results
@@ -46,7 +50,7 @@ const SearchListings = () => {
                 {displayedResults.map(listing => (
                     <div
                         key={listing.id}
-                        onClick={() => window.location.href = `/listing/${listing.id}`}
+                        onClick={() => navigate(`/listing/${listing._id}`)}
                         className="overflow-hidden cursor-pointer"
                     >
                         <img

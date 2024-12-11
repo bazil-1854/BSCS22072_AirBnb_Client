@@ -21,6 +21,13 @@ const Navbar = () => {
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [homePath, sethomePath] = useState(true);
     const location = useLocation();
+
+    // bottom navigaiton
+    
+    const [scrollPosition, setScrollPosition] = useState(0);
+    const [isScrollingUp, setIsScrollingUp] = useState(true);
+    const [prevScrollPosition, setPrevScrollPosition] = useState(0); 
+
     /*function isTokenValid() {
         const token = localStorage.getItem('token');
 
@@ -72,11 +79,44 @@ const Navbar = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.scrollY;
+            if (currentScrollPos > prevScrollPosition) {
+                setIsScrollingUp(false);
+            } else {
+                setIsScrollingUp(true);
+            }
+
+            setPrevScrollPosition(currentScrollPos);
+            setScrollPosition(currentScrollPos);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [prevScrollPosition]);
+
     const handleLogout = () => {
         //localStorage.removeItem('token');
         logout();
         toggleMenu();
         navigate('/signin');
+    };
+
+    const getNavbarClasses = () => {
+        if (scrollPosition > window.innerHeight) {
+            return 'bg-[#000000c5]';
+        }
+        return 'bg-navbar-color';
+    };
+
+    const getNavbarTranslateClasses = () => {
+        if (!isScrollingUp && scrollPosition > 50) {
+            return 'translate-y-[70px]';
+        }
+        return 'translate-y-0';
     };
 
     return (
@@ -255,12 +295,11 @@ const Navbar = () => {
                     </div>
                 )}
 
-                <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg flex px-[40px] justify-between py-2">
+                <div className={`fixed bottom-0 left-0 w-full bg-white shadow-lg flex px-[40px] justify-between py-2 transition-transform duration-300 ${getNavbarTranslateClasses()} ${getNavbarClasses()}`}>
                     <NavLink to="/" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                         <FiHome className="mb-[6px]" size={22} />
                         <span className="text-xs">Home</span>
                     </NavLink>
-
 
                     {user &&
                         <>{userRole === 'Host' ? <>

@@ -105,7 +105,7 @@ const ListingDetails = () => {
   };
 
   return (
-    <div className="w-full overflow-x-hidden xl:px-[180px] min-h-screen p-6 bg-white">
+    <div className="w-full overflow-x-hidden xl:px-[160px] min-h-screen p-6 bg-white">
 
       {showModal && <Reviews listingId={id} ratingReviews={ratingReviews} onClose={() => setShowModal(false)} />}
       <h2 className="mt-[85px] mb-[20px] md:text-[30px] text-rose-950  font-semibold">{listing.name}</h2>
@@ -128,7 +128,7 @@ const ListingDetails = () => {
         </div>
       </div>
 
-      <div className="mt-[15px] container mx-auto md:p-4 space-y-6 md:space-y-8 lg:grid lg:grid-cols-3 lg:gap-6 lg:space-y-0">
+      <div className="mt-[15px] mx-auto md:p-4 space-y-6 md:space-y-8 lg:grid lg:grid-cols-3 lg:gap-6 lg:space-y-0">
         <div className="lg:col-span-2 space-y-4">
           <div className='flex md:flex-row flex-col md:justify-between md:items-center space-y-4'>
             <div>
@@ -274,9 +274,8 @@ const ListingDetails = () => {
                 Reserve
               </button> :
               <div>
-
-                <div className="w-full py-2 bg-rose-500 text-center text-rose-100 cursor-pointer font-semibold rounded-lg">Reserve</div>
-                <p onClick={() => navigate("/signIn")} className='text-rose-700 underline font-[500] text-[14px] text-center mt-[8px]'>Login To Reserve a booking</p>
+                <div className="w-full py-2 bg-rose-300 text-center text-rose-100 cursor-pointer font-semibold rounded-lg">Reserve</div>
+                <p onClick={() => navigate("/signIn")} className='text-rose-700 underline font-[500] text-[14px] text-center mt-[8px]'>Login as a Guest To Reserve a booking</p>
               </div>
             }
 
