@@ -19,6 +19,7 @@ import GuestNotifications from './Components/Notifications/guest_Notifications';
 import HostNotifications from './Components/Notifications/Host_Notifications';
 import PrivacyPolicy from './Components/FooterPages/PrivacyPolicy';
 import FAQPage from './Components/FooterPages/FAQPage';
+import TermsOfService from './Components/FooterPages/TermsOfService';
 
 function App() {
 
@@ -56,7 +57,7 @@ function App() {
         <Route path="/favourite-listings" element={<FavoriteListings />} />
 {/*===================*/}
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/term-of-service" element={<PrivacyPolicy />} />
+        <Route path="/term-of-service" element={<TermsOfService />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 

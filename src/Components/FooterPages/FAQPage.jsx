@@ -70,7 +70,7 @@ const FAQPage = () => {
                     {faqs.map((faq, index) => (
                         <div key={index} className='mb-4'>
                             <button
-                                className='w-full text-left text-lg font-semibold text-rose-800 py-2 px-4 bg-rose-50 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 flex items-center justify-between'
+                                className='w-full text-left text-lg font-semibold text-rose-800 py-2 px-4 border-b-[1.5px] border-b-gray-600 focus:outline-none flex items-center justify-between'
                                 onClick={() => handleToggle(index)}
                                 type='button'
                             >
