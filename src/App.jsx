@@ -21,6 +21,8 @@ import PrivacyPolicy from './Components/FooterPages/PrivacyPolicy';
 import FAQPage from './Components/FooterPages/FAQPage';
 import TermsOfService from './Components/FooterPages/TermsOfService';
 import AccessibilityPage from './Components/FooterPages/AccessibilityPage';
+import HelpCenter from './Components/FooterPages/HelpCenter';
+import AboutUs from './Components/FooterPages/AboutUs';
 
 function App() {
 
@@ -60,9 +62,11 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/term-of-service" element={<TermsOfService />} />
         <Route path="/faq" element={<FAQPage />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/accessibility" element={<AccessibilityPage />} />
-
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} /> 
+        <Route path="/accessibility" element={<AccessibilityPage />} /> 
+        <Route path="/help-center" element={<HelpCenter />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        
       </Routes>
       <Footer />
     </Router>

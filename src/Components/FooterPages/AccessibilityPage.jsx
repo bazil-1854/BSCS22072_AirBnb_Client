@@ -1,8 +1,12 @@
-import React from 'react';
+import { useEffect } from 'react';
 
 const AccessibilityPage = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     return (
-        <div className="font-sans w-full overflow-x-hidden pt-[120px] px-[15px] text-gray-900">
+        <div className="font-sans w-full overflow-x-hidden  pt-[80px] md::pt-[120px] px-[15px] text-gray-900">
             <header className="text-center  py-10  border-b border-gray-200">
                 <h1 className="text-[55px] xl:scale-[1.5] space-y-[-15px] xl:text-[75px] font-bold">Accessibility at <p className='text-rose-600 mt-[-8px] xl:mt-[-25px]'>AirBnB</p></h1>
                 <p className="mt-8 xl:mt-[55px] text-lg text-gray-600">

@@ -53,12 +53,14 @@ const FAQPage = () => {
     };
 
     return (
-        <div className='bg-gray-100  min-h-screen pt-[120px] pb-8 px-4 md:px-8'>
-            <div className='max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6'>
-                <h1 className='text-2xl md:text-3xl font-bold mb-6 text-center text-rose-500'>
-                    <FaQuestionCircle className='inline mr-2' />
-                    Frequently Asked Questions
-                </h1>
+        <div className="font-sans w-full overflow-x-hidden  pt-[80px] md::pt-[120px] px-[15px] text-gray-900">
+            <header className="text-center  py-10  border-b border-gray-200">
+                <h1 className="text-[55px] xl:scale-[1.5] space-y-[-15px] xl:text-[75px] font-bold"> <FaQuestionCircle className='inline mr-2' />Frequently Asked <p className='text-rose-600 mt-[-8px] xl:mt-[-25px]'>Questions</p></h1>
+                <p className="mt-8 xl:mt-[55px] text-lg text-gray-600">
+                    Here's how we're making it easier to travel with us.
+                </p>
+            </header>
+            <div className='max-w-4xl mx-auto  p-6'>
 
                 <div className='h-[3px] mb-[35px] w-[89%] mx-auto bg-rose-500'></div>
 

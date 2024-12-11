@@ -18,16 +18,13 @@ const PrivacyPolicy = () => {
   }, []);
 
   return (
-    <div className='bg-gray-100 xsx:pt-[120px] pt-[100px] min-h-screen py-8 px-4 md:px-8'>
-      <div className='max-w-4xl mx-auto border bg-white border-gray-200 rounded-xl p-6'>
-        <motion.h1
-          className='text-4xl font-[700] mb-6 text-center text-rose-600'
-          variants={headingVariants}
-          initial='hidden'
-          animate='visible'
-        >
-          Airbnb Privacy Commitment
-        </motion.h1>
+    <div className="font-sans w-full overflow-x-hidden pt-[80px] md::pt-[120px] px-[15px] text-gray-900">
+      <header className="text-center  py-10  border-b border-gray-200">
+        <h1 className="text-[55px] xl:scale-[1.5] space-y-[-15px] xl:text-[75px] font-bold">Privacy <span className='text-rose-600'>Policy</span></h1>
+
+      </header>
+      <div className='max-w-4xl mx-auto  p-6'>
+ 
         <motion.p
           className='text-base text-rose-800 mb-8 leading-relaxed'
           variants={textVariants}

@@ -5,46 +5,36 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
         <footer className="bg-gray-100  mx-auto px-4 xl:px-[55px] py-10">
-{/* 
-
-
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/term-of-service" element={<PrivacyPolicy />} />
-        <Route path="/faq" element={<PrivacyPolicy />} />
-*/}
             <div className="flex px-4 justify-evenly mb-6">
                 <div className="flex-1">
                     <h5 className="text-gray-700 font-semibold mb-2">Airbnb</h5>
                     <ul>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">About Us</Link></li>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Become Link Host</Link></li>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Host your home</Link></li>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Host an Online Experience</Link></li> 
-                        <li><Link to="privacy-policy" className="text-gray-600 hover:text-gray-800">Careers</Link></li>
+                        <li><Link to="about-us" className="text-gray-600 hover:text-gray-800">About Us</Link></li>
                         <li><Link to="privacy-policy" className="text-gray-600 hover:text-gray-800">Privacy</Link></li>
                         <li><Link to="term-of-service" className="text-gray-600 hover:text-gray-800">Terms</Link></li>
                         <li><Link to="faq" className="text-gray-600 hover:text-gray-800">FAQ's</Link></li>
-                        <li><Link to="faq" className="text-gray-600 hover:text-gray-800">Help</Link></li>
+                        <li><Link to="accessibility" className="text-gray-600 hover:text-gray-800">Accessbility</Link></li>
                     </ul>
                 </div>
 
                 <div className="flex-1">
-                    <h5 className="text-gray-700 font-semibold mb-2">Support</h5>
+                    <h5 className="text-gray-700 font-semibold mb-2">Hosting</h5>
                     <ul>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Help Center</Link></li>
+                        <li><Link to="signUp" className="text-gray-600 hover:text-gray-800">Host your home</Link></li>
+                        <li><Link to="signUp" className="text-gray-600 hover:text-gray-800">Host an Online Experience</Link></li>
+                        <li><Link to="help-center" className="text-gray-600 hover:text-gray-800">Help Center</Link></li>
                         <li><Link to="" className="text-gray-600 hover:text-gray-800">Cancellation Options</Link></li>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Trust & Safety</Link></li>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Accessibility</Link></li>
+                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Trust & Safety</Link></li> 
                     </ul>
                 </div>
-
                 <div className="flex-1">
-                    <h5 className="text-gray-700 font-semibold mb-2">Community</h5>
+                    <h5 className="text-gray-700 font-semibold mb-2">Community and Support</h5>
                     <ul>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Diversity & Belonging</Link></li>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Airbnb.org</Link></li>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Community Center</Link></li>
-                        <li><Link to="" className="text-gray-600 hover:text-gray-800">Neighborhood Support</Link></li>
+                        <li><Link to="help-center" className="text-gray-600 hover:text-gray-800">Help</Link></li>
+                        <li><Link to="https://news.airbnb.com/" target='_blank' className="text-gray-600 hover:text-gray-800">NewsRoom</Link></li>
+                        <li><Link to="https://www.airbnb.com/release" target='_blank' className="text-gray-600 hover:text-gray-800">News Features</Link></li>
+                        <li><Link to="https://careers.airbnb.com/" target='_blank' className="text-gray-600 hover:text-gray-800">Careers</Link></li>
+                        <li><Link to="https://careers.airbnb.com/internship-programs/" target='_blank' className="text-gray-600 hover:text-gray-800">Neighborhood Support</Link></li>
                     </ul>
                 </div>
             </div>

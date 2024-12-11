@@ -24,10 +24,10 @@ const Navbar = () => {
     const location = useLocation();
 
     // bottom navigaiton
-    
+
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isScrollingUp, setIsScrollingUp] = useState(true);
-    const [prevScrollPosition, setPrevScrollPosition] = useState(0); 
+    const [prevScrollPosition, setPrevScrollPosition] = useState(0);
 
     const [showFilterModal, setShowFilterModal] = useState(false);
 
@@ -122,13 +122,13 @@ const Navbar = () => {
         return 'translate-y-0';
     };
 
-    const closeFilterModal=()=>{
+    const closeFilterModal = () => {
         setShowFilterModal(false);
     }
 
     return (
         <header className="bg-white fixed w-full z-50 top-0">
-            {showFilterModal && <FiltersModal closeFilterModal={closeFilterModal}/>}
+            {showFilterModal && <FiltersModal closeFilterModal={closeFilterModal} />}
             <nav className='md:block hidden'>
                 <div className={`${location.pathname === '/' ? 'border-white pt-4' : 'border-b-[3px] border-gray-100 py-4'} mx-auto px-4 sm:px-6 md:px-[15px] lg:px-[35px] xl:px-[75px]`}>
                     <div className="flex justify-between items-center ">
@@ -140,7 +140,7 @@ const Navbar = () => {
                         </div>
 
                         {!homePath ?
-                            <div onClick={()=>setShowFilterModal(true)} className="hidden cursor-pointer sm:flex items-cente border-[2px] xl:mr-[-165px] z-90 rounded-full py-2 px-4 shadow-md">
+                            <div onClick={() => setShowFilterModal(true)} className="hidden cursor-pointer sm:flex items-cente border-[2px] xl:mr-[-165px] z-90 rounded-full py-2 px-4 shadow-md">
                                 <p className="bg-transparent flex-grow outline-none border-r-[2px] border-gray-200 px-[8px] font-[600] text-gray-700">Anywhere</p>
                                 <p className="bg-transparent flex-grow outline-none border-r-[2px] border-gray-200 px-[8px] font-[600] text-[15px] text-gray-700">Any week</p>
                                 <p className="bg-transparent flex-grow outline-none px-[8px] font-[600] text-[15px] text-gray-500">Any Guests</p>
@@ -148,7 +148,7 @@ const Navbar = () => {
                             </div>
                             : <>
                                 {showSearchBar ? (
-                                    <div onClick={()=>setShowFilterModal(true)} className="hidden cursor-pointer sm:flex z-50 items-cente border-[2px] xl:mr-[-165px] z-90 rounded-full py-2 px-4 shadow-md">
+                                    <div onClick={() => setShowFilterModal(true)} className="hidden cursor-pointer sm:flex z-50 items-cente border-[2px] xl:mr-[-165px] z-90 rounded-full py-2 px-4 shadow-md">
                                         <p className="bg-transparent flex-grow outline-none border-r-[2px] border-gray-200 px-[8px] font-[600] text-gray-700">Anywhere</p>
                                         <p className="bg-transparent flex-grow outline-none border-r-[2px] border-gray-200 px-[8px] font-[600] text-[15px] text-gray-700">Any week</p>
                                         <p className="bg-transparent flex-grow outline-none px-[8px] font-[600] text-[15px] text-gray-500">Any Guests</p>
@@ -159,7 +159,7 @@ const Navbar = () => {
                                         style={{ opacity, y }}
                                         className="hidden sm:flex xl:mr-[-165px] bg-white z-90 space-x-6"
                                     >
-                                        <div onClick={()=>setShowFilterModal(true)} className="text-gray-600 hover:text-black font-medium">
+                                        <div onClick={() => setShowFilterModal(true)} className="text-gray-600 hover:text-black font-medium">
                                             Stays
                                         </div>
                                         <NavLink to="/search" className="text-gray-600 hover:text-black font-medium">
@@ -249,7 +249,7 @@ const Navbar = () => {
 
             <nav className='md:hidden block'>
                 <div className="flex items-center py-[10px] px-[18px] w-screen">
-                    <div onClick={()=>setShowFilterModal(true)} className='border-[2px] w-[85%] border-gray-300 rounded-[25px] flex items-center py-[5px] px-3'>
+                    <div onClick={() => setShowFilterModal(true)} className='border-[2px] w-[85%] border-gray-300 rounded-[25px] flex items-center py-[5px] px-3'>
                         <FaSearch className="text-gray-700 mr-5" size={25} />
                         <div className="flex-1 text-[14px] text-gray-500">
                             <div className="font-medium">Where to?</div>
@@ -303,7 +303,7 @@ const Navbar = () => {
                     </div>
                 )}
 
-                <div className={`fixed bottom-0 left-0 w-full bg-white shadow-lg flex px-[40px] justify-between py-2 transition-transform duration-300 ${getNavbarTranslateClasses()} ${getNavbarClasses()}`}>
+                <div className={`fixed bottom-0 left-0 w-full bg-white shadow-lg flex  justify-between py-2 transition-transform duration-300 ${getNavbarTranslateClasses()} ${getNavbarClasses()} ${user ? 'px-[40px]' : 'px-[110px]' }`}>
                     <NavLink to="/" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                         <FiHome className="mb-[6px]" size={22} />
                         <span className="text-xs">Home</span>
@@ -331,11 +331,21 @@ const Navbar = () => {
                             </>}
                         </>
                     }
-                    <NavLink to={userRole === "Guest" ? "/guest_notifications" : "/host_notifications"} className={({ isActive }) => `relative flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
-                        <FaBell className="mb-[6px]" size={22} />
-                        {notificationsCount !== 0 && <div className='absolute text-[12px] font-[600] rounded-full w-[22px] h-[22px] ml-[20px] text-white text-center bg-rose-800 border-[2px] border-white mt-[-10px]'>{notificationsCount}</div>}
-                        <span className="text-xs">Alerts</span>
-                    </NavLink>
+
+                    {user ?
+                        <NavLink to={userRole === "Guest" ? "/guest_notifications" : "/host_notifications"} className={({ isActive }) => `relative flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
+                            <FaBell className="mb-[6px]" size={22} />
+                            {notificationsCount !== 0 && <div className='absolute text-[12px] font-[600] rounded-full w-[22px] h-[22px] ml-[20px] text-white text-center bg-rose-800 border-[2px] border-white mt-[-10px]'>{notificationsCount}</div>}
+                            <span className="text-xs">Alerts</span>
+                        </NavLink>
+                        :
+                        <NavLink to="/signUp" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
+                            <FaBell className="mb-[6px]" size={22} />
+                            <span className="text-xs">Alerts</span>
+                        </NavLink>
+                    }
+
+
                     {user ?
                         <NavLink to="/profile" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                             <FaUser className="mb-[6px]" size={22} />
