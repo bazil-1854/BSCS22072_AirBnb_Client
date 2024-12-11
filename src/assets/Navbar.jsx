@@ -159,9 +159,9 @@ const Navbar = () => {
                                         style={{ opacity, y }}
                                         className="hidden sm:flex xl:mr-[-165px] bg-white z-90 space-x-6"
                                     >
-                                        <NavLink to="/stays" className="text-gray-600 hover:text-black font-medium">
+                                        <div onClick={()=>setShowFilterModal(true)} className="text-gray-600 hover:text-black font-medium">
                                             Stays
-                                        </NavLink>
+                                        </div>
                                         <NavLink to="/search" className="text-gray-600 hover:text-black font-medium">
                                             Experiences
                                         </NavLink>

@@ -20,6 +20,7 @@ import HostNotifications from './Components/Notifications/Host_Notifications';
 import PrivacyPolicy from './Components/FooterPages/PrivacyPolicy';
 import FAQPage from './Components/FooterPages/FAQPage';
 import TermsOfService from './Components/FooterPages/TermsOfService';
+import AccessibilityPage from './Components/FooterPages/AccessibilityPage';
 
 function App() {
 
@@ -60,6 +61,7 @@ function App() {
         <Route path="/term-of-service" element={<TermsOfService />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/accessibility" element={<AccessibilityPage />} />
 
       </Routes>
       <Footer />
