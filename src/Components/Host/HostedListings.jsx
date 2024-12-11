@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { RiDeleteBinLine } from 'react-icons/ri'; 
 import { FaEdit } from 'react-icons/fa';
+import MyLoader from '../../assets/MyLoader';
 
 const HostedListings = () => {
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const HostedListings = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <MyLoader />;
   }
 
   if (error) {

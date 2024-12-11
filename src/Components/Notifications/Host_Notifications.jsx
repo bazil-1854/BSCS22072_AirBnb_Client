@@ -16,11 +16,10 @@ const HostNotifications = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, []);
+    }, []);
 
     const fetchBookingDetails = async (bookingId) => {
-        console.log(bookingId)
-
+        //console.log(bookingId)
         try {
             const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/manage-bookings/booking-details/${bookingId}`,);
             //console.log(response.data.checkIn) 
@@ -47,7 +46,7 @@ const HostNotifications = () => {
                     {notifications.map((notification, index) => (
                         <div key={index} className="border-b-[2px] border-rose-700 lg:px-[20px] py-[15px] flex flex-col">
                             <div className="flex items-center">
-                            <div className="w-[32px] h-[32px] md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center text-[28px] bg-rose-800 text-rose-50">
+                                <div className="w-[32px] h-[32px] md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center text-[28px] bg-rose-800 text-rose-50">
                                     <TbBrandBooking />
                                 </div>
                                 <h3 className="text-[16px] ml-[12px] text-rose-600 font-[500]">
@@ -73,7 +72,7 @@ const HostNotifications = () => {
                     {userNotifications.map((notification, index) => (
                         <div key={index} className="bg-rose-50 rounded-[25px] lg:px-[20px] py-[15px] flex flex-col">
                             <div className="flex items-center">
-                            <div className="w-[32px] h-[32px] md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center text-[28px] bg-rose-100 text-rose-600">
+                                <div className="w-[32px] h-[32px] md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center text-[28px] bg-rose-100 text-rose-600">
                                     <TbBrandBooking />
                                 </div>
                                 <h3 className="text-[16px] ml-[12px] text-rose-400 font-[500]">

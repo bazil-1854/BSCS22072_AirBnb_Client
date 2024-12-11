@@ -5,6 +5,7 @@ import { FaBed, FaBath, FaDollarSign, FaHome, FaImage, FaPlusCircle } from 'reac
 import { MdLocationOn } from 'react-icons/md';
 import { RiCloseFill, RiDeleteBinLine } from 'react-icons/ri';
 import { categories } from './AddListings_Utility';
+import MyLoader from '../../assets/MyLoader';
 
 const EditListing = () => {
   const { id } = useParams();
@@ -128,7 +129,7 @@ const EditListing = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <MyLoader />;
   }
 
   if (error) {

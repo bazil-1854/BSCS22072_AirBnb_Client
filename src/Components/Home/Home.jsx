@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import HorizontalScrollList from './HorizontalScrollList';
+import MyLoader from '../../assets/MyLoader';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -103,7 +104,9 @@ const Home = () => {
       </div>
     );
   }
-
+  if (loading) {
+    return <MyLoader />;
+  }
 
   return (
     <div className='mt-[85px] min-h-screen md:mt-[95px]'>

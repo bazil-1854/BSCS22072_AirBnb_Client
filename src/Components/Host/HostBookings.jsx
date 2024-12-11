@@ -6,7 +6,8 @@ import { AiFillFacebook, AiFillTwitterCircle, AiFillLinkedin, AiOutlineCalendar 
 import { Link } from 'react-router-dom';
 import { MdClose, MdOutlinePropane } from 'react-icons/md';
 import { GrStatusInfo } from 'react-icons/gr';
-
+import { motion } from 'framer-motion';
+import MyLoader from '../../assets/MyLoader';
 
 const HostBookings = () => {
     const [bookings, setBookings] = useState([]);
@@ -74,8 +75,8 @@ const HostBookings = () => {
     };
 
     if (loading) {
-        return <div className="text-center mt-10">Loading...</div>;
-    }
+        return <MyLoader />;
+      }
 
     if (error) {
         return (
@@ -170,7 +171,11 @@ const HostBookings = () => {
                 {/* Modal for Guest Details */}
                 {showModal && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                        <div className="bg-white rounded-lg shadow-lg p-6 w-96">
+                        <motion.div
+            initial={{ opacity: 1, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+             className="bg-white rounded-lg shadow-lg p-6 w-96">
                             {modalLoading ? (
                                 <p>Loading...</p>
                             ) : guestDetails ? (
@@ -184,8 +189,7 @@ const HostBookings = () => {
                                         </div>
                                         <h2 className="text-xl font-semibold ml-4">{guestDetails.username}</h2>
                                     </div>
-
-                                    {/* Guest Details */}
+ 
                                     <div className="space-y-[13px]">
                                         <p className="flex items-center gap-2">
                                             <label className='w-[34px] h-[34px] rounded-full flex items-center justify-center text-[17px] text-rose-100 bg-rose-600'>
@@ -206,8 +210,7 @@ const HostBookings = () => {
                                             <strong>Bio:</strong> {guestDetails.bio}
                                         </p>
                                     </div>
-
-                                    {/* Social Links */}
+ 
                                     <div className="mt-4">
                                         <p className="flex items-center gap-2">
                                             <FaUserCircle className="text-purple-500" />
@@ -256,7 +259,7 @@ const HostBookings = () => {
                             ) : (
                                 <p>No details available.</p>
                             )}
-                        </div>
+                        </motion.div>
                     </div>
                 )}
             </div>

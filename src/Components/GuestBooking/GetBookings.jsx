@@ -5,6 +5,7 @@ import { AiOutlineCalendar, AiOutlineUser } from 'react-icons/ai';
 import { MdClose } from 'react-icons/md';
 import { BiArrowFromLeft } from 'react-icons/bi';
 import { FaArrowRight } from 'react-icons/fa';
+import MyLoader from '../../assets/MyLoader';
 
 const GuestBookings = () => {
     const [bookings, setBookings] = useState([]);
@@ -67,8 +68,8 @@ const GuestBookings = () => {
     };
 
     if (loading) {
-        return <div className="text-center mt-10">Loading...</div>;
-    }
+        return <MyLoader />;
+      }
 
     if (error) {
         return <div className="text-center min-h-screen w-full pt-[150px] text-red-500 mt-10">{error}</div>;

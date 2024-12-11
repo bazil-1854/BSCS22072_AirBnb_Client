@@ -89,7 +89,7 @@ const FavoriteListings = () => {
                     <div className="text-center mt-6">
                         <button
                             onClick={handleShowMore}
-                            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+                            className="bg-rose-600 font-[600] text-white  px-4 hover:bg-rose-900 transition duration-300"
                             disabled={loading}
                         >
                             {loading ? 'Loading...' : 'Show More'}

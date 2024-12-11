@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaUserAlt, FaCheckCircle, FaCamera, FaPlusCircle } from "react-icons/fa";
 import { RiDeleteBinLine } from 'react-icons/ri';
+import MyLoader from '../../assets/MyLoader';
 
 const Profile = () => {
     const [userInfo, setUserInfo] = useState(null);
@@ -36,9 +37,9 @@ const Profile = () => {
             setUpdatedData({
                 ...updatedData,
                 location: {
-                    ...userInfo.location, // Retain existing location fields
-                    ...updatedData.location, // Retain previously updated location fields
-                    [name]: value, // Update the specific field
+                    ...userInfo.location,
+                    ...updatedData.location,
+                    [name]: value,
                 },
             });
         } else {
@@ -70,8 +71,9 @@ const Profile = () => {
         }
     };
 
+    
     if (loading) {
-        return <div className="flex justify-center items-center h-screen text-lg">Loading...</div>;
+        return <MyLoader/>;
     }
 
     if (error) {
@@ -96,7 +98,7 @@ const Profile = () => {
 
 
     return (
-        <main className='px-6 min-h-screen bg-gray-100 pt-[150px]'>
+        <main className='px-6 min-h-screen bg-gray-100 pt-[110px] lg:pt-[150px]'>
             {isEditing ?
                 <div className="lg:flex lg:space-x-8 lg:items-start max-w-5xl mx-auto">
                     {/* Left Section */}

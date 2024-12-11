@@ -7,19 +7,21 @@ import { useNavigate } from "react-router-dom";
 const GuestNotifications = () => {
     const navigate = useNavigate();
     const { notifications, userNotifications } = useAuthContext();
+
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, []);
+    }, []);
+
     return (
         <div className='bg-gray-50 pt-[100px] min-h-screen pb-[65px] justify-center items-center '>
             <div className="max-w-[950px] mx-auto px-6" >
-                <div className="flex items-center text-rose-600"> 
-                        <IoNotificationsCircleOutline size={35} className="mr-[8px]"/> 
+                <div className="flex items-center text-rose-600">
+                    <IoNotificationsCircleOutline size={35} className="mr-[8px]" />
                     <h3 className='text-[24px]   font-[700]  text-start'>Notifications</h3>
                 </div>
 
                 <div className='h-[2px] bg-rose-300 rounded-lg my-[15px] mb-[35px]'></div>
-                
+
                 <div className="flex flex-col space-y-[15px]">
                     {notifications.map((notification, index) => (
                         <div key={index} className="border-b-[2px] border-rose-700  lg:px-[20px] py-[15px] flex flex-col">
@@ -27,14 +29,14 @@ const GuestNotifications = () => {
                                 <div className='w-[32px] h-[32px] md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center text-[28px] bg-rose-800 text-rose-100'>
                                     <TbBrandBooking />
                                 </div>
-                                <h3 className="text-[16px] ml-[5px] text-rose-700 font-[500]">{notification.title} 
-                                <span className={`scale-[0.9] mt-[5px] uppercase font-[600] px-[12px] mx-[8px] pb-[2px] text-white rounded-[30px] text-[13px] 
+                                <h3 className="text-[16px] ml-[5px] text-rose-700 font-[500]">{notification.title}
+                                    <span className={`scale-[0.9] mt-[5px] uppercase font-[600] px-[12px] mx-[8px] pb-[2px] text-white rounded-[30px] text-[13px] 
                                     ${notification.UpdatedStatus === 'approved' ? 'bg-green-800' :
-                                        notification.UpdatedStatus === 'pending' ? 'bg-yellow-600' :
-                                            notification.UpdatedStatus === 'rejected' ? 'bg-red-800' : 'text-gray-800'}`}
-                                >
-                                    {notification.UpdatedStatus}
-                                </span>
+                                            notification.UpdatedStatus === 'pending' ? 'bg-yellow-600' :
+                                                notification.UpdatedStatus === 'rejected' ? 'bg-red-800' : 'text-gray-800'}`}
+                                    >
+                                        {notification.UpdatedStatus}
+                                    </span>
                                 </h3>
                             </div>
                             {/*  <p className="ml-[38px]">{notification.details}</p> */}
@@ -54,21 +56,21 @@ const GuestNotifications = () => {
                     ))}
 
 
-<div className="underline underline-offset-1  text-rose-600 text-center font-[600]">Older Notifications</div>
-{userNotifications.map((notification, index) => (
+                    <div className="underline underline-offset-1  text-rose-600 text-center font-[600]">Older Notifications</div>
+                    {userNotifications.map((notification, index) => (
                         <div key={index} className="bg-rose-50 rounded-[18px]  lg:px-[20px] py-[15px] flex flex-col">
                             <div className="flex items-center">
                                 <div className='w-[32px] h-[32px] md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center text-[28px] bg-rose-100 text-rose-600'>
                                     <TbBrandBooking />
                                 </div>
-                                <h3 className="text-[16px] ml-[5px] text-rose-700 font-[500]">{notification.title} 
-                                <span className={`scale-[0.9] mt-[5px] uppercase font-[600] px-[12px] mx-[8px] pb-[2px] text-white rounded-[30px] text-[11px] 
+                                <h3 className="text-[16px] ml-[5px] text-rose-700 font-[500]">{notification.title}
+                                    <span className={`scale-[0.9] mt-[5px] uppercase font-[600] px-[12px] mx-[8px] pb-[2px] text-white rounded-[30px] text-[11px] 
                                     ${notification.UpdatedStatus === 'approved' ? 'bg-green-400' :
-                                        notification.UpdatedStatus === 'pending' ? 'bg-yellow-500' :
-                                            notification.UpdatedStatus === 'rejected' ? 'bg-red-300' : 'text-gray-800'}`}
-                                >
-                                    {notification.UpdatedStatus}
-                                </span>
+                                            notification.UpdatedStatus === 'pending' ? 'bg-yellow-500' :
+                                                notification.UpdatedStatus === 'rejected' ? 'bg-red-300' : 'text-gray-800'}`}
+                                    >
+                                        {notification.UpdatedStatus}
+                                    </span>
                                 </h3>
                             </div>
                             {/*  <p className="ml-[38px]">{notification.details}</p> */}

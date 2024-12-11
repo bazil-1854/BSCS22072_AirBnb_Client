@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { FaWifi, FaSnowflake, FaTshirt } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react'; 
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { useAuthContext } from '../../AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { MdSearch } from 'react-icons/md';
 import { categories } from '../Host/AddListings_Utility';
 import { RiCloseFill } from 'react-icons/ri';
+import { motion } from 'framer-motion';
 
 const FiltersModal = ({ closeFilterModal }) => {
     const navigate = useNavigate();
@@ -63,7 +63,11 @@ const FiltersModal = ({ closeFilterModal }) => {
 
     return (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-[999]">
-            <div className="bg-white rounded-lg w-11/12 max-w-md p-6 shadow-lg">
+            <motion.div
+            initial={{ opacity: 1, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="bg-white rounded-lg w-11/12 max-w-md p-6 shadow-lg">
 
                 <div className="flex justify-between items-center border-b pb-4">
                     <h2 className="text-lg font-semibold">Filters</h2>
@@ -237,7 +241,7 @@ const FiltersModal = ({ closeFilterModal }) => {
                        <MdSearch className="text-[20px] mt-[3px] mr-[3px]"/> Search
                     </button>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };
