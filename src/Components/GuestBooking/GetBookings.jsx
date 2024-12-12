@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { TbBrandBooking } from 'react-icons/tb';
 import { AiOutlineCalendar, AiOutlineUser } from 'react-icons/ai';
-import { MdClose } from 'react-icons/md'; 
+import { MdClose } from 'react-icons/md';
 import { FaArrowRight } from 'react-icons/fa';
 import MyLoader from '../../assets/MyLoader';
-
 import { motion } from 'framer-motion';
+import noReservations from "../../assets/PhotosAssets/noReservations.webp"
+import { Link } from 'react-router-dom';
 
 const GuestBookings = () => {
     const [bookings, setBookings] = useState([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
     const [selectedBooking, setSelectedBooking] = useState(null);
-    const [showModal, setShowModal] = useState(false); 
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -69,10 +70,10 @@ const GuestBookings = () => {
 
     if (loading) {
         return <MyLoader />;
-      }
+    }
 
     if (error) {
-        return <div className="text-center min-h-screen w-full pt-[150px] text-red-500 mt-10">{error}</div>;
+        return <div className="text-center pt-[150px] min-h-screen w-full text-red-500 mt-10">{error}</div>;
     }
 
     return (
@@ -81,6 +82,12 @@ const GuestBookings = () => {
                 <h3 className='text-[24px]  text-rose-600 font-[700]  text-start'>My Reserved bookings</h3>
                 <div className='h-[2px] bg-rose-300 rounded-lg my-[15px] mb-[35px]'></div>
                 <div className="flex flex-col space-y-[15px]">
+                    {bookings.length === 0 && 
+                        <div className="min-h-screen w-full flex flex-col justify-center items-center mix-blend-multiply mt-[-150px]">
+                            <img src={noReservations} alt="" className="scale-[0.4]" />
+                            <p className='text-rose-800 font-[400] text-[15px] text-center mt-[-45px] md:mt-[-100px]'>You haven't made any reservations. <br /> <Link to="/" className='text-rose-600 underline font-[600]'> Make a Boooking now</Link></p>
+                        </div>
+                    }
                     {bookings.map((booking) => (
                         <div
                             key={booking._id}
@@ -157,13 +164,13 @@ const GuestBookings = () => {
                 {showModal && selectedBooking && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                         <motion.div className="bg-white rounded-lg p-6 shadow-lg lg:w-[600px] w-[400px] relative"
-                         initial={{scale:0.4 , opacity: 1, y: 500 }}
-                         animate={{ scale:1,opacity: 1, y: 0 }}
-                         transition={{
-                             duration: 0.5,
-                             ease: [0.2, 0.8, 0.2, 1],
-                         }}
-                        > 
+                            initial={{ scale: 0.4, opacity: 1, y: 500 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            transition={{
+                                duration: 0.5,
+                                ease: [0.2, 0.8, 0.2, 1],
+                            }}
+                        >
                             <button
                                 onClick={closeModal}
                                 className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -188,9 +195,9 @@ const GuestBookings = () => {
                                     <p className="text-gray-700 font-medium">
                                         Name: <span className="font-normal">{selectedBooking.listing.name}</span>
                                     </p>
-                                    <p className='text-rose-700 hover:text-red-500 cursor-pointer flex items-center '>
+                                    <Link to={`/listing/${selectedBooking.listingId}`} className='text-rose-700 hover:text-red-500 cursor-pointer flex items-center '>
                                         See Listings <FaArrowRight className='pl-[5px] mt-[2px]' />
-                                    </p>
+                                    </Link>
                                 </div>
                                 <p className="text-gray-700 mb-[15px] font-medium">
                                     Property Type: <span className="font-normal">{selectedBooking.listing.property_type}</span>

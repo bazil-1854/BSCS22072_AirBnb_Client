@@ -26,7 +26,9 @@ const GuestNotifications = () => {
                 <div className="flex flex-col space-y-[15px]">
 
                     {userNotifications.length === 0 && notifications.length === 0 &&
-                        <div className="min-h-screen w-full flex justify-center items-center mix-blend-multiply mt-[-250px]"><img src={Notification} alt="" className="scale-[0.4]" /></div>
+                        <div className="min-h-screen w-full flex justify-center items-center mix-blend-multiply mt-[-250px]">
+                            <img src={Notification} alt="" className="scale-[0.55] md:scale-[0.4]" />
+                        </div>
                     }
 
                     {notifications.map((notification, index) => (
@@ -44,8 +46,7 @@ const GuestNotifications = () => {
                                         {notification.UpdatedStatus}
                                     </span>
                                 </h3>
-                            </div>
-                            {/*  <p className="ml-[38px]">{notification.details}</p> */}
+                            </div> 
 
                             <p className="ml-[48px] break-words">Your reservation for {notification.address}
                                 between {notification.checkInOut} has been
@@ -60,6 +61,7 @@ const GuestNotifications = () => {
                             <button onClick={() => navigate(`/listing/${notification.listingId}`)} className="ml-[48px] text-rose-700 underline underline-offset-2 font-[500] mt-[4px] text-start">See Listing</button>
                         </div>
                     ))}
+
                     {userNotifications.map((notification, index) => (
                         <div key={index} className="bg-rose-50 rounded-[18px]  lg:px-[20px] py-[15px] flex flex-col">
                             <div className="flex items-center">

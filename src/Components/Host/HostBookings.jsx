@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { TbBrandBooking } from 'react-icons/tb';
-import { FaUserCircle, FaEnvelope, FaMapMarkerAlt, FaInfoCircle, FaArrowRight } from "react-icons/fa";
-import { AiFillFacebook, AiFillTwitterCircle, AiFillLinkedin, AiOutlineCalendar } from "react-icons/ai";
+import { FaUserCircle, FaEnvelope, FaMapMarkerAlt, FaInfoCircle, FaArrowRight, FaLinkedinIn, FaTwitter, FaPhoneAlt } from "react-icons/fa";
+import { AiFillFacebook, AiFillTwitterCircle, AiFillLinkedin, AiOutlineCalendar, AiOutlineInstagram } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import { MdClose, MdOutlinePropane } from 'react-icons/md';
 import { GrStatusInfo } from 'react-icons/gr';
 import { motion } from 'framer-motion';
 import MyLoader from '../../assets/MyLoader';
+import noReservations from "../../assets/PhotosAssets/noReservations.webp"
+import { TiSocialFacebook } from 'react-icons/ti';
 
 const HostBookings = () => {
     const [bookings, setBookings] = useState([]);
@@ -17,8 +19,8 @@ const HostBookings = () => {
     const [guestDetails, setGuestDetails] = useState(null);
     const [modalLoading, setModalLoading] = useState(false);
 
-    useEffect(() => { 
-            window.scrollTo(0, 0); 
+    useEffect(() => {
+        window.scrollTo(0, 0);
         const fetchBookings = async () => {
             try {
                 const token = localStorage.getItem('token');
@@ -76,21 +78,20 @@ const HostBookings = () => {
 
     if (loading) {
         return <MyLoader />;
-      }
+    }
 
     if (error) {
         return (
-            <div className='bg-gray-50 pt-[115px] p-6 min-h-screen justify-center items-center '>
-                <div className="max-w-[1350px] mx-auto" >
-                    <h3 className='text-[20px] md:text-[24px] mb-[15px] text-rose-600 font-[700]'>Applied Bookings For Your Properties:</h3>
-                    <div className='h-[2.5px] bg-rose-600 mb-[35px] lg:mb-[55px]'></div>
-                    asd  {error.statusCode} {error.message}
-                    {/*error.message*/} {/*error.statusCode && `(Status Code: ${error.statusCode})`*/}
-                    {error.statusCode &&
-                        <div>
-                            No Listings Found with this filter
+            <div className='bg-gray-50 pt-[90px] min-h-screen pb-[65px] justify-center items-center '>
+                <div className="max-w-[950px] mx-auto px-6" >
+                    <h3 className='text-[24px]  text-rose-600 font-[700]  text-start'>My Reserved bookings</h3>
+                    <div className='h-[2px] bg-rose-300 rounded-lg my-[15px] mb-[35px]'></div>
+                    <div className="flex flex-col space-y-[15px]">
+                        <div className="min-h-screen w-full flex flex-col justify-center items-center mix-blend-multiply mt-[-150px]">
+                            <img src={noReservations} alt="" className="scale-[0.4]" />
+                            <p className='text-rose-800 font-[400] text-[15px] text-center mt-[-45px] md:mt-[-100px]'>You haven't made any reservations. <br /> <Link to="/" className='text-rose-600 underline font-[600]'> Make a Boooking now</Link></p>
                         </div>
-                    }
+                    </div>
                 </div>
             </div>
         );
@@ -112,9 +113,9 @@ const HostBookings = () => {
                                 </div>
                                 <div className='flex w-[85%] pb-[4px] justify-between items-center'>
                                     <div className='font-[600] text-[15px] md:text-[22px] text-rose-50'><p>{`${booking.listingDetails.name.slice(0, 35)}..` || 'N/A'}</p></div>
-                                    <p className='text-rose-50 hover:text-red-300 hover:underline cursor-pointer flex items-center '>
+                                    <Link to={`/listing/${booking.listingId}`} className='text-rose-50 hover:text-red-300 hover:underline cursor-pointer flex items-center '>
                                         See Listings <FaArrowRight className='pl-[5px] mt-[2px]' />
-                                    </p>
+                                    </Link>
                                 </div>
                             </div>
 
@@ -172,12 +173,15 @@ const HostBookings = () => {
                 {showModal && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                         <motion.div
-            initial={{ opacity: 1, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-             className="bg-white rounded-lg shadow-lg p-6 w-96">
+                            initial={{ scale: 0.8, opacity: 1, x: -500 }}
+                            animate={{ scale: 1, opacity: 1, x: 0 }}
+                            transition={{
+                                duration: 0.5,
+                                ease: [0.2, 0.8, 0.2, 1],
+                            }}
+                            className="bg-white rounded-lg shadow-lg p-6 w-96">
                             {modalLoading ? (
-                                <p>Loading...</p>
+                               <MyLoader/>
                             ) : guestDetails ? (
                                 <div className='relative'>
                                     <button onClick={() => setShowModal(false)} className="absolute top-[-5px] right-4 text-gray-500 hover:text-gray-700" aria-label="Close Modal" >
@@ -189,13 +193,19 @@ const HostBookings = () => {
                                         </div>
                                         <h2 className="text-xl font-semibold ml-4">{guestDetails.username}</h2>
                                     </div>
- 
+
                                     <div className="space-y-[13px]">
                                         <p className="flex items-center gap-2">
                                             <label className='w-[34px] h-[34px] rounded-full flex items-center justify-center text-[17px] text-rose-100 bg-rose-600'>
                                                 <FaEnvelope />
                                             </label>
                                             {guestDetails.email}
+                                        </p>
+                                        <p className="flex items-center text-[14px] gap-2">
+                                            <label className='w-[34px] h-[34px] rounded-full flex items-center justify-center text-[17px] text-rose-100 bg-rose-600'>
+                                                <FaPhoneAlt />
+                                            </label>
+                                            {guestDetails.phoneNumber || `No Phone numebr added by ${guestDetails.username}`}
                                         </p>
                                         <p className="flex items-center gap-2">
                                             <label className='w-[34px] h-[34px] rounded-full flex items-center justify-center text-[17px] text-rose-100 bg-rose-600'>
@@ -210,46 +220,43 @@ const HostBookings = () => {
                                             <strong>Bio:</strong> {guestDetails.bio}
                                         </p>
                                     </div>
- 
-                                    <div className="mt-4">
+
+                                    <div className="mt-4 border-t-[2px] pt-[8px]">
                                         <p className="flex items-center gap-2">
-                                            <FaUserCircle className="text-purple-500" />
+                                            <FaUserCircle className="text-purple-500" size={28}/>
                                             <strong>Social Links:</strong>
                                         </p>
-                                        <ul className="list-none mt-2 flex gap-4">
+                                        <ul className="list-none mt-3 ml-[35px] flex gap-[8px]">
                                             {guestDetails.socialLinks?.facebook && (
-                                                <li>
+                                                <li className='w-[30px] h-[30px] rounded-full text-white flex items-center justify-center overflow-hidden bg-blue-700'>
                                                     <Link
                                                         to={guestDetails.socialLinks.facebook}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="text-blue-600 hover:text-blue-800"
                                                     >
-                                                        <AiFillFacebook size={24} />
+                                                        <TiSocialFacebook size={24} />
                                                     </Link>
                                                 </li>
                                             )}
-                                            {guestDetails.socialLinks?.twitter && (
-                                                <li>
+                                            {guestDetails.socialLinks?.instagram && (
+                                                <li className='w-[30px] h-[30px] rounded-full text-white flex items-center justify-center overflow-hidden bg-pink-700'>
                                                     <Link
-                                                        to={guestDetails.socialLinks.twitter}
+                                                        to={guestDetails.socialLinks.instagram}
                                                         target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-blue-400 hover:text-blue-600"
+                                                        rel="noopener noreferrer" 
                                                     >
-                                                        <AiFillTwitterCircle size={24} />
+                                                        <AiOutlineInstagram size={24} />
                                                     </Link>
                                                 </li>
                                             )}
                                             {guestDetails.socialLinks?.linkedin && (
-                                                <li>
+                                                 <li className='w-[30px] h-[30px] rounded-full text-white flex items-center justify-center overflow-hidden bg-blue-700'>
                                                     <Link
                                                         to={guestDetails.socialLinks.linkedin}
                                                         target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-blue-700 hover:text-blue-900"
+                                                        rel="noopener noreferrer" 
                                                     >
-                                                        <AiFillLinkedin size={24} />
+                                                        <FaLinkedinIn size={19} />
                                                     </Link>
                                                 </li>
                                             )}

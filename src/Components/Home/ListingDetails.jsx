@@ -5,6 +5,42 @@ import axios from 'axios';
 import { FaMedal, FaHome, FaDoorOpen, FaToilet, FaStarHalfAlt, FaStar } from 'react-icons/fa';
 import { AddRating, FavoriteButton, Reviews } from './ListingRating';
 import { useAuthContext } from '../../AuthProvider';
+import { GiAngelWings } from 'react-icons/gi';
+
+const LisitngDetailsLoader = () => {
+  return (
+    <div className="w-full overflow-x-hidden xl:px-[160px] pt-[100px] lg:pt-[120px] min-h-screen p-6 bg-white">
+      <div className="w-full h-6 bg-gray-200 animate-pulse-fast mb-[25px] rounded"></div>
+
+      <div className='grid w-full overflow-hidden gap-[6px] grid-cols-5 rounded-[25px]'>
+        <div className="col-span-5 h-[250px] sm:h-[350px] md:h-[430px] md:col-span-3">
+          <div className="col-span-2 h-full bg-gray-200 rounded animate-pulse-fast"></div>
+        </div>
+
+        <div className='hidden h-[430px] col-span-2 md:grid grid-cols-2 grid-rows-2 gap-[6px]'>
+          <div className="bg-gray-200 rounded animate-pulse-fast"></div>
+          <div className="bg-gray-200 rounded animate-pulse-fast"></div>
+          <div className="bg-gray-200 rounded animate-pulse-fast"></div>
+          <div className="bg-gray-200 rounded animate-pulse-fast"></div>
+        </div>
+      </div>
+
+      <div className="h-[55px] mt-[15px] animate-pulse-fast bg-gray-200 rounded-xl"></div>
+      <div className='w-full mt-[18px] grid lg:grid-cols-2'>
+        <div className="w-full lg:order-1 order-2 space-y-2">
+          <div className="h-[35px] animate-pulse-fast bg-gray-200 rounded lg:w-[85%] lg:ml-[45px]"></div>
+          <div className="h-[35px] animate-pulse-fast bg-gray-200 rounded lg:w-[85%] lg:ml-[45px]"></div>
+          <div className="h-[35px] animate-pulse-fast bg-gray-200 rounded lg:w-[85%] lg:ml-[45px]"></div>
+          <div className="h-[35px] animate-pulse-fast bg-gray-200 rounded lg:w-[85%] lg:ml-[45px]"></div>
+          <div className="h-[35px] animate-pulse-fast bg-gray-200 rounded lg:w-[85%] lg:ml-[45px]"></div>
+          <div className="h-[35px] animate-pulse-fast bg-gray-200 rounded lg:w-[85%] lg:ml-[45px]"></div>
+          <div className="h-[35px] animate-pulse-fast bg-gray-200 rounded lg:w-[85%] lg:ml-[45px]"></div>
+        </div>
+        <div className="bg-gray-200 animate-pulse-fast rounded-[25px] lg:w-[75%] lg:ml-auto mb-[15px] lg:mb-0 h-[310px]"></div>
+      </div>
+    </div>
+  );
+};
 
 const isLoggedIn = () => {
   const token = localStorage.getItem('token');
@@ -91,7 +127,7 @@ const ListingDetails = () => {
   }, [userLoginStatus]);
 
   if (loading) {
-    return <div className="text-center mt-10">Loading...</div>;
+    return <LisitngDetailsLoader />;
   }
 
   if (error) {
@@ -108,7 +144,7 @@ const ListingDetails = () => {
     <div className="w-full overflow-x-hidden xl:px-[160px] min-h-screen p-6 bg-white">
 
       {showModal && <Reviews listingId={id} ratingReviews={ratingReviews} onClose={() => setShowModal(false)} />}
-      <h2 className="mt-[85px] mb-[20px] md:text-[30px] text-rose-950  font-semibold">{listing.name}</h2>
+      <h2 className="mt-[85px] mb-[20px] text-[22px] md:text-[30px] text-rose-950  font-semibold">{listing.name}</h2>
 
       <div className='grid w-full overflow-hidden gap-[6px] grid-cols-5 rounded-[25px]'>
         <div className="col-span-5 h-[250px] sm:h-[350px] md:h-[430px] md:col-span-3">
@@ -141,9 +177,9 @@ const ListingDetails = () => {
           </div>
 
           <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 border shadow-md px-[8px] md:px-[45px] py-[15px] rounded-[28px] space-y-2 md:space-y-0 md:flex-row md:items-center md:space-x-4">
-            <div className="md:scale-[1] scale-[0.8] flex flex-col items-center border-r-[2px] font-[500] text-lg">
-              <span>Guest</span>
-              <span className='mt-[-5px]'>favorite</span>
+            <div className="flex border-r-[2px]  flex-col items-center justify-center">
+              <GiAngelWings className="text-[22px] lg:text-[30px]" />
+              <div className='mt-[5px] text-[10px] flex  md:text-[15px] font-[500]'>Guest <div className='ml-[4px]'>Favourite</div></div>
             </div>
 
             <p className="text-[14px] font-[600] border-r-[2px] col-span-2 lg:block hidden text-center">
@@ -151,7 +187,7 @@ const ListingDetails = () => {
             </p>
 
             <div className='flex flex-col items-center border-r-[2px] justify-center'>
-              <p className="font-semibold text-[15px] md:text-[18px]">{ratingReviews.averageRating}</p>
+              <p className="font-semibold text-[15px] mt-[6px]  md:text-[18px]">{ratingReviews.averageRating}</p>
               <div className='flex'>
                 {[...Array(Math.floor(ratingReviews.averageRating))].map((_, index) => (
                   <FaStar size={15} key={`full-${index}`} className="text-yellow-500" />
@@ -212,24 +248,29 @@ const ListingDetails = () => {
             <div className="flex items-start space-x-2 text-[17px] mb-[32px]">
               <FaHome className="text-gray-700 mt-[12px] text-[28px] mr-[15px] " />
               <div>
-                <p className="font-semibold">Room in a casa particular</p>
-                <p className="text-gray-700">Your own room in a home, plus access to shared spaces.</p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-2 text-[17px] mb-[32px]">
-              <FaDoorOpen className="text-gray-700 mt-[12px] text-[28px] mr-[15px] " />
-              <div>
-                <p className="font-semibold">Shared common spaces</p>
-                <p className="text-gray-700">You'll share parts of the home with the Host.</p>
+                <p className="font-semibold">{listing.bedrooms || ''} Bed Room{listing.bedrooms > 1 && 's'}</p>
+                <p className="text-gray-700">Your own {listing.bedrooms || ''} bedroom{listing.bedrooms > 1 && 's'} in the {listing.property_type}, plus access to shared spaces.</p>
               </div>
             </div>
 
             <div className="flex items-start space-x-2 text-[17px] mb-[32px]">
               <FaToilet className="text-gray-700 mt-[12px] text-[28px] mr-[15px] " />
               <div>
-                <p className="font-semibold">Shared bathroom</p>
-                <p className="text-gray-700">You'll share the bathroom with others.</p>
+                <p className="font-semibold">{listing.bathrooms || ''} Bath Room{listing.bathrooms > 1 && 's'}</p>
+                <p className="text-gray-700">Your own {listing.bathrooms || ''} bathroom{listing.bathrooms > 1 && 's'} in the {listing.property_type} and access to shared spaces.</p>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-2 text-[17px] mb-[32px]">
+              <FaDoorOpen className="text-gray-700 mt-[12px] text-[28px] mr-[15px] " />
+              <div>
+                <p className="font-semibold">Amenities</p>
+                <div className='flex mt-[8px] items-center'>
+                  {listing.amenities.map((amenity, index) => (
+                    <p key={index} className="text-gray-800 px-[7px] py-[1px] text-[13px] font-[500] border-[2px] border-gray-500 rounded-xl mr-[10px] flex items-center break-words">{amenity}</p>
+                  ))}
+                </div>
+
               </div>
             </div>
           </div>
@@ -239,7 +280,7 @@ const ListingDetails = () => {
             <p className="text-sm break-words text-gray-600">{listing.summary}</p>
           </div>
 
-          {userLoginStatus && <AddRating listingId={id} /> }
+          {userLoginStatus && <AddRating listingId={id} />}
 
         </div>
 
@@ -305,12 +346,8 @@ const ListingDetails = () => {
           </div>
 
           <div className="border rounded-lg p-4 shadow-sm">
-            <p className="text-pink-800 font-semibold">This is a rare find</p>
-            <p className="text-sm text-gray-600">Bo's place is usually fully booked.</p>
-          </div>
-
-          <div className="text-center">
-            <button className="text-sm text-gray-500 underline">Report this listing</button>
+            <p className="text-pink-800 font-semibold">{listing.bookingsMade > 20 ? 'This is a rare find' : 'Seize this exclusive opportunity now.'}</p>
+            <p className="text-sm text-gray-600">{listing.bookingsMade || ""} booking made {listing.bookingsMade > 1 && 's'} till now</p>
           </div>
         </div>
       </div>

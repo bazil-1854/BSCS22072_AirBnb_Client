@@ -4,9 +4,9 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { FaBookmark, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import LeftWing from "../../assets//PhotosAssets/leftWing.png";
 import RightWing from "../../assets/PhotosAssets/rightWing.png";
-import noComments from  "../../assets/noComments.webp"
-
-import { motion } from 'framer-motion';
+import noComments from "../../assets/PhotosAssets/noComments.webp"
+import { motion, AnimatePresence } from "framer-motion";
+import { GiAngelWings } from 'react-icons/gi';
 
 export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
     const [isFavorited, setIsFavorited] = useState(isInitiallyFavorited);
@@ -17,11 +17,12 @@ export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/home/listings/${listingId}/toggle-favorite`, {}, {
-                headers: { Authorization: `Bearer ${token}` }, }
+                headers: { Authorization: `Bearer ${token}` },
+            }
             );
 
             setIsFavorited(!isFavorited);
-        } 
+        }
         catch (err) {
             setError('Failed to toggle favorite. Please try again.');
             console.error('Error toggling favorite:', err.response?.data || err.message);
@@ -44,6 +45,15 @@ export const AddRating = ({ listingId }) => {
     const [review, setReview] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    useEffect(() => {
+        if (success) {
+            const timer = setTimeout(() => {
+                setSuccess("");
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [success, setSuccess]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -80,24 +90,20 @@ export const AddRating = ({ listingId }) => {
             <div className="bg-white border-t-[3px] border-gray-300 mt-[25px] pt-[15px]">
                 <h2 className="text-xl font-semibold mb-4">Add a Review</h2>
                 {error && <p className="text-red-500">{error}</p>}
-                {success && <p className="text-green-500">{success}</p>}
+                <AnimatePresence>
+                    {success && (
+                        <motion.div
+                            initial={{ x: "20%" }} // Start off-screen
+                            animate={{ x: 0 }} // Slide into view
+                            exit={{ x: "10%" }} // Slide out of view
+                            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                            className="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg"
+                        >
+                            {success}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
                 <form onSubmit={handleSubmit}>
-                    {/*<div className="mb-4">
-                        <label htmlFor="rating" className="block text-sm font-medium text-gray-700">
-                            Rating (1-5):
-                        </label>
-                        <input
-                            type="number"
-                            id="rating"
-                            className="border rounded-md w-full p-2"
-                            min="1"
-                            max="5"
-                            step="0.01"
-                            value={rating}
-                            onChange={(e) => setRating(parseFloat(e.target.value))}
-                        />
-                    </div>
-                    */}
                     <div className="flex items-center">
                         <label className="mr-[10px] text-xl font-semibold">Rating:</label>
                         {[...Array(5)].map((_, index) => (
@@ -184,12 +190,12 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
     return (
         <div className="fixed inset-0 bg-black  bg-opacity-50 flex justify-center items-center z-50">
             <motion.div className="bg-white rounded-lg overflow-y-auto no-scrollbar lg:overflow-y-hidden h-[90vh] w-full max-w-4xl mx-4 md:mx-auto shadow-lg"
-            initial={{scale:0.7 , opacity: 1, y: 500 }}
-            animate={{ scale:1,opacity: 1, y: 0 }}
-            transition={{
-                duration: 0.5,
-                ease: [0.2, 0.8, 0.2, 1],
-            }}
+                initial={{ scale: 0.7, opacity: 1, y: 500 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                transition={{
+                    duration: 0.5,
+                    ease: [0.2, 0.8, 0.2, 1],
+                }}
             >
                 <div className="flex justify-between items-center border-b p-4">
                     <h2 className="text-lg font-semibold">Guest Reviews</h2>
@@ -202,9 +208,9 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
                         <div className='flex items-center justify-center mb-[25px]'>
                             <img src={LeftWing} alt="img1" className='w-[75px] mt-[28px]' />
                             <p className='text-[65px] ml-[12px] mr-[-5px] font-[600]'>{ratingReviews.averageRating}</p>
-                            <img src={RightWing} alt="img1" className='w-[75px] mt-[28px]'/>
+                            <img src={RightWing} alt="img1" className='w-[75px] mt-[28px]' />
                         </div>
-                        <p className="text-sm text-center text-yellow-700 font-[600] underline">Guest favorite</p>
+                        <div className='md:scale-[1] scale-[0.8] flex items-center justify-center w-[130px] py-[2px] border border-gray-500 rounded-lg'><GiAngelWings className="" /> <span className='ml-[8px] text-[15px]'>Guest favorite </span></div>
                         <p className='mt-[15px] text-[13px] text-gray-600'>One of the most loved homes on Airbnb based on ratings, reviews, and reliability</p>
 
                     </div>
@@ -215,12 +221,12 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
 
                             {!loading ?
                                 <>
-                                 {reviews.length === 0 &&
-                            <div className='w-full flex flex-col scale-[0.4] lg:mt-[-15px] mt-[-80px] mx-auto contrast justify-center items-center '>
-                            <img className='grayscale  contrast-75' src={noComments} alt="" />
-                           <p className='text-gray-400 font-[600] text-[32px]'>No Review Made Till Now</p>
-                            </div>
-                        }
+                                    {reviews.length === 0 &&
+                                        <div className='w-full flex flex-col scale-[0.4] lg:mt-[-15px] mt-[-80px] mx-auto contrast justify-center items-center '>
+                                            <img className='grayscale  contrast-75' src={noComments} alt="" />
+                                            <p className='text-gray-400 font-[600] text-[32px]'>No Review Made Till Now</p>
+                                        </div>
+                                    }
                                     {reviews.map((review, index) => (
                                         <div key={index} className="mb-6 p-4 bg-white">
                                             <div className="mb-[8px] flex items-center">
@@ -257,7 +263,7 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
                                                     {(() => {
                                                         const reviewDate = new Date(review.date);
                                                         const now = new Date();
-                                                        const timeDiff = now - reviewDate; // Difference in milliseconds
+                                                        const timeDiff = now - reviewDate;
 
                                                         const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
                                                         const months = Math.floor(days / 30);
@@ -265,10 +271,12 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
 
                                                         if (years >= 1) {
                                                             return `${years} year${years > 1 ? 's' : ''} ago`;
-                                                        } else if (months >= 1) {
+                                                        }
+                                                        else if (months >= 1) {
                                                             return `${months} month${months > 1 ? 's' : ''} ago`;
-                                                        } else {
-                                                            return `${days} day${days > 1 ? 's' : ''} ago`;
+                                                        }
+                                                        else {
+                                                            return days === 0 ? "Today" : `${days} day${days > 1 ? 's' : ''} ago`;
                                                         }
                                                     })()}
                                                 </p>
@@ -300,4 +308,3 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
         </div>
     );
 };
- 

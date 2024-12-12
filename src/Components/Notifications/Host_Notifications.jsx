@@ -6,7 +6,8 @@ import { MdClose } from "react-icons/md";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { TbBrandBooking } from "react-icons/tb";
 import { FaArrowRight } from "react-icons/fa";
-import { AiOutlineCalendar, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineCalendar, AiOutlineUser } from "react-icons/ai"; 
+import { motion } from "framer-motion";
 
 const HostNotifications = () => {
     const navigate = useNavigate();
@@ -42,11 +43,13 @@ const HostNotifications = () => {
                 </div>
 
                 <div className="h-[2px] bg-rose-300 rounded-lg my-[15px] mb-[35px]" />
-                
-                {userNotifications.length === 0 && notifications.length === 0  && 
-                <div className="min-h-screen w-full flex justify-center items-center mix-blend-multiply mt-[-250px]"><img src={Notification} alt="" className="scale-[0.4]" /></div>
+
+                {userNotifications.length === 0 && notifications.length === 0 &&
+                    <div className="min-h-screen w-full flex justify-center items-center mix-blend-multiply mt-[-250px]">
+                        <img src={Notification} alt="" className="scale-[0.55] md:scale-[0.4]" />
+                    </div>
                 }
-                
+
                 <div className="flex flex-col space-y-[15px]">
                     {notifications.map((notification, index) => (
                         <div key={index} className="border-b-[2px] border-rose-700 lg:px-[20px] py-[15px] flex flex-col">
@@ -64,14 +67,14 @@ const HostNotifications = () => {
                                 <span className="text-rose-500 text-[16px] font-[700]">Special Requests: </span>{notification.details}
                             </p>
                             <button
-                                onClick={() => fetchBookingDetails(notification.bookingId)} // Call to fetch booking details
+                                onClick={() => fetchBookingDetails(notification.bookingId)}
                                 className="ml-[48px] text-rose-700 underline underline-offset-2 font-[500] mt-[4px] text-start"
                             >
                                 See Booking
                             </button>
                         </div>
                     ))}
-                    <div className="underline underline-offset-1  text-rose-600 text-center font-[600]">Older Notifications</div>
+
 
                     {/* Older notificaitons */}
                     {userNotifications.map((notification, index) => (
@@ -102,8 +105,14 @@ const HostNotifications = () => {
 
             {isModalOpen &&
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg p-6 shadow-lg lg:w-[600px] w-[400px] relative">
-                        {/* Close Button */}
+                    <motion.div className="bg-white rounded-lg p-6 shadow-lg lg:w-[600px] w-[400px] relative"
+                     initial={{ scale: 0.8, opacity: 1, y: -500 }}
+                     animate={{ scale: 1, opacity: 1, y: 0 }}
+                     transition={{
+                         duration: 0.5,
+                         ease: [0.2, 0.8, 0.2, 1], 
+                     }}
+                    > 
                         <button
                             onClick={() => setIsModalOpen(false)}
                             className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -163,7 +172,7 @@ const HostNotifications = () => {
                             </p>
                         )}
 
-                    </div>
+                    </motion.div>
                 </div>
             }
 

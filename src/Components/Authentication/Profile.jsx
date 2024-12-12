@@ -101,7 +101,7 @@ const Profile = () => {
         <main className='px-6 min-h-screen bg-gray-100 pt-[110px] lg:pt-[150px]'>
             {isEditing ?
                 <div className="lg:flex lg:space-x-8 lg:items-start max-w-5xl mx-auto">
-                    {/* Left Section */}
+                    {/* Left wala Section */}
                     <div className="lg:w-1/3 mb-6 lg:mb-0">
                         <div className="flex justify-between py-6 p-[35px] bg-white rounded-[28px] shadow-sm ">
                             <div className='flex flex-col items-center justify-center'>
