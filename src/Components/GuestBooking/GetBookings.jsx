@@ -72,22 +72,29 @@ const GuestBookings = () => {
         return <MyLoader />;
     }
 
-    if (error) {
-        return <div className="text-center pt-[150px] min-h-screen w-full text-red-500 mt-10">{error}</div>;
-    }
-
+   if (error || bookings.length === 0) {
+           return <>
+               <div className='bg-gray-100 pt-[115px] p-6 min-h-screen justify-center items-center '>
+                   <div className="max-w-[1150px] mx-auto" >
+                       <h3 className='text-[24px] mb-[15px] text-rose-600 font-[700]'>Visited Places</h3>
+                       <div className='h-[2.5px] bg-rose-600 mb-[35px] lg:mb-[55px]'></div>
+                       <div className="min-h-screen w-full flex flex-col justify-center items-center mix-blend-multiply mt-[-150px]">
+                           <img src={noReservations} alt="No Reservations" className="scale-[0.4]" />
+                           <p className="text-rose-800 font-[400] text-[15px] text-center mt-[-45px] md:mt-[-100px]">
+                               You haven't visited any place, make a Booking <br />
+                               <Link to="/" className="text-rose-600 underline font-[600]">Start Exploring</Link>
+                           </p>
+                       </div>
+                   </div>
+               </div>
+           </>;
+       }
     return (
-        <div className='bg-gray-50 pt-[90px] min-h-screen pb-[65px] justify-center items-center '>
+        <div className='bg-gray-50 pt-[120px] min-h-screen pb-[65px] justify-center items-center '>
             <div className="max-w-[950px] mx-auto px-6" >
                 <h3 className='text-[24px]  text-rose-600 font-[700]  text-start'>My Reserved bookings</h3>
                 <div className='h-[2px] bg-rose-300 rounded-lg my-[15px] mb-[35px]'></div>
                 <div className="flex flex-col space-y-[15px]">
-                    {bookings.length === 0 && 
-                        <div className="min-h-screen w-full flex flex-col justify-center items-center mix-blend-multiply mt-[-150px]">
-                            <img src={noReservations} alt="" className="scale-[0.4]" />
-                            <p className='text-rose-800 font-[400] text-[15px] text-center mt-[-45px] md:mt-[-100px]'>You haven't made any reservations. <br /> <Link to="/" className='text-rose-600 underline font-[600]'> Make a Boooking now</Link></p>
-                        </div>
-                    }
                     {bookings.map((booking) => (
                         <div
                             key={booking._id}
@@ -97,14 +104,8 @@ const GuestBookings = () => {
                                 <div className='w-[45px] h-[45px] rounded-full flex items-center justify-center text-[28px] text-rose-100 bg-rose-600'>
                                     <TbBrandBooking />
                                 </div>
-                                <div className='ml-[20px] hidden md:flex flex-col items-center justify-center'>
-                                    <p className='text-[13px] font-[600] text-gray-500 '>Listing Title</p>
-                                    <p className='font-[600] w-[110px] text-[19px] text-rose-800'>{`${booking.listing.name.slice(0, 11)}...`}</p>
-                                </div>
-                                <div className='md:hidden flex ml-[15px] items-center justify-center'>
-                                    <p className='text-[15px] font-[600] text-gray-500 '>Property Name:</p>
-                                    <p className='font-[600] w-[110px] text-[18px] ml-[10px] text-rose-800'>{`${booking.listing.name.slice(0, 11)}...`}</p>
-                                </div>
+                                
+                                <p className='font-[600] text-[18px] ml-[8px] text-rose-800'>{`${booking.listing.name.slice(0, 11)}...`}</p> 
                             </div>
 
                             <div className='hidden md:flex items-center'>

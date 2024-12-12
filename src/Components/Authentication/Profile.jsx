@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { FaUserAlt, FaCheckCircle, FaCamera, FaPlusCircle } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+import { FaCheckCircle, FaPlusCircle, FaLinkedinIn } from "react-icons/fa";
 import { RiDeleteBinLine } from 'react-icons/ri';
 import MyLoader from '../../assets/MyLoader';
+import { AiOutlineInstagram } from 'react-icons/ai';
+import { TiSocialFacebook } from 'react-icons/ti';
 
 const Profile = () => {
     const [userInfo, setUserInfo] = useState(null);
@@ -11,7 +13,7 @@ const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-   
+
     useEffect(() => {
         window.scrollTo(0, 0);
         const fetchUserProfile = async () => {
@@ -71,9 +73,9 @@ const Profile = () => {
         }
     };
 
-    
+
     if (loading) {
-        return <MyLoader/>;
+        return <MyLoader />;
     }
 
     if (error) {
@@ -299,13 +301,32 @@ const Profile = () => {
                                 )}
                             </div>
 
-                            <div className='flex mt-[40px] items-center'>
-                                <p className='text-rose-900 font-[500] mr-[15px]'>Found Me at:</p>
-                                {/*<p className='bg-blue-600 text-white'>{userInfo.socialLinks.facebook}</p>*/}
-                                <p className='bg-blue-600 ml-[6px] text-sm px-[12px] rounded-lg text-white'>Facebook</p>
-                                <p className='bg-rose-600 ml-[6px] text-sm px-[12px] rounded-lg text-white'>Instagram</p>
-                                <p className='bg-blue-300 ml-[6px] text-sm px-[12px] rounded-lg text-white'>linkdin</p>
+                            <div className="mt-8">
+                                <h3 className="text-[17px] font-semibold">Social Links</h3>
+                                {['facebook', 'instagram', 'linkedin'].map((platform) => (
+                                    <div key={platform} className="flex items-center my-2">
+                                        <label className="w-20 font-semibold capitalize">{platform}:</label>
+                                        <input
+                                            type="text"
+                                            name={platform}
+                                            value={updatedData.socialLinks?.[platform] || userInfo.socialLinks?.[platform] || ''}
+                                            onChange={(e) =>
+                                                setUpdatedData({
+                                                    ...updatedData,
+                                                    socialLinks: {
+                                                        ...userInfo.socialLinks,
+                                                        ...updatedData.socialLinks,
+                                                        [platform]: e.target.value,
+                                                    },
+                                                })
+                                            }
+                                            className="px-2 py-[2px] ml-[8px] border rounded-md w-full"
+                                            placeholder={`Enter ${platform} link`}
+                                        />
+                                    </div>
+                                ))}
                             </div>
+
                         </div>
 
                     </div>
@@ -375,6 +396,7 @@ const Profile = () => {
                             </div>
 
                             <p><span className='font-[700]  mr-[4px]'>Fullname:</span> {userInfo.fullName}</p>
+                            <p><span className='font-[700]  mr-[4px]'>Email:</span> {userInfo.email}</p>
                             <p><span className='font-[700]  mr-[4px]'>About:</span> {userInfo.about}</p>
                             <p><span className='font-[700]  mr-[4px]'>Occupation:</span> {userInfo.occupation}</p>
                             <p><span className='font-[700]  mr-[4px]'>Location:</span> {userInfo.location.city}, {userInfo.location.country}</p>
@@ -407,12 +429,44 @@ const Profile = () => {
                                 )}
                             </div>
 
-                            <div className='flex mt-[40px] items-center'>
-                                <p className='text-rose-900 font-[500] mr-[15px]'>Found Me at:</p>
-                                {/*<p className='bg-blue-600 text-white'>{userInfo.socialLinks.facebook}</p>*/}
-                                <p className='bg-blue-600 ml-[6px] text-sm px-[12px] rounded-lg text-white'>Facebook</p>
-                                <p className='bg-rose-600 ml-[6px] text-sm px-[12px] rounded-lg text-white'>Instagram</p>
-                                <p className='bg-blue-300 ml-[6px] text-sm px-[12px] rounded-lg text-white'>linkdin</p>
+                            <div className='flex mt-[15px] items-center'>
+                                <p className='text-rose-900 font-[500] mr-[15px]'>Found Me at:</p> 
+                                {userInfo.socialLinks.facebook && userInfo.socialLinks.instagram && userInfo.socialLinks.linkedin && <p>No Social Links Attached</p>}
+                                <ul className="list-none mt-3 ml-[35px] flex gap-[8px]">
+                                    {userInfo.socialLinks?.facebook && (
+                                        <li className='w-[30px] h-[30px] rounded-full text-white flex items-center justify-center overflow-hidden bg-blue-700'>
+                                            <Link
+                                                to={userInfo.socialLinks.facebook}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <TiSocialFacebook size={24} />
+                                            </Link>
+                                        </li>
+                                    )}
+                                    {userInfo.socialLinks?.instagram && (
+                                        <li className='w-[30px] h-[30px] rounded-full text-white flex items-center justify-center overflow-hidden bg-pink-700'>
+                                            <Link
+                                                to={userInfo.socialLinks.instagram}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <AiOutlineInstagram size={24} />
+                                            </Link>
+                                        </li>
+                                    )}
+                                    {userInfo.socialLinks?.linkedin && (
+                                        <li className='w-[30px] h-[30px] rounded-full text-white flex items-center justify-center overflow-hidden bg-blue-700'>
+                                            <Link
+                                                to={userInfo.socialLinks.linkedin}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <FaLinkedinIn size={19} />
+                                            </Link>
+                                        </li>
+                                    )}
+                                </ul>
                             </div>
                         </div>
 
@@ -423,152 +477,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
-/*
- <div className="max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-6">Profile</h1>
-            {userInfo && (
-                <div className="bg-white shadow-md rounded-lg p-6">
-                    <div className="flex items-center space-x-4 mb-6">
-                        <img
-                            src={userInfo.profilePicture || 'https://via.placeholder.com/150'}
-                            alt="Profile"
-                            className="w-24 h-24 rounded-full object-cover border border-gray-300"
-                        />
-                        <div>
-                            <h2 className="text-2xl font-semibold text-gray-900">
-                                {userInfo.fullName || 'Enter Full Name'}
-                            </h2>
-                            <p className="text-gray-500">{userInfo.role}</p>
-                        </div>
-                    </div>
-                    {userInfo.role === 'Host' ?
-                        <>
-                            <button className='text-blue-600 underline mb-[15px]' onClick={() => { navigate('/add-listing') }}>Add Listing</button>
-                            <button className='text-blue-600 underline mb-[15px] ml-[25px]' onClick={() => { navigate('/host-listing') }}>See Listing</button>
-                            <button className='text-blue-600 underline mb-[15px] ml-[25px]' onClick={() => { navigate('/host-dashboard') }}>Manage Boolings</button>
-                        </> :
-                        <>
-                            <button className='text-blue-600 underline mb-[15px]' onClick={() => { navigate('/reserved-bookings') }}>See Made Bookings</button>
-                            <button className='text-blue-600 underline mb-[15px]' onClick={() => { navigate('/favourite-listings') }}>See Fav Listings</button>
-                        </>
-                    }
-                    {isEditing ? (
-                        <form onSubmit={handleSubmit}>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
-                                        Full Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="fullName"
-                                        name="fullName"
-                                        value={updatedData.fullName || userInfo.fullName || ''}
-                                        onChange={handleChange}
-                                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                        Email
-                                    </label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={userInfo.email || ''}
-                                        onChange={handleChange}
-                                        disabled
-                                        className="mt-1 block w-full bg-gray-100 border border-gray-300 rounded-md shadow-sm sm:text-sm"
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="bio" className="block text-sm font-medium text-gray-700">
-                                        Bio
-                                    </label>
-                                    <textarea
-                                        id="bio"
-                                        name="bio"
-                                        value={updatedData.bio || userInfo.bio || ''}
-                                        onChange={handleChange}
-                                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    ></textarea>
-                                </div>
-                                <div>
-                                    <label htmlFor="languages" className="block text-sm font-medium text-gray-700">
-                                        Languages
-                                    </label>
-                                    <div className="space-y-2">
-                                        {(updatedData.languages || userInfo.languages || []).map((language, index) => (
-                                            <div
-                                                key={index}
-                                                className="flex items-center justify-between border border-gray-300 p-2 rounded-md"
-                                            >
-                                                <span className="text-gray-700">{language}</span>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => handleArrayDelete('languages', language)}
-                                                    className="text-red-500 hover:text-red-700"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </div>
-                                        ))}
-                                        <input
-                                            type="text"
-                                            placeholder="Add a language"
-                                            onKeyDown={(e) => {
-                                                if (e.key === 'Enter') {
-                                                    e.preventDefault();
-                                                    handleArrayChange('languages', e.target.value);
-                                                    e.target.value = '';
-                                                }
-                                            }}
-                                            className="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="mt-6 flex justify-end space-x-4">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsEditing(false)}
-                                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                                >
-                                    Save Changes
-                                </button>
-                            </div>
-                        </form>
-                    ) : (
-                        <div className="space-y-4">
-                            <p>
-                                <strong>Email:</strong> {userInfo.email || 'Enter Email'}
-                            </p>
-                            <p>
-                                <strong>Bio:</strong> {userInfo.bio || 'Enter Bio'}
-                            </p>
-                            <p>
-                                <strong>Languages:</strong>{' '}
-                                {(userInfo.languages && userInfo.languages.length > 0
-                                    ? userInfo.languages.join(', ')
-                                    : 'Enter Languages')}
-                            </p>
-                            <button
-                                onClick={() => setIsEditing(true)}
-                                className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                            >
-                                Edit Profile
-                            </button>
-                        </div>
-                    )}
-                </div>
-            )}
-        </div>
-*/
+export default Profile; 

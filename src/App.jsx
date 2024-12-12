@@ -15,7 +15,7 @@ import GuestBookings from './Components/GuestBooking/GetBookings';
 import HostBookings from './Components/Host/HostBookings';
 import FinalizeBooking from './Components/GuestBooking/FinalizeBooking';
 import FavoriteListings from './Components/Authentication/FavoriteListings'; 
-import GuestNotifications from './Components/Notifications/guest_Notifications';
+import GuestNotifications from './Components/Notifications/Guest_Notifications';
 import HostNotifications from './Components/Notifications/Host_Notifications';
 import PrivacyPolicy from './Components/FooterPages/PrivacyPolicy';
 import FAQPage from './Components/FooterPages/FAQPage';
@@ -24,6 +24,7 @@ import AccessibilityPage from './Components/FooterPages/AccessibilityPage';
 import HelpCenter from './Components/FooterPages/HelpCenter';
 import AboutUs from './Components/FooterPages/AboutUs';
 import TrustAndSafetyPage from './Components/FooterPages/TrustAndSafetyPage';
+import GetBookingHistory from './Components/GuestBooking/GetBookingHistory';
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
         <Route path="/update-listing/:id" element={<EditListing />} /> 
         
         <Route path="/reserved-bookings" element={<GuestBookings />} /> 
+        <Route path="/reserved-bookings-history" element={<GetBookingHistory />} /> 
 
         
         <Route path="/host-bookings" element={<HostBookings />} /> 

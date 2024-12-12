@@ -157,12 +157,12 @@ const Navbar = () => {
                                 ) : (
                                     <motion.div
                                         style={{ opacity, y }}
-                                        className="hidden sm:flex xl:mr-[-165px] bg-white z-90 space-x-6"
+                                        className="hidden cursor-pointer sm:flex xl:mr-[-165px] bg-white z-90 space-x-6"
                                     >
                                         <div onClick={() => setShowFilterModal(true)} className="text-gray-600 hover:text-black font-medium">
-                                            Stays
+                                            Explore
                                         </div>
-                                        <NavLink to="/search" className="text-gray-600 hover:text-black font-medium">
+                                        <NavLink to="/reserved-bookings-history" className="text-gray-600 hover:text-black font-medium">
                                             Experiences
                                         </NavLink>
                                     </motion.div>
@@ -236,16 +236,20 @@ const Navbar = () => {
                                             <NavLink to="/favourite-listings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                                 Favourites
                                             </NavLink>
+                                            
                                             <NavLink to="/reserved-bookings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                                 Reserved Bookings
+                                            </NavLink>
+                                            <NavLink to="/reserved-bookings-history" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                                Past Experiences
                                             </NavLink>
                                         </>}
                                     </>
                                 }
-                                <NavLink to="/host-listing" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                    Gift Cards
+                                <NavLink to="/privacy-policy" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                    Privacy Policy
                                 </NavLink>
-                                <NavLink to="/host-bookings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                <NavLink to="/help-center" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Help Center
                                 </NavLink>
                             </motion.div>
@@ -279,17 +283,31 @@ const Navbar = () => {
                                 ease: [0.2, 0.8, 0.2, 1],
                             }}
                         >
-                            <NavLink to="/" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                Gift Cards
+
+                            {user &&
+                                <>{userRole === 'Host' ? <> 
+                                    <NavLink to="/host-bookings" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        Host Bookings
+                                    </NavLink>
+                                    <NavLink to="/add-listing" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        Add Listing
+                                    </NavLink>
+                                </>
+                                    : <>
+                                    <NavLink to="/reserved-bookings-history"onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        Bookings History
+                                    </NavLink> 
+                                        <NavLink to="/reserved-bookings"onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                            Reserved Bookings
+                                        </NavLink>
+                                    </>}
+                                </>
+                            }
+                            <NavLink to="/privacy-policy" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                Privacy Policy
                             </NavLink>
-                            <NavLink to="/" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                Airbnb Your Home
-                            </NavLink>
-                            <NavLink to="/" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                Host an Experience
-                            </NavLink>
-                            <NavLink to="/" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                Help Center
+                            <NavLink to="/accessibility" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            Accessibility
                             </NavLink>
 
                             <div className="w-full bg-gray-200 h-[2px] my-2"></div>

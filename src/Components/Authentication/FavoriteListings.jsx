@@ -88,8 +88,7 @@ const FavoriteListings = () => {
                             />
                             <div className="p-4">
                                 <h2 className="font-semibold text-lg">{listing.name}</h2>
-                                <p className="text-gray-500">{listing.property_type}</p>
-                                {/* <p className="text-gray-500">{listing.category}</p>  */}
+                                <p className="text-gray-500">{listing.property_type}</p> 
                                 <p className="text-gray-700">Bedrooms: {listing.bedrooms}</p>
                                 <p className="font-bold text-lg">${listing.price} / night</p>
                             </div>

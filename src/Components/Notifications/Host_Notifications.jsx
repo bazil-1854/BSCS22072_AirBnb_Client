@@ -152,7 +152,6 @@ const HostNotifications = () => {
                         <div className="mt-4">
                             <p className="text-gray-700 font-medium mb-1 flex items-center gap-2">
                                 <label className='w-[30px] h-[30px] text-[18px] bg-rose-600 flex justify-center items-center rounded-full text-white'><AiOutlineUser /></label>
-
                                 Guests:
                             </p>
                             <ul className="list-disc list-inside ml-4 text-gray-600">

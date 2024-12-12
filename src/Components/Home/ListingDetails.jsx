@@ -320,8 +320,6 @@ const ListingDetails = () => {
               </div>
             }
 
-
-
             <p className="text-center text-gray-600 font-[500] text-[15px]">You won't be charged yet</p>
 
             <div className="space-y-1 text-gray-600 font-[500] underline text-[15px]">
