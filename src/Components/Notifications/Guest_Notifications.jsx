@@ -3,6 +3,7 @@ import { TbBrandBooking } from "react-icons/tb";
 import { useAuthContext } from "../../AuthProvider";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import Notification from "../../assets/PhotosAssets/notifications.webp"
 
 const GuestNotifications = () => {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ const GuestNotifications = () => {
     }, []);
 
     return (
-        <div className='bg-gray-50 pt-[100px] min-h-screen pb-[65px] justify-center items-center '>
+        <div className='bg-white pt-[100px] min-h-screen pb-[65px] justify-center items-center '>
             <div className="max-w-[950px] mx-auto px-6" >
                 <div className="flex items-center text-rose-600">
                     <IoNotificationsCircleOutline size={35} className="mr-[8px]" />
@@ -23,6 +24,11 @@ const GuestNotifications = () => {
                 <div className='h-[2px] bg-rose-300 rounded-lg my-[15px] mb-[35px]'></div>
 
                 <div className="flex flex-col space-y-[15px]">
+
+                    {userNotifications.length === 0 && notifications.length === 0 &&
+                        <div className="min-h-screen w-full flex justify-center items-center mix-blend-multiply mt-[-250px]"><img src={Notification} alt="" className="scale-[0.4]" /></div>
+                    }
+
                     {notifications.map((notification, index) => (
                         <div key={index} className="border-b-[2px] border-rose-700  lg:px-[20px] py-[15px] flex flex-col">
                             <div className="flex items-center">
@@ -54,9 +60,6 @@ const GuestNotifications = () => {
                             <button onClick={() => navigate(`/listing/${notification.listingId}`)} className="ml-[48px] text-rose-700 underline underline-offset-2 font-[500] mt-[4px] text-start">See Listing</button>
                         </div>
                     ))}
-
-
-                    <div className="underline underline-offset-1  text-rose-600 text-center font-[600]">Older Notifications</div>
                     {userNotifications.map((notification, index) => (
                         <div key={index} className="bg-rose-50 rounded-[18px]  lg:px-[20px] py-[15px] flex flex-col">
                             <div className="flex items-center">

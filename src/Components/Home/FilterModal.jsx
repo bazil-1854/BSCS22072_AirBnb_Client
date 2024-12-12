@@ -64,10 +64,14 @@ const FiltersModal = ({ closeFilterModal }) => {
     return (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-[999]">
             <motion.div
-            initial={{ opacity: 1, y: 100 }}
+            initial={{ opacity: 1, y: 500 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="bg-white rounded-lg w-11/12 max-w-md p-6 shadow-lg">
+            transition={{
+              duration: 0.5,
+              ease: [0.2, 0.8, 0.2, 1], // Custom cubic-bezier easing
+            }}
+            className="bg-white rounded-lg w-[95%] sm:w-11/12 max-w-md sm:pb-6 pb-[150px] sm:mb-0 mb-[-180px] px-6 pt-6 shadow-lg"
+            >
 
                 <div className="flex justify-between items-center border-b pb-4">
                     <h2 className="text-lg font-semibold">Filters</h2>
@@ -104,7 +108,7 @@ const FiltersModal = ({ closeFilterModal }) => {
                         />
                     </div>
 
-                    <div className="mb-6">
+                    <div className="mb-[65px] md:mb-[45px]">
                         <h3 className="font-medium">Price Range</h3>
                         <p className="text-[12px] mb-[15px] text-gray-500">Nightly prices before fees and taxes</p>
                         <div className="xl:pl-[12px] flex overflow-hidden rotate-180 scale-x-[-1] w-full mb-2">
@@ -153,7 +157,7 @@ const FiltersModal = ({ closeFilterModal }) => {
                         </div>
                     </div>
 
-                    <div className="pt-[15px] mb-6">
+                    <div className="pt-[15px] mb-6 border-t-[2px] border-gray-300 border-b-[2px] pb-[28px] ">
                         <h3 className="font-medium">Beds and Bathrooms</h3>
                         <div className="flex justify-between items-center mt-2">
                             <span>Beds</span>

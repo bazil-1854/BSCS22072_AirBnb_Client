@@ -4,6 +4,9 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { FaBookmark, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import LeftWing from "../../assets//PhotosAssets/leftWing.png";
 import RightWing from "../../assets/PhotosAssets/rightWing.png";
+import noComments from  "../../assets/noComments.webp"
+
+import { motion } from 'framer-motion';
 
 export const FavoriteButton = ({ listingId, isInitiallyFavorited }) => {
     const [isFavorited, setIsFavorited] = useState(isInitiallyFavorited);
@@ -180,7 +183,14 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
 
     return (
         <div className="fixed inset-0 bg-black  bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white rounded-lg overflow-y-auto no-scrollbar lg:overflow-y-hidden h-[90vh] w-full max-w-4xl mx-4 md:mx-auto shadow-lg">
+            <motion.div className="bg-white rounded-lg overflow-y-auto no-scrollbar lg:overflow-y-hidden h-[90vh] w-full max-w-4xl mx-4 md:mx-auto shadow-lg"
+            initial={{scale:0.7 , opacity: 1, y: 500 }}
+            animate={{ scale:1,opacity: 1, y: 0 }}
+            transition={{
+                duration: 0.5,
+                ease: [0.2, 0.8, 0.2, 1],
+            }}
+            >
                 <div className="flex justify-between items-center border-b p-4">
                     <h2 className="text-lg font-semibold">Guest Reviews</h2>
                     <button onClick={onClose}>
@@ -205,6 +215,12 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
 
                             {!loading ?
                                 <>
+                                 {reviews.length === 0 &&
+                            <div className='w-full flex flex-col scale-[0.4] lg:mt-[-15px] mt-[-80px] mx-auto contrast justify-center items-center '>
+                            <img className='grayscale  contrast-75' src={noComments} alt="" />
+                           <p className='text-gray-400 font-[600] text-[32px]'>No Review Made Till Now</p>
+                            </div>
+                        }
                                     {reviews.map((review, index) => (
                                         <div key={index} className="mb-6 p-4 bg-white">
                                             <div className="mb-[8px] flex items-center">
@@ -280,58 +296,8 @@ export const Reviews = ({ listingId, ratingReviews, onClose }) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };
-
-/*
-<div className="fixed inset-0 h-screen w-screen z-[999] bg-gray-800 bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white h-[80vh] w-[550px] overflow-y-auto rounded-lg p-6 shadow-lg">
-                <button
-                    type="button"
-                    className="mr-4 px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
-                    onClick={onClose}
-                >
-                    Close
-                </button>
-                <h2 className="text-2xl font-semibold mb-6">Reviews</h2>
-                {reviews.map((review, index) => (
-                    <div key={index} className="mb-6 p-4 bg-white shadow-md rounded-md">
-                        <div className="flex items-center">
-                            {review.user?.profilePicture ? (
-                                <img
-                                    src={review.user.profilePicture}
-                                    alt={`${review.user.name}'s profile`}
-                                    className="w-10 h-10 rounded-full mr-4"
-                                />
-                            ) : (
-                                <div className="w-10 h-10 bg-gray-300 rounded-full mr-4"></div>
-                            )}
-                            <div>
-                                <h4 className="text-lg font-medium">{review.user?.name || 'Anonymous'}</h4>
-                                <p className="text-sm text-gray-500">{new Date(review.date).toLocaleDateString()}</p>
-                            </div>
-                        </div>
-                        <div className="mt-4">
-                            <p className="text-sm text-gray-800">
-                                <strong>Rating:</strong> {review.rating.toFixed(2)} / 5
-                            </p>
-                            <p className="mt-2 text-gray-700">{review.review}</p>
-                        </div>
-                    </div>
-                ))}
-                {loading && <div className="text-center mt-4">Loading...</div>}
-                {currentPage < totalPages && !loading && (
-                    <div className="text-center mt-6">
-                        <button
-                            onClick={handleShowMore}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                        >
-                            Show More
-                        </button>
-                    </div>
-                )}
-            </div>
-        </div>
-*/
+ 

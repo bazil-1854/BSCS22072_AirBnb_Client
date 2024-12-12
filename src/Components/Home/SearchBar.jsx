@@ -11,7 +11,7 @@ const SearchBar = ({ handleSearch }) => {
     const [guests, setGuests] = useState(1);
 
     const onSearch = () => {
-        handleSearch(location, guests); // Pass location and guests to parent component
+        handleSearch(location, guests);
     };
 
 

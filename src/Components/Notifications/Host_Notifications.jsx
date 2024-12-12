@@ -42,6 +42,11 @@ const HostNotifications = () => {
                 </div>
 
                 <div className="h-[2px] bg-rose-300 rounded-lg my-[15px] mb-[35px]" />
+                
+                {userNotifications.length === 0 && notifications.length === 0  && 
+                <div className="min-h-screen w-full flex justify-center items-center mix-blend-multiply mt-[-250px]"><img src={Notification} alt="" className="scale-[0.4]" /></div>
+                }
+                
                 <div className="flex flex-col space-y-[15px]">
                     {notifications.map((notification, index) => (
                         <div key={index} className="border-b-[2px] border-rose-700 lg:px-[20px] py-[15px] flex flex-col">

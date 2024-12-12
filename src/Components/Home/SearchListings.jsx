@@ -42,10 +42,11 @@ const SearchListings = () => {
     };*/
 
     return (
-        <div className="mt-[150px] min-h-screen md:mt-[110px] xl:px-[75px] px-4">
-            <h2 className="text-[24px] lg:text-[30px] underline font-[700] mb-[8px] text-rose-500 tracking-wide">
-                Search Listings
+        <div className="min-h-screen lg:[pt-[150px] pt-[100px] xl:px-[75px] px-4">
+            <h2 className="text-[20px] pl-[5px] lg:text-[18px] font-[700] mb-[8px] text-rose-500">
+                Filtered Listings
             </h2>
+            <div className='w-[98%] mx-auto bg-rose-300 rounded-xl h-[1.5px]'></div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 py-4">
                 {results.map(listing => (

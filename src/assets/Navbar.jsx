@@ -190,8 +190,15 @@ const Navbar = () => {
                     </div>
 
                     {isOpen && (
-                        <div className="md:block hidden">
-                            <div onClick={toggleMenu} className="flex flex-col absolute z-[90] right-0 mr-[75px] w-[250px] bg-white rounded-lg border shadow-xl mt-2 p-4">
+                        <div className="md:block hidden" >
+                            <motion.div onClick={toggleMenu}
+                                initial={{ opacity: 1, x: 500 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{
+                                    duration: 0.5,
+                                    ease: [0.2, 0.8, 0.2, 1],
+                                }}
+                                className="flex flex-col absolute right-0 mr-[75px] w-[250px] bg-white rounded-lg border shadow-xl mt-5 p-4">
                                 {user ? (
                                     <>
                                         <NavLink to="/profile" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
@@ -205,7 +212,7 @@ const Navbar = () => {
                                     <NavLink to="/signUp" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                         Sign up
                                     </NavLink>
-                                    <NavLink to="/signIn" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                    <NavLink to="/signIn" className="pl-[12px] block py-2 text-rose-600 font-[600] hover:bg-gray-100 rounded-lg">
                                         Log in
                                     </NavLink>
                                 </>
@@ -241,14 +248,14 @@ const Navbar = () => {
                                 <NavLink to="/host-bookings" className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                     Help Center
                                 </NavLink>
-                            </div>
+                            </motion.div>
                         </div>
                     )}
                 </div>
             </nav>
 
             <nav className='md:hidden block'>
-                <div className="flex items-center py-[10px] px-[18px] w-screen">
+                <div className="flex z-[999] items-center py-[10px] px-[18px] w-screen">
                     <div onClick={() => setShowFilterModal(true)} className='border-[2px] w-[85%] border-gray-300 rounded-[25px] flex items-center py-[5px] px-3'>
                         <FaSearch className="text-gray-700 mr-5" size={25} />
                         <div className="flex-1 text-[14px] text-gray-500">
@@ -264,8 +271,14 @@ const Navbar = () => {
                 </div>
                 {isOpen && (
                     <div className="sm:hidden">
-                        <div className="flex flex-col bg-white rounded-lg shadow-md mt-2 p-4">
-
+                        <motion.div className="flex flex-col z-10 bg-white rounded-lg shadow-md mt-2 p-4"
+                            initial={{ opacity: 1, y: -500 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{
+                                duration: 0.5,
+                                ease: [0.2, 0.8, 0.2, 1],
+                            }}
+                        >
                             <NavLink to="/" onClick={toggleMenu} className="pl-[12px] block py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 Gift Cards
                             </NavLink>
@@ -299,11 +312,11 @@ const Navbar = () => {
                             </>
                             )}
 
-                        </div>
+                        </motion.div>
                     </div>
                 )}
 
-                <div className={`fixed bottom-0 left-0 w-full bg-white shadow-lg flex  justify-between py-2 transition-transform duration-300 ${getNavbarTranslateClasses()} ${getNavbarClasses()} ${user ? 'px-[40px]' : 'px-[110px]' }`}>
+                <div className={`fixed bottom-0 left-0 w-full bg-white shadow-lg flex  justify-between py-2 transition-transform duration-300 ${getNavbarTranslateClasses()} ${getNavbarClasses()} ${user ? 'px-[40px]' : 'px-[110px]'}`}>
                     <NavLink to="/" className={({ isActive }) => `flex flex-col items-center ${isActive ? 'text-rose-600' : 'text-gray-400'}`} >
                         <FiHome className="mb-[6px]" size={22} />
                         <span className="text-xs">Home</span>

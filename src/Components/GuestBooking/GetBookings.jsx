@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { TbBrandBooking } from 'react-icons/tb';
 import { AiOutlineCalendar, AiOutlineUser } from 'react-icons/ai';
-import { MdClose } from 'react-icons/md';
-import { BiArrowFromLeft } from 'react-icons/bi';
+import { MdClose } from 'react-icons/md'; 
 import { FaArrowRight } from 'react-icons/fa';
 import MyLoader from '../../assets/MyLoader';
+
+import { motion } from 'framer-motion';
 
 const GuestBookings = () => {
     const [bookings, setBookings] = useState([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
-    const [selectedBooking, setSelectedBooking] = useState(null); // Selected booking details
-    const [showModal, setShowModal] = useState(false); // Modal visibility
+    const [selectedBooking, setSelectedBooking] = useState(null);
+    const [showModal, setShowModal] = useState(false); 
 
-    // Fetch bookings
     useEffect(() => {
         window.scrollTo(0, 0);
         const fetchBookings = async () => {
@@ -156,8 +156,14 @@ const GuestBookings = () => {
 
                 {showModal && selectedBooking && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                        <div className="bg-white rounded-lg p-6 shadow-lg lg:w-[600px] w-[400px] relative">
-                            {/* Close Button */}
+                        <motion.div className="bg-white rounded-lg p-6 shadow-lg lg:w-[600px] w-[400px] relative"
+                         initial={{scale:0.4 , opacity: 1, y: 500 }}
+                         animate={{ scale:1,opacity: 1, y: 0 }}
+                         transition={{
+                             duration: 0.5,
+                             ease: [0.2, 0.8, 0.2, 1],
+                         }}
+                        > 
                             <button
                                 onClick={closeModal}
                                 className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -166,7 +172,6 @@ const GuestBookings = () => {
                                 <MdClose size={24} />
                             </button>
 
-                            {/* Header */}
                             <div className=" flex justify-center items-center font-semibold mb-4 fkex text-center text-gray-800">
                                 <p className='w-[38px] h-[38px] rounded-full flex items-center justify-center text-[28px] text-rose-100 bg-rose-600'>
                                     <TbBrandBooking />
@@ -174,7 +179,6 @@ const GuestBookings = () => {
                                 <p className='ml-[10px] text-rose-600 text-[25px]'>Booking Details</p>
                             </div>
 
-                            {/* Booking Information */}
                             <div className="space-y-2">
                                 {/*  <p className="text-gray-700 font-medium">
                                     Listing ID: <span className="font-normal">{selectedBooking.listingId}</span>
@@ -236,7 +240,7 @@ const GuestBookings = () => {
                                     Finalize Booking
                                 </button>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 )}
             </div>

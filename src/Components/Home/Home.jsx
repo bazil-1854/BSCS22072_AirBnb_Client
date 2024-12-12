@@ -1,10 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchBar from './SearchBar';
-import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import HorizontalScrollList from './HorizontalScrollList';
-import MyLoader from '../../assets/MyLoader';
+import HorizontalScrollList from './HorizontalScrollList'; 
+
+const Homeloader = () => {
+  return (
+    <div className='w-full px-[25px] xl:px-[55px] overflow-x-hidden flex justify-center items-center flex-col'>
+      <div className='w-full'>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 pt-4 pb-[45px]">
+          {Array.from({ length: 15 }).map((_, index) => (
+            <div
+              key={index}
+              className="h-[290px] lg:h-[230px] xl:h-[240px] w-full md:w-[95%] bg-gray-200 rounded-xl animate-pulse-fast"
+            ></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const Home = () => {
   const navigate = useNavigate();
@@ -104,9 +120,6 @@ const Home = () => {
       </div>
     );
   }
-  if (loading) {
-    return <MyLoader />;
-  }
 
   return (
     <div className='mt-[85px] min-h-screen md:mt-[95px]'>
@@ -116,58 +129,35 @@ const Home = () => {
         <HorizontalScrollList setCategory={setCategory} />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 pt-4 xl:px-[75px] pb-[45px] px-4">
-        {listings.map(listing => (
-          <div
-            key={listing._id}
-            onClick={() => navigate(`/listing/${listing._id}`)}
-            className="overflow-hidden mt-[15px] cursor-pointer"
-          >
-            <img
-              src={listing.images.placePicture || 'https://via.placeholder.com/300'}
-              alt={listing.name}
-              loading='lazy'
-              className="m-2 h-[290px] lg:h-[230px] xl:h-[240px] w-[95%] border rounded-xl hover:shadow-xl transition duration-200"
-            />
-            <div className="px-4">
-              <div className='w-full flex justify-between'>
-                <h2 className="font-semibold text-lg">{listing.address.suburb.substring(0, 8)}, {listing.address.country.substring(0, 8)}</h2>
-                {listing.rating > 0 && <p className='flex items-center'>{listing.rating} <FaStar size={18} className="text-yellow-500" /></p>}
-              </div>
-              <p className="text-rose-600 font-[700] text-[12px]">{listing.property_type}</p>
-              <p className="text-gray-500">{listing.category}</p>
-              <p className="font-bold text-[14px] mt-[6px]">${listing.price} / night</p>
-              {
-                /*
-                 <div className="flex">
-                  {[...Array(Math.floor(listing.rating))].map((_, index) => (
-                    <FaStar
-                      size={22}
-                      key={`full-${index}`}
-                      className="text-yellow-500"
-                    />
-                  ))}
-                  {(listing.rating % 1 >= 0.5) && (
-                    <FaStarHalfAlt
-                      size={22}
-                      key="half"
-                      className="text-yellow-500"
-                    />
-                  )}
-                  {[...Array(5 - (Math.floor(listing.rating)) - ((listing.rating % 1 >= 0.5) ? 1 : 0))].map((_, index) => (
-                    <FaStar
-                      size={22}
-                      key={`empty-${index}`}
-                      className="text-gray-300"
-                    />
-                  ))}
+      {loading ? <Homeloader /> :
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 pt-4 xl:px-[75px] pb-[45px] px-4">
+          {listings.map(listing => (
+            <div
+              key={listing._id}
+              onClick={() => navigate(`/listing/${listing._id}`)}
+              className="overflow-hidden mt-[15px] cursor-pointer"
+            >
+              <img
+                src={listing.images.placePicture || 'https://via.placeholder.com/300'}
+                alt={listing.name}
+                loading='lazy'
+                className="m-2 h-[290px] lg:h-[230px] xl:h-[240px] w-[95%] border rounded-xl hover:shadow-xl transition duration-200"
+              />
+              <div className="px-4">
+                <div className='w-full flex justify-between'>
+                  <h2 className="font-semibold text-lg">{listing.address.suburb.substring(0, 8)}, {listing.address.country.substring(0, 8)}</h2>
+                  {listing.rating > 0 && <p className='flex items-center'>{listing.rating} <FaStar size={18} className="text-yellow-500" /></p>}
                 </div>
-                */
-              }
+                <p className="text-rose-600 font-[700] text-[12px]">{listing.property_type}</p>
+                <p className="text-gray-500">{listing.category}</p>
+                <p className="font-bold text-[14px] mt-[6px]">${listing.price} / night</p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+
+      }
+
 
       {hasMore && (
         <div className="text-center mt-6">
