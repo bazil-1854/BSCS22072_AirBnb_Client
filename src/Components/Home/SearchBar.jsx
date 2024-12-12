@@ -41,10 +41,10 @@ const SearchBar = ({ handleSearch }) => {
                     <label className="text-[12px] font-[700] mb-[-2px] text-gray-600">Where</label>
                     <input
                         type="text"
-                        placeholder="Search Destinations"
+                        placeholder="Search by Country"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        className="outline-none group-hover:bg-gray-100"
+                        className="outline-none placeholder:font-[600] group-hover:bg-gray-100"
                     />
                 </div>
 

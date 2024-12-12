@@ -3,7 +3,8 @@ import axios from 'axios';
 import SearchBar from './SearchBar';
 import { FaStar } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import HorizontalScrollList from './HorizontalScrollList'; 
+import HorizontalScrollList from './HorizontalScrollList';
+import noResults from "../../assets/PhotosAssets/noResults.webp";
 
 const Homeloader = () => {
   return (
@@ -69,21 +70,28 @@ const Home = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     setCurrentPage(1);
     fetchListings(1, category);
   }, [category]);
 
   useEffect(() => {
-    fetchListings(currentPage);
-  }, [currentPage]);
+    if (searchParams) {
+      setCurrentPage(1);
+      fetchListings(1, category, searchParams);
+    }
+  }, [searchParams, category]);
+
+  useEffect(() => {
+    if (!searchParams) {
+      fetchListings(currentPage, category);
+    }
+  }, [currentPage, category, searchParams]);
+ 
 
   const handleSearch = (location, guests) => {
-    // Prepare search parameters and reset current page
     //console.log(location)
     //console.log(guests)
-
     setSearchParams({ location, guests });
     setCurrentPage(1);
     fetchListings(1, category, { location, guests });
@@ -102,8 +110,7 @@ const Home = () => {
     }
   };
 
-  //if (error.status === 404) return <p className="h-screen bg-green-800 -center text-lg text-red-500">{error}</p>;
-  if (error) {
+  if (error || listings.length === 0) {
     return (
       <div className='mt-[85px] min-h-screen md:mt-[95px]'>
         <SearchBar handleSearch={handleSearch} />
@@ -111,12 +118,10 @@ const Home = () => {
         <div className='top-[60px] w-full bg-white sticky'>
           <HorizontalScrollList setCategory={setCategory} />
         </div>
-        {error.message} {/*error.statusCode && `(Status Code: ${error.statusCode})`*/}
-        {error.statusCode &&
-          <div>
-            No Listings Found with this filter
-          </div>
-        }
+        <div className='mt-[150px] w-full flex flex-col  mx-auto contrast justify-center items-center '>
+          <img className='mix-blend-multiply z-10 scale-[0.8]' src={noResults} alt="" />
+          <p className='text-gray-400 bg-white z-30 pt-[18px] mt-[-70px] px-[55px] font-[600] text-[15px]'>No listings found</p>
+        </div>
       </div>
     );
   }

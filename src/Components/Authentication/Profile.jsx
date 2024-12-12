@@ -138,20 +138,26 @@ const Profile = () => {
                         </div>
 
                         <div className="mt-8 p-6  border bg-white rounded-[24px]">
-                            <h3 className="text-lg font-semibold mb-4">Bazil's confirmed information</h3>
-                            <div className="flex items-center space-x-2 mb-2">
-                                <FaCheckCircle className="text-green-500" />
-                                <p className="text-sm text-gray-600">Phone number</p>
-                            </div>
+                            <h3 className="text-[17px] font-semibold mb-4">Bazil's confirmed information status</h3>
+                            {userInfo.phoneNumber ?
+                                <div className="flex items-center space-x-2 mb-2">
+                                    <FaCheckCircle className="text-green-500" />
+                                    <p className="text-sm text-gray-600">Phone number: <span className='font-[500]'>{userInfo.phoneNumber}</span></p>
+                                </div>
+                                :
+                                <div className="flex items-center space-x-2 mb-2">
+                                    <FaCheckCircle className="text-green-500" />
+                                    <p className="text-sm text-gray-600">Phone number</p>
+                                </div>
+                            }
 
                             <hr className="my-4" />
                             <div>
                                 <h3 className="text-lg font-semibold mb-2">Verify your identity</h3>
                                 <p className="text-sm text-gray-500 mb-4">
-                                    Before you book or host on Airbnb, you’ll need to complete this step.
+                                    Before you book or host on Airbnb, you must to complete this step.
                                 </p>
-                                <button className="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600">
-                                    Get verified
+                                <button className="px-4 py-2 lg:pb-[24px] text-white text-sm rounded-md  "> 
                                 </button>
                             </div>
                         </div>
@@ -175,6 +181,23 @@ const Profile = () => {
                                     onChange={handleChange}
                                     className="p-[5px] border w-full my-[12px] border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 />
+                            </p>
+                            <p>
+                                <span className='font-[700]  mr-[4px]'>Phone Number:</span>
+                                <input
+                                    type="text"
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    value={updatedData.phoneNumber || userInfo.phoneNumber || ''}
+                                    onChange={handleChange}
+                                    className="p-[5px] border w-full my-[12px] border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    pattern="^\d{11}$"   
+                                    inputMode="numeric"
+                                    maxLength={11}    
+                                    required   
+                                    title="Please enter exactly 11 digits" 
+                                />
+
                             </p>
                             <p>
                                 <span className='font-[700]  mr-[4px]'>About:</span>
@@ -368,20 +391,26 @@ const Profile = () => {
                         </div>
 
                         <div className="mt-8 p-6  border bg-white rounded-[24px]">
-                            <h3 className="text-lg font-semibold mb-4">Bazil's confirmed information</h3>
-                            <div className="flex items-center space-x-2 mb-2">
-                                <FaCheckCircle className="text-green-500" />
-                                <p className="text-sm text-gray-600">Phone number</p>
-                            </div>
+                            <h3 className="text-[17px] font-semibold mb-4">Bazil's confirmed information status</h3>
+                            {userInfo.phoneNumber ?
+                                <div className="flex items-center space-x-2 mb-2">
+                                    <FaCheckCircle className="text-green-500" />
+                                    <p className="text-sm text-gray-600">Phone number: <span className='font-[500]'>{userInfo.phoneNumber}</span></p>
+                                </div>
+                                :
+                                <div className="flex items-center space-x-2 mb-2">
+                                    <FaCheckCircle className="text-green-500" />
+                                    <p className="text-sm text-gray-600">Phone number</p>
+                                </div>
+                            }
 
                             <hr className="my-4" />
                             <div>
                                 <h3 className="text-lg font-semibold mb-2">Verify your identity</h3>
                                 <p className="text-sm text-gray-500 mb-4">
-                                    Before you book or host on Airbnb, you’ll need to complete this step.
+                                    Before you book or host on Airbnb, you must to complete this step.
                                 </p>
-                                <button className="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600">
-                                    Get verified
+                                <button className="px-4 py-2 lg:pb-[24px] text-white text-sm rounded-md  "> 
                                 </button>
                             </div>
                         </div>
@@ -430,7 +459,7 @@ const Profile = () => {
                             </div>
 
                             <div className='flex mt-[15px] items-center'>
-                                <p className='text-rose-900 font-[500] mr-[15px]'>Found Me at:</p> 
+                                <p className='text-rose-900 font-[500] mr-[15px]'>Found Me at:</p>
                                 {userInfo.socialLinks.facebook && userInfo.socialLinks.instagram && userInfo.socialLinks.linkedin && <p>No Social Links Attached</p>}
                                 <ul className="list-none mt-3 ml-[35px] flex gap-[8px]">
                                     {userInfo.socialLinks?.facebook && (
