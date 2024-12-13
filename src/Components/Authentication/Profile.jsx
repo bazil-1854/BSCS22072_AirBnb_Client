@@ -86,7 +86,7 @@ const Profile = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const updatedProfile = { ...updatedData, profilePicture: selectedAvatar }; // Include avatar in profile update
+            const updatedProfile = { ...updatedData, profilePicture: selectedAvatar || userInfo.profilePicture }; // Include avatar in profile update
             const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/profile/update-info`, updatedProfile, {
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -220,6 +220,17 @@ const Profile = () => {
                                     id="fullName"
                                     name="fullName"
                                     value={updatedData.fullName || userInfo.fullName || ''}
+                                    onChange={handleChange}
+                                    className="p-[5px] border w-full my-[12px] border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                />
+                            </p>
+                            <p className=''>
+                                <span className='font-[700]  mr-[4px]'>User Name:</span>
+                                <input
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    value={updatedData.username || userInfo.username || ''}
                                     onChange={handleChange}
                                     className="p-[5px] border w-full my-[12px] border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 />
